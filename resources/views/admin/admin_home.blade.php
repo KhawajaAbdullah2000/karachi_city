@@ -4,5 +4,5 @@
 
 <br>
 <a href="{{ route('logout') }}" class="btn btn-primary">Log out</a>
-</div>
+
 @endsection
