@@ -28,10 +28,17 @@ class UserController extends Controller
 
     }
 
-    public function changepass(){
-        $super=User::where('id',2)->first();
-        $super->password=Hash::make('12345');
-        $super->save();
-      }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('home')->with('success','Logged out successfully');
+    
+    }
+
+
+    // public function changepass(){
+    //     $super=User::where('id',2)->first();
+    //     $super->password=Hash::make('12345');
+    //     $super->save();
+    //   }
 }
 

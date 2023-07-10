@@ -1,5 +1,8 @@
 @extends('master')
 @section('content')
+<h1>Welcome Admin {{auth()->user()->name}}</h1>
 
-<h2>Welcome Admin</h2>
+<br>
+<a href="{{ route('logout') }}" class="btn btn-primary">Log out</a>
+</div>
 @endsection
