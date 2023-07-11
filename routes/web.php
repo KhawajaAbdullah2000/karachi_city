@@ -43,7 +43,12 @@ Route::get('/login_form',function(){
 
 Route::post('login',[UserController::class,'login']);
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
+
+#Employee Routes
 Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
-
-
+Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name('Employees.delete');
+Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
+Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
+Route::post('/employees/store', [UserController::class,'store'])->name('Employees.store');
 //Route::get('changepass',[UserController::class,'changepass']);

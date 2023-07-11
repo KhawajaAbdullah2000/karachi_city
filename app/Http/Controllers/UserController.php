@@ -33,7 +33,46 @@ class UserController extends Controller
         return redirect()->route('home')->with('success','Logged out successfully');
     
     }
-    
+    public function showEmployees(){
+        $users = User::all();
+        return view('admin.DisplayEmployees',['users'=>$users]);
+    }
+
+    public function destroy($id){
+        $user = User::where('id',$id)->first();
+        $user->delete();
+        return back();
+    }
+
+    public function addEmployee(){
+        return view('admin.addEmployee');
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'number' => 'required|numeric',
+            'password' => 'required',
+            'cnic' => 'required|numeric',
+            'front' => 'required|mimes:jpeg,jpg,png,gif|max:10000',
+            'back' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
+        ]);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->number;
+        $user->cnic = $request->cnic;
+        $user->password=Hash::make($request->password);
+        $cnicFront = time().'.'.$request->front->extension();
+        $cnicBack = time().'.'.$request->back->extension();
+        $request->front->move(public_path('cnic'),$cnicFront);
+        $request->back->move(public_path('cnic'),$cnicBack);
+        $user->save();
+
+        return back()->withSuccess('New Employee added successfully!');
+    }
+
 
 
     // public function changepass(){
