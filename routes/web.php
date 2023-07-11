@@ -34,15 +34,15 @@ Route::middleware(['auth','isemp'])->group(function(){
 
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->middleware('home')->name('home');
 
 Route::get('/login_form',function(){
     return view('login_form');
-})->name('login_form');
+})->middleware('guest')->name('login_form');
 
 
 Route::post('login',[UserController::class,'login']);
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
 
-// Route::get('changepass',[UserController::class,'changepass']);
+//Route::get('changepass',[UserController::class,'changepass']);

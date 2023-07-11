@@ -36,9 +36,10 @@ class UserController extends Controller
 
 
     // public function changepass(){
-    //     $super=User::where('id',2)->first();
+    //    $super=User::where('id',2)->first();
     //     $super->password=Hash::make('12345');
-    //     $super->save();
+    //    $super->save();
+    //    dd('done');
     //   }
 }
 
