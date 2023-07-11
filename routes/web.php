@@ -43,6 +43,7 @@ Route::get('/login_form',function(){
 
 Route::post('login',[UserController::class,'login']);
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
+Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
 
 
 //Route::get('changepass',[UserController::class,'changepass']);

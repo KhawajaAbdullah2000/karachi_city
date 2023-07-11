@@ -33,6 +33,7 @@ class UserController extends Controller
         return redirect()->route('home')->with('success','Logged out successfully');
     
     }
+    
 
 
     // public function changepass(){
