@@ -68,14 +68,22 @@ class UserController extends Controller
         $user->phone = $request->number;
         $user->cnic = $request->cnic;
         $user->password=Hash::make($request->password);
+
+        if(isset($request->front)){
+         $cnicFront = time().'.'.$request->front->extension();
+         $user->cnicFront=$cnicFront;
+         $request->front->move(public_path('cnic'),$cnicFront);
+        }
+        
+        if(isset($request->back)){
+            $cnicBack = time().'.'.$request->back->extension();
+            $user->cnicBack=$cnicBack;   
+             $request->back->move(public_path('cnic'),$cnicBack);
+           }
         $user->branch_id=$request->branch_id;
-        $cnicFront = time().'.'.$request->front->extension();
-        $cnicBack = time().'.'.$request->back->extension();
-        $user->cnicFront=$cnicFront;
-        $user->cnicBack=$cnicBack;
+  
         $user->salary=$request->salary;
-        $request->front->move(public_path('cnic'),$cnicFront);
-        $request->back->move(public_path('cnic'),$cnicBack);
+
         $user->save();
 
         return back()->withSuccess('New Employee added successfully!');
@@ -83,11 +91,11 @@ class UserController extends Controller
 
 
 
-    //  public function changepass(){
-    // $super=Student::where('id',1)->first();
-    //     $super->password=Hash::make('12345');
-    //    $super->save();
-    //     dd('done');
-    // }
+      public function changepass(){
+     $super=User::where('id',1)->first();
+         $super->password=Hash::make('12345');
+        $super->save();
+         dd('done');
+     }
 }
 

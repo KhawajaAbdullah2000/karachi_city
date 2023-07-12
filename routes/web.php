@@ -81,7 +81,7 @@ Route::post('login',[UserController::class,'login']);
 
 
 
-//Route::get('changepass',[UserController::class,'changepass']);
+Route::get('changepass',[UserController::class,'changepass']);
 
 
 
