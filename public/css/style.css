@@ -52,11 +52,11 @@
     font-size: 16px;
 }
 
-#sidebar ul li>ul {
+#sidebar ul li > ul {
     margin-left: 10px;
 }
 
-#sidebar ul li>ul li {
+#sidebar ul li > ul li {
     font-size: 14px;
 }
 
@@ -71,7 +71,7 @@
     color: #f8b739;
 }
 
-#sidebar ul li.active>a {
+#sidebar ul li.active > a {
     background: transparent;
     color: #f8b739;
 }
@@ -117,7 +117,7 @@ a[data-toggle="collapse"] {
 .boxstyling {
     background-color: #6eb5ee;
     color: white;
-    padding: 8px;
+    padding: 6px;
     width: 240px;
     border: none;
     font-size: 20px;
@@ -145,4 +145,12 @@ a[data-toggle="collapse"] {
 .boxstyling:hover::before {
     color: rgba(255, 255, 255, 0.6);
     background-color: rgba(255, 255, 255, 0.2);
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p {
+    font-size: 15px;
 }

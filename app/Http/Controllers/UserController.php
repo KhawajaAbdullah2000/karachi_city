@@ -50,6 +50,38 @@ class UserController extends Controller
         $branches=Branches::all();
         return view('admin.addEmployee',['branches'=>$branches]);
     }
+    public function editEmployee($id){
+        $user = User::where('id',$id)->first();
+        $branches=Branches::all();
+        return view('admin.edit',['user'=>$user,'branches'=>$branches]);
+    }
+    
+    public function updateEmployee(Request $request,$id){
+        $request->validate([
+            'password' => 'required'
+               ]);
+        $user = User::where('id',$id)->first();
+        if(isset($request->front)){
+            $cnicFront = time().'.'.$request->front->extension();
+            $request->front->move(public_path('cnic'),$cnicFront);
+            $user->cnicFront=$cnicFront;
+        }
+        if(isset($request->back)){
+            $cnicBack = time().'.'.$request->back->extension();
+            $request->back->move(public_path('cnic'),$cnicBack);
+            $user->cnicBack=$cnicBack;
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->number;
+        $user->cnic = $request->cnic;
+        $user->password=Hash::make($request->password);
+        $user->branch_id=$request->branch_id;
+        $user->salary=$request->salary;
+        $user->save();
+        return redirect()->route('admin_home')->withSuccess('Employee Details Updated Scuccessfully');
+
+    }
 
     public function store(Request $request){
         $request->validate([
@@ -60,25 +92,34 @@ class UserController extends Controller
             'cnic' => 'required|numeric',
             'front' => 'mimes:jpeg,jpg,png|max:10000',
             'back' => 'mimes:jpeg,jpg,png|max:10000',
-            'salary' => 'required|numeric'
+            'salary' => 'required|numeric',
+            'branch_id' => 'required'
         ]);
         $user = new User;
+        if(isset($request->front)){
+            $cnicFront = time().'.'.$request->front->extension();
+            $request->front->move(public_path('cnic'),$cnicFront);
+            $user->cnicFront=$cnicFront;
+        }
+        if(isset($request->back)){
+            $cnicBack = time().'.'.$request->back->extension();
+            $request->back->move(public_path('cnic'),$cnicBack);
+            $user->cnicBack=$cnicBack;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->number;
         $user->cnic = $request->cnic;
         $user->password=Hash::make($request->password);
         $user->branch_id=$request->branch_id;
-        $cnicFront = time().'.'.$request->front->extension();
-        $cnicBack = time().'.'.$request->back->extension();
-        $user->cnicFront=$cnicFront;
-        $user->cnicBack=$cnicBack;
         $user->salary=$request->salary;
-        $request->front->move(public_path('cnic'),$cnicFront);
-        $request->back->move(public_path('cnic'),$cnicBack);
         $user->save();
 
-        return back()->withSuccess('New Employee added successfully!');
+        return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully');
+    }
+    public function viewEmployee($id){
+        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+        return view('admin.viewEmployee',['user'=>$user]);
     }
 
 

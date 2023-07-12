@@ -32,10 +32,11 @@ Route::middleware(['auth','isadmin'])->group(function(){
     #Employee Routes admin can access
     Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
     Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name('Employees.delete');
-    Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
     Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
     Route::post('/employees/store', [UserController::class,'store'])->name('Employees.store');
-
+    Route::get('/employees/{id}/update',[UserController::class,'editEmployee'])->name('Employees.update');
+    Route::put('/employees/{id}/edit',[UserController::class,'updateEmployee'])->name('Employees.edit');
+    Route::get('employees/{id}/display',[UserController::class,'viewEmployee'])->name('Employees.view');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -62,7 +63,7 @@ Route::get('/login_form',function(){
 
 //student login
 Route::middleware(['auth:student','isstudent'])->group(function(){
-    Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
+Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
 Route::get('/student_logout',[StudentController::class,'logout'])->name('student_logout');
 
 });
