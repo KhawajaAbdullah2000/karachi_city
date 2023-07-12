@@ -20,6 +20,14 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/admin_home',function(){
         return view('admin.admin_home');
     })->name('admin_home');
+
+    #Employee Routes
+    Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
+    Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name('Employees.delete');
+    Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
+    Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
+    Route::post('/employees/store', [UserController::class,'store'])->name('Employees.store');
+
 });
 
 
@@ -62,13 +70,6 @@ Route::post('/student/login',[StudentController::class,'login'])->name('student_
 Route::post('login',[UserController::class,'login']);
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
-
-#Employee Routes
-Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
-Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name('Employees.delete');
-Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
-Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
-Route::post('/employees/store', [UserController::class,'store'])->name('Employees.store');
 
 
 
