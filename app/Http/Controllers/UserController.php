@@ -58,8 +58,9 @@ class UserController extends Controller
             'number' => 'required|numeric',
             'password' => 'required',
             'cnic' => 'required|numeric',
-            'front' => 'required|mimes:jpeg,jpg,png,gif|max:10000',
-            'back' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
+            'front' => 'mimes:jpeg,jpg,png|max:10000',
+            'back' => 'mimes:jpeg,jpg,png|max:10000',
+            'salary' => 'required|numeric'
         ]);
         $user = new User;
         $user->name = $request->name;
@@ -70,6 +71,9 @@ class UserController extends Controller
         $user->branch_id=$request->branch_id;
         $cnicFront = time().'.'.$request->front->extension();
         $cnicBack = time().'.'.$request->back->extension();
+        $user->cnicFront=$cnicFront;
+        $user->cnicBack=$cnicBack;
+        $user->salary=$request->salary;
         $request->front->move(public_path('cnic'),$cnicFront);
         $request->back->move(public_path('cnic'),$cnicBack);
         $user->save();
