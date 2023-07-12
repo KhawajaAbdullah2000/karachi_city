@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group mt-3 mb-3">
-                    <select name="branch_id" id="branch_id" class="boxstyling">
+                    <select name="branch_id" id="branch_id" class="boxstyling bg-primary rounded">
                         @foreach($branches as $b)
                         <option value="{{$b->id}}">{{$b->branch_name}}</option>
                         @endforeach
@@ -61,6 +61,14 @@
                     <input type="text" name="cnic" class="form-control" value="{{old('cnic')}}" />
                     @if($errors->has('cnic'))
                        <span class="text-danger">{{$errors->first('cnic')}}</span>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label>Salary</label>
+                    <input type="text" name="salary" class="form-control" value="{{old('salary')}}" />
+                    @if($errors->has('salary'))
+                       <span class="text-danger">{{$errors->first('salary')}}</span>
                     @endif
                 </div>
                 <div class="form-group">

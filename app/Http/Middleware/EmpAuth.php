@@ -30,7 +30,7 @@ class EmpAuth
               }
 
         }else{
-            return redirect()->route('login_form')->with('error','Please Login to access');
+            return redirect()->route('home')->with('error','Please Login to access');
 
 
         }
