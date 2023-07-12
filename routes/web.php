@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,23 @@ Route::get('/login_form',function(){
 })->middleware('guest')->name('login_form');
 
 
+//student login
+Route::middleware(['auth:student','isstudent'])->group(function(){
+    Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
+Route::get('/student_logout',[StudentController::class,'logout'])->name('student_logout');
+
+});
+
+
+
+Route::get('/student/login',function(){
+    return view('student.loginform');
+})->name('student_login');
+
+Route::post('/student/login',[StudentController::class,'login'])->name('student_login_logic');
+
+
+
 Route::post('login',[UserController::class,'login']);
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
@@ -51,4 +69,7 @@ Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name
 Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
 Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
 Route::post('/employees/store', [UserController::class,'store'])->name('Employees.store');
+
+
+
 //Route::get('changepass',[UserController::class,'changepass']);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Branches;
-
+use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
@@ -79,11 +79,11 @@ class UserController extends Controller
 
 
 
-    // public function changepass(){
-    //    $super=User::where('id',2)->first();
+    //  public function changepass(){
+    // $super=Student::where('id',1)->first();
     //     $super->password=Hash::make('12345');
     //    $super->save();
-    //    dd('done');
-    //   }
+    //     dd('done');
+    // }
 }
 
