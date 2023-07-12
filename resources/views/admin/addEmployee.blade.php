@@ -45,6 +45,17 @@
                        <span class="text-danger">{{$errors->first('number')}}</span>
                     @endif
                 </div>
+
+                <div class="form-group mt-3 mb-3">
+                    <select name="branch_id" id="branch_id" class="boxstyling">
+                        @foreach($branches as $b)
+                        <option value="{{$b->id}}">{{$b->branch_name}}</option>
+                        @endforeach
+                      </select> 
+                </div>
+
+        
+
                 <div class="form-group">
                     <label>CNIC No.</label>
                     <input type="text" name="cnic" class="form-control" value="{{old('cnic')}}" />

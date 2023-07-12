@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Branches;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
@@ -45,7 +47,8 @@ class UserController extends Controller
     }
 
     public function addEmployee(){
-        return view('admin.addEmployee');
+        $branches=Branches::all();
+        return view('admin.addEmployee',['branches'=>$branches]);
     }
 
     public function store(Request $request){
@@ -64,6 +67,7 @@ class UserController extends Controller
         $user->phone = $request->number;
         $user->cnic = $request->cnic;
         $user->password=Hash::make($request->password);
+        $user->branch_id=$request->branch_id;
         $cnicFront = time().'.'.$request->front->extension();
         $cnicBack = time().'.'.$request->back->extension();
         $request->front->move(public_path('cnic'),$cnicFront);
