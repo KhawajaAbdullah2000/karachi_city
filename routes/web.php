@@ -20,6 +20,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/admin_home',function(){
         return view('admin.admin_home');
     })->name('admin_home');
+    Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
     #Employee Routes
     Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
@@ -68,7 +69,7 @@ Route::post('/student/login',[StudentController::class,'login'])->name('student_
 
 
 Route::post('login',[UserController::class,'login']);
-Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
 
 
 

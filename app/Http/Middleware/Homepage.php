@@ -16,6 +16,15 @@ class Homepage
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+       if( Auth::guard('student')->check())
+       {
+        return redirect()->route('student_home');
+       }
+       else{
+        return $next($request);
+       }
+
         if(Auth::check())
         {
 
