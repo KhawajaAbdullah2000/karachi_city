@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'isadmin'=> \App\Http\Middleware\AdminAuth::class,
         'isemp'=> \App\Http\Middleware\EmpAuth::class,
         'home'=> \App\Http\Middleware\Homepage::class,
+        'isstudent'=> \App\Http\Middleware\StudentMiddleware::class,
     ];
 }

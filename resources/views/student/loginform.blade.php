@@ -28,20 +28,17 @@
     @endif
     
    
-    <form method="post" action="/login" class="mt-2 mx-3">
+    <form method="post" action="{{route('student_login_logic')}}" class="mt-2 mx-3">
         @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Phone</label>
+                        <label for="exampleInputEmail1">email</label>
                         <input type="text" class="form-control" id="exampleInputEmail1"
-                         aria-describedby="emailHelp" placeholder="03xxxxxxxxx" name='phone' value="{{old('phone')}}">
+                         aria-describedby="emailHelp" placeholder="" name='email' value="{{old('email')}}">
                       </div>
-                      <div class="form-group">
-                        <small><a href="{{route('password.request')}}">Forgot password</a></small>
-                          </div>
-                      @if($errors->has('phone'))
-                      <div class="text-danger">{{ $errors->first('phone') }}</div>
+                      @if($errors->has('email'))
+                      <div class="text-danger">{{ $errors->first('email') }}</div>
                   @endif
                 </div>
             </div>
@@ -57,7 +54,6 @@
                 <div class="text-danger">{{ $errors->first('password') }}</div>
             @endif
             </div>
-          
            
      
             <button type="submit" class="btn btn-primary mt-3">Login</button>

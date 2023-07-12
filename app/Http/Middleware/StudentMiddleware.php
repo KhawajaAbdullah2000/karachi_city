@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAuth
+class StudentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,25 +16,15 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-
-        if(Auth::check())
+        if(Auth::guard('student')->check())
         {
-
-              if(Auth::user()->role==1){
-                //he is root user
-                    return $next($request);
-
-              }   
-              else{
-                return redirect()->route('emp_home')->with('error','Access Denied');
-
-              }
+           return $next($request);
 
         }else{
-            return redirect()->route('home')->with('error','Please Login to access');
+            return redirect()->route('student_login')->with('error','Please Login to access');
 
 
         }
     }
+    
 }
