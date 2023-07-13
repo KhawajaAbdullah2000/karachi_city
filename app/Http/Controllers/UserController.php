@@ -117,8 +117,26 @@ class UserController extends Controller
         $user->phone = $request->number;
         $user->cnic = $request->cnic;
         $user->password=Hash::make($request->password);
+
+        if(isset($request->front)){
+         $cnicFront = time().'.'.$request->front->extension();
+         $user->cnicFront=$cnicFront;
+         $request->front->move(public_path('cnic'),$cnicFront);
+        }
+        
+        if(isset($request->back)){
+            $cnicBack = time().'.'.$request->back->extension();
+            $user->cnicBack=$cnicBack;   
+             $request->back->move(public_path('cnic'),$cnicBack);
+           }
         $user->branch_id=$request->branch_id;
+
         $user->salary=$request->salary;
+
+  
+        $user->salary=$request->salary;
+
+
         $user->save();
 
         return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully');
@@ -130,11 +148,11 @@ class UserController extends Controller
 
 
 
-    //  public function changepass(){
-    // $super=Student::where('id',1)->first();
-    //     $super->password=Hash::make('12345');
-    //    $super->save();
-    //     dd('done');
-    // }
+      public function changepass(){
+     $super=User::where('id',1)->first();
+         $super->password=Hash::make('12345');
+        $super->save();
+         dd('done');
+     }
 }
 
