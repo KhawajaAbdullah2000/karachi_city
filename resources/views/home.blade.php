@@ -2,18 +2,20 @@
 
 @section('content')
 
-
-
 @if(Session::has('status'))
 <h3 class="text-secondary">{{Session::get('status')}}</h3>
 @endif
-<h2>Employee Login</h2>
 
-<a href='/login_form'>Employee Login</a>
-<a href="{{route('student_login')}}">Student Login</a>
+@include('home-nav')
+  <div class="homepage">
 
+    <div class="homepage-content">
+    <h1>KARACHI CITY</h1>
+    <p>We have amazing things in store for you.</p>
+    <a href="{{route('register')}}" class="btn btn-warning btn-lg">Register Yourself</a>
+    </div>
 
-
-
+  </div>
+  
 
 @endsection

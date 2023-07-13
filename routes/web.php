@@ -84,6 +84,9 @@ Route::post('login',[UserController::class,'login']);
 
 //Route::get('changepass',[UserController::class,'changepass']);
 
+Route::get('/register',function(){
+    return view('student.register_form');
+})->name('register');
 
 
 //Password
