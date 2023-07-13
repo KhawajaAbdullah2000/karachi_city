@@ -2,68 +2,78 @@
 
 @section('content')
 
-<div class="ml-4">
+@include('home-nav')
 
+<div class="container">
 
-   
-    @if(Session::has('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <p class="text-bold">{{Session::get('error')}}
-      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true"></span>
-      </button>
-    </div>
-        
-    @endif
-    
-    
-    @if(Session::has('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <p class="text-bold">{{Session::get('success')}}
-      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true"></span>
-      </button>
-    </div>
-        
-    @endif
-    
-   
-    <form method="post" action="/login" class="mt-2 mx-3">
-        @csrf
-            <div class="row">
-                <div class="col-md-6">
+  <div class="row justify-content-center mt-4">
+    <div class="col-sm-12 col-md-6">
+
+      
+      <div class="card">
+        <div class="card-header bg-primary text-center">
+          <h2>Employee Login</h2>
+        </div>
+
+        <div class="card-body">
+
+          <form method="post" action="/login" class="mt-2">
+            @csrf
+                   
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Phone</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"
-                         aria-describedby="emailHelp" placeholder="03xxxxxxxxx" name='phone' value="{{old('phone')}}">
-                      </div>
-                      <div class="form-group">
-                        <small><a href="{{route('password.request')}}">Forgot password</a></small>
+                            <label for="exampleInputEmail1">Phone</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1"
+                             aria-describedby="emailHelp" placeholder="03xxxxxxxxx" name='phone' value="{{old('phone')}}">
                           </div>
-                      @if($errors->has('phone'))
-                      <div class="text-danger">{{ $errors->first('phone') }}</div>
-                  @endif
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name='password'>
-                      </div>
-                </div>
-                @if($errors->has('password'))
-                <div class="text-danger">{{ $errors->first('password') }}</div>
-            @endif
-            </div>
+                          <div class="form-group">
+                            <small><a href="{{route('password.request')}}" class="forgot-link">Forgot password</a></small>
+                              </div>
+                          @if($errors->has('phone'))
+                          <div class="text-danger">{{ $errors->first('phone') }}</div>
+                      @endif
+               
+              
+                        <div class="form-group mt-2">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name='password'>
+                          </div>
+                 
+                    @if($errors->has('password'))
+                    <div class="text-danger">{{ $errors->first('password') }}</div>
+                @endif
+         <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-lg mt-3">Login</button>
           
-           
-     
-            <button type="submit" class="btn btn-primary mt-3">Login</button>
-          </form>
-       
+         </div>
+              </form>
 
         </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+@section('scripts')
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
+  closeOnClickOutside: true,
+  timer: 3000,
+    });
+</script> 
+@endif
+@endsection
+       
+
+     
 
 @endsection

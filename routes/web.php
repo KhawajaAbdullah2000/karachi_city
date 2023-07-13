@@ -99,7 +99,7 @@ Route::Post('/student_register',[StudentController::class,'student_register'])->
 //got to reset password link for employees
 Route::get('/forgot-password', function () {
     return view('emp.forgot-password');
-})->middleware('guest')->name('password.request');
+})->name('password.request');
 
 //employee enters email to send link of password
 Route::post('/forgot-password', function (Request $request) {
@@ -112,12 +112,12 @@ Route::post('/forgot-password', function (Request $request) {
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
-})->middleware('guest')->name('password.email');
+})->name('password.email');
 
 //after user clicks on link
 Route::get('/reset-password/{token}', function (string $token) {
     return view('emp.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
+})->name('password.reset');
 
 Route::post('/reset-password', function (Request $request) {
     $request->validate([
@@ -142,4 +142,4 @@ Route::post('/reset-password', function (Request $request) {
     return $status === Password::PASSWORD_RESET
                 ? redirect()->route('home')->with('status', __($status))
                 : back()->withErrors(['status' => [__($status)]]);
-})->middleware('guest')->name('password.update');
+})->name('password.update');

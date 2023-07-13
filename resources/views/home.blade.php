@@ -4,13 +4,10 @@
 
 @section('class','cont')
 
-@if(Session::has('status'))
+{{-- @if(Session::has('status'))
 <h3 class="text-secondary">{{Session::get('status')}}</h3>
-@endif
+@endif --}}
 
-@if(Session::has('registered'))
-<h3 class="text-primary">{{Session::get('registered')}}</h3>
-@endif
 
 @include('home-nav')
 
@@ -40,6 +37,18 @@
                   });
               </script> 
       @endif
+
+      
+      @if(Session::has('success'))
+      <script>
+          swal({
+        title: "{{Session::get('success')}}",
+        icon: "success",
+        closeOnClickOutside: true,
+        timer: 4000,
+          });
+      </script> 
+@endif
 
   @endsection 
 
