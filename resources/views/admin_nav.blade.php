@@ -7,7 +7,7 @@
     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
     <ul class="collapse list-unstyled" id="homeSubmenu">
     <li>
-        <a href="#">Home 1</a>
+        <a href="/admin_home">Home</a>
     </li>
     <li>
         <a href="#">Home 2</a>
@@ -20,6 +20,9 @@
   <li>
       <a href="/employees">Employees</a>
   </li>
+  <li>
+    <a href="/Branches">Branches</a>
+</li>
   <li>
   <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
   <ul class="collapse list-unstyled" id="pageSubmenu">
