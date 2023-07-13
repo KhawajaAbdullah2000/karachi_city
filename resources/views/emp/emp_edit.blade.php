@@ -47,13 +47,7 @@
                 @endif
             </div>
 
-            <div class="form-group">
-                <label>Salary</label>
-                <input type="text" name="salary" class="form-control" value="{{old('salary',$user->salary)}}" />
-                @if($errors->has('salary'))
-                   <span class="text-danger">{{$errors->first('salary')}}</span>
-                @endif
-            </div>
+            
             <div class="form-group">
                 <label>CNIC Front</label>
                 <input type="file" name="front" class="form-control"/>

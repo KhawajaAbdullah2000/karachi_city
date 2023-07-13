@@ -4,6 +4,11 @@
 
 <div class="row justify-content-center">
     <div class="col-sm-8">
+        @if($message=Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <strong>{{$message}}</strong>
+    </div>
+    @endif
         <h2>Welcome {{$user->name}}</h2>
        <div class="card mt-3 p-3 bg-primary text-white">
         <div class="row">
@@ -11,6 +16,11 @@
               <p>Name</p>
               <h5>{{$user->name}}</h5>
               <hr>
+              @role('manager')
+              <p>Role</p>
+              <h5>Branch Manager</h5>
+              <hr>
+              @endrole
               <p>Email</p>
               <h5>{{$user->email}}</h5>
               <hr>
@@ -22,9 +32,6 @@
               <hr>
               <p>Branch Name</p>
               <h5>{{$user->branch_name}},{{$user->address}}</h5>
-              <hr>
-              <p>Salary</p>
-              <h5>{{$user->salary}} Rs.</h5>
               <hr>
             </div>
             <div class="col">

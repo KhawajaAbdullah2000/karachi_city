@@ -162,8 +162,7 @@ class UserController extends Controller
             'password' => ['required'],
             'email' => ['required',Rule::unique('users')->ignore($id,'id')],
             'cnic' => ['min:13','max:13','required',Rule::unique('users')->ignore($id,'id')],
-            'number' => ['min:11','max:11','required',Rule::unique('users','phone')->ignore($id,'id')],
-            'salary' => ['required']
+            'number' => ['min:11','max:11','required',Rule::unique('users','phone')->ignore($id,'id')]
                ]);
         $user = User::where('id',$id)->first();
         if(isset($request->front)){
@@ -181,11 +180,8 @@ class UserController extends Controller
         $user->phone = $request->number;
         $user->cnic = $request->cnic;
         $user->password=Hash::make($request->password);
-        $user->salary=$request->salary;
         $user->save();
-        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
-
-        return view('emp.emp_home',['user'=>$user]);
+        return redirect()->route('emp_home',['id'=>$user->id]);
      }
 }
 

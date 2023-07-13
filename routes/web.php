@@ -52,7 +52,8 @@ Route::get('/logout',[UserController::class,'logout'])->name('logout');
 Route::middleware(['auth','isemp'])->group(function(){
     Route::get('/emp_home/{id}',[UserController::class,'displayEmployee'])->name('emp_home');
     Route::get('/emp_home/{id}/edit',[UserController::class,'editEmp'])->name('emp_edit');
-    Route::put('emp_home/{id}/update',[UserController::class,'updateEmp'])->name('emp_update');
+    Route::put('/emp_home/{id}/update',[UserController::class,'updateEmp'])->name('emp_update');
+    Route::get('/emp_home/{id}/branchDetails',[UserController::class,'branchDetail'])->name('emp_showBranch');
 });
 
 

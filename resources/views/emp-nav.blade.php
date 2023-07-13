@@ -6,11 +6,11 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="/emp_home/{{auth()->user()->id}}" class="nav-link">home</a>
+            <a href="/emp_home/{{auth()->user()->id}}" class="nav-link">Home</a>
         </li>
         @role('manager')
         <li class="nav-item">
-            <a href="#" class="nav-link">Branch Details</a>
+            <a href="/emp_home/{{auth()->user()->id}}/branchDetails" class="nav-link">Branch Details</a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link">Borrowed items</a>
