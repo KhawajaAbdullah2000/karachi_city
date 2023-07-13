@@ -8,6 +8,8 @@ use App\Models\Branches;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+
 class UserController extends Controller
 {
     public function login(Request $req){
@@ -36,7 +38,7 @@ class UserController extends Controller
     
     }
     public function showEmployees(){
-        $users = User::all();
+        $users = User::latest()->paginate(6);
         return view('admin.DisplayEmployees',['users'=>$users]);
     }
 
@@ -58,7 +60,11 @@ class UserController extends Controller
     
     public function updateEmployee(Request $request,$id){
         $request->validate([
-            'password' => 'required'
+            'password' => ['required'],
+            'email' => ['required',Rule::unique('users')->ignore($id,'id')],
+            'cnic' => ['integer','size:13','required',Rule::unique('users')->ignore($id,'id')],
+            'number' => ['integer','size:11','required',Rule::unique('users','phone')->ignore($id,'id')],
+            'salary' => ['required']
                ]);
         $user = User::where('id',$id)->first();
         if(isset($request->front)){
@@ -86,10 +92,10 @@ class UserController extends Controller
     public function store(Request $request){
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'number' => 'required|numeric',
+            'email' => 'required|unique:users,email',
+            'number' => 'size:11|required|numeric|unique:users,phone',
             'password' => 'required',
-            'cnic' => 'required|numeric',
+            'cnic' => 'size:13|required|numeric|unique:users,cnic',
             'front' => 'mimes:jpeg,jpg,png|max:10000',
             'back' => 'mimes:jpeg,jpg,png|max:10000',
             'salary' => 'required|numeric',
