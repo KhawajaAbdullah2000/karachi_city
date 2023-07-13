@@ -21,6 +21,9 @@
       <a href="/employees">Employees</a>
   </li>
   <li>
+    <a href="/Branches">Branches</a>
+</li>
+  <li>
   <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
   <ul class="collapse list-unstyled" id="pageSubmenu">
     <li>

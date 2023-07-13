@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BranchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -37,6 +38,11 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/employees/{id}/update',[UserController::class,'editEmployee'])->name('Employees.update');
     Route::put('/employees/{id}/edit',[UserController::class,'updateEmployee'])->name('Employees.edit');
     Route::get('employees/{id}/display',[UserController::class,'viewEmployee'])->name('Employees.view');
+
+    Route::get('/Branches',[BranchController::class,'showbranches'])->name('branches.show');
+    Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
+    Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
+    Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
