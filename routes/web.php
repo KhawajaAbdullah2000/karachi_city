@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 
@@ -99,7 +100,7 @@ Route::Post('/student_register',[StudentController::class,'student_register'])->
 //got to reset password link for employees
 Route::get('/forgot-password', function () {
     return view('emp.forgot-password');
-})->name('password.request');
+})->middleware('guest')->name('password.request');
 
 //employee enters email to send link of password
 Route::post('/forgot-password', function (Request $request) {
@@ -112,12 +113,12 @@ Route::post('/forgot-password', function (Request $request) {
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
-})->name('password.email');
+})->middleware('guest')->name('password.email');
 
 //after user clicks on link
 Route::get('/reset-password/{token}', function (string $token) {
     return view('emp.reset-password', ['token' => $token]);
-})->name('password.reset');
+})->middleware('guest')->name('password.reset');
 
 Route::post('/reset-password', function (Request $request) {
     $request->validate([
@@ -142,4 +143,14 @@ Route::post('/reset-password', function (Request $request) {
     return $status === Password::PASSWORD_RESET
                 ? redirect()->route('home')->with('status', __($status))
                 : back()->withErrors(['status' => [__($status)]]);
-})->name('password.update');
+})->middleware('guest')->name('password.update');
+
+
+//for atudents
+Route::get('student/forgot-password', function () {
+    return view('student.forget-password');
+})->middleware('guest')->name('student.password.request');
+
+Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email');
+Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form');
+Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass');

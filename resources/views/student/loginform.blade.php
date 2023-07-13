@@ -24,6 +24,9 @@
                               <input type="text" class="form-control" id="exampleInputEmail1"
                                aria-describedby="emailHelp" placeholder="" name='email' value="{{old('email')}}">
                             </div>
+                            <div class="form-group">
+                              <small><a href="{{route('student.password.request')}}" class="forgot-link">Forgot password</a></small>
+                                </div>
                             @if($errors->has('email'))
                             <div class="text-danger">{{ $errors->first('email') }}</div>
                         @endif

@@ -8,7 +8,9 @@ use App\Models\Branches;
 use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class StudentController extends Controller
 {
@@ -81,6 +83,59 @@ class StudentController extends Controller
 
 
 
+    }
+
+    public function forget_password(Request $req){
+        $req->validate([
+            'email'=>'required|email|exists:students,email'
+        ]);
+        $token=Str::random(64);
+
+        DB::table('password_reset_tokens')->insert([
+            'email'=>$req->email,
+            'token'=>$token,
+            'created_at'=>Carbon::now(),
+        ]);
+        $action_link=url('student_pass_reset',['token'=>$token,'email'=>$req->email]);
+        $body='You can set your password from this link';
+        Mail::send('student.email-forgot',['action_link'=>$action_link,'body'=>$body],function($message) use($req){
+                 $message->to($req->email);
+                 $message->subject('Pasword reset');
+
+        });
+        return back()->with('success','Email sent');
+
+    }
+
+    public function showResetForm($token,$email){
+        return view('student.reset-password')->with(['token'=>$token,'email'=>$email]);
+    }
+
+    public function student_resetpass(Request $req){
+        $req->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:students,email',
+            'password' => 'required|min:5|confirmed',
+        ]);
+        $check_token=DB::table('password_reset_tokens')->where([
+            'email'=>$req->email,
+            'token'=>$req->token
+        ])->first();
+        if(!$check_token){
+            return back()->withInput()->with('error','Invalid details');
+        }
+        else{
+            Student::where('email',$req->email)->update( [
+                'password'=>Hash::make($req->password)
+                ]);
+                Db::table('password_reset_tokens')->where([
+                    'email'=>$req->email
+                ])->delete();
+                return redirect()->route('student_login');
+        }
+
+
+    
     }
 
 
