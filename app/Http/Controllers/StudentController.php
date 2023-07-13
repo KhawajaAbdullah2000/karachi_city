@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Branches;
 use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
 
 
 class StudentController extends Controller
@@ -52,17 +52,29 @@ class StudentController extends Controller
             'DOB'=>'required',
             'gender'=>'required',
             'email'=>'required|max:40|unique:students',
-            'password'=>'required|max:20',
-            'phone'=>'required|numeric|digits:11',
+            'password'=>'required|same:passconfirm|max:20',
+            'phone'=>'required|numeric|digits:11|unique:students',
             'school'=>'required',
             'medical'=>'required|max:50',
             'parent_email'=>'required|max:40',
+            'branch_id'=>'required',
             'parent_phone'=>'required|max:11',
             'emergency_name'=>'required',
             'emergency_contact'=>'required|max:11',
 
+        ],
+        [
+            'DOB.required' => 'Date of birth is required',
+            'password.same'=>'Password and confrim password must match'
         ]);
-        $user=Student::create(array_merge($req->all(), ['password' => bcrypt($req->password)]));
+            
+        $user=Student::create(array_merge($req->all(), ['password' => bcrypt($req->password)])); //user created
+
+        $data=['f_name'=>$user->first_name,'l_name'=>$user->last_name];
+        Mail::send('student.admission_invoice',$data,function($messages) use ($user){
+           $messages->to($user->email);
+           $messages->subject('Welcome to Karachi City');
+        });
 
         return redirect()->route('home')->with('registered','Please check your email inbox');
     
