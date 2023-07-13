@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="{{ route('emp_home') }}" class="nav-link">home</a>
+            <a href="/emp_home/{{auth()->user()->id}}" class="nav-link">home</a>
         </li>
         @role('manager')
         <li class="nav-item">

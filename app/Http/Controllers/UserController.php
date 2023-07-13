@@ -22,7 +22,7 @@ class UserController extends Controller
             if(auth()->user()->role==1){
                 return redirect()->route('admin_home');
             }else{
-                return redirect()->route('emp_home');
+                return redirect()->route('emp_home',['id'=>auth()->user()->id]);
             }
       
         } else {
@@ -130,13 +130,7 @@ class UserController extends Controller
              $request->back->move(public_path('cnic'),$cnicBack);
            }
         $user->branch_id=$request->branch_id;
-
         $user->salary=$request->salary;
-
-  
-        $user->salary=$request->salary;
-
-
         $user->save();
 
         return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully');
@@ -153,6 +147,45 @@ class UserController extends Controller
          $super->password=Hash::make('12345');
         $super->save();
          dd('done');
+     }
+     public function displayEmployee($id){
+        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+        return view('emp.emp_home',['user'=>$user]);
+     }
+
+     public function editEmp($id){
+        $user = User::where('id',$id)->first();
+        return view('emp.emp_edit',['user'=>$user]);
+     }
+     public function updateEmp($id,Request $request){
+        $request->validate([
+            'password' => ['required'],
+            'email' => ['required',Rule::unique('users')->ignore($id,'id')],
+            'cnic' => ['min:13','max:13','required',Rule::unique('users')->ignore($id,'id')],
+            'number' => ['min:11','max:11','required',Rule::unique('users','phone')->ignore($id,'id')],
+            'salary' => ['required']
+               ]);
+        $user = User::where('id',$id)->first();
+        if(isset($request->front)){
+            $cnicFront = time().'.'.$request->front->extension();
+            $request->front->move(public_path('cnic'),$cnicFront);
+            $user->cnicFront=$cnicFront;
+        }
+        if(isset($request->back)){
+            $cnicBack = time().'.'.$request->back->extension();
+            $request->back->move(public_path('cnic'),$cnicBack);
+            $user->cnicBack=$cnicBack;
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->number;
+        $user->cnic = $request->cnic;
+        $user->password=Hash::make($request->password);
+        $user->salary=$request->salary;
+        $user->save();
+        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+
+        return view('emp.emp_home',['user'=>$user]);
      }
 }
 
