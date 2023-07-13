@@ -12,7 +12,7 @@
     <div class="homepage-content">
     <h1>KARACHI CITY</h1>
     <p>We have amazing things in store for you.</p>
-    <a href="#" class="btn btn-warning btn-lg">Register Yourself</a>
+    <a href="{{route('register')}}" class="btn btn-warning btn-lg">Register Yourself</a>
     </div>
 
   </div>

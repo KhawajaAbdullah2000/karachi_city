@@ -177,3 +177,15 @@ a[data-toggle="collapse"] {
     color: black;
     /* Set the color of the text */
 }
+
+.center {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100vh;
+    /* background-color: red; */
+}
+
+.form-width {
+    max-width: 400px;
+}
