@@ -62,8 +62,8 @@ class UserController extends Controller
         $request->validate([
             'password' => ['required'],
             'email' => ['required',Rule::unique('users')->ignore($id,'id')],
-            'cnic' => ['integer','size:13','required',Rule::unique('users')->ignore($id,'id')],
-            'number' => ['integer','size:11','required',Rule::unique('users','phone')->ignore($id,'id')],
+            'cnic' => ['min:13','max:13','required',Rule::unique('users')->ignore($id,'id')],
+            'number' => ['min:11','max:11','required',Rule::unique('users','phone')->ignore($id,'id')],
             'salary' => ['required']
                ]);
         $user = User::where('id',$id)->first();
@@ -93,9 +93,9 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'number' => 'size:11|required|numeric|unique:users,phone',
+            'number' => 'min:11|max:11|required|unique:users,phone',
             'password' => 'required',
-            'cnic' => 'size:13|required|numeric|unique:users,cnic',
+            'cnic' => 'max:13|min:13|required|unique:users,cnic',
             'front' => 'mimes:jpeg,jpg,png|max:10000',
             'back' => 'mimes:jpeg,jpg,png|max:10000',
             'salary' => 'required|numeric',
