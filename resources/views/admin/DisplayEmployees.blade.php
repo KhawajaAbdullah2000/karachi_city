@@ -12,7 +12,7 @@
     {{-- always include this nav2 first in div with id=content for admin pages --}}
     @include('admin_nav2')
     
-<h1>Employee Page</h1>
+<h1>Employees</h1>
 <table class="table table-hover">
     <thead>
       <tr>
@@ -29,12 +29,12 @@
       @if ($user->role==0)
       <tr>
         <td>{{$user->id}}</td>
-        <td>{{$user->name}}</td>
+        <td><a href="employees/{{$user->id}}/display">{{$user->name}}</a></td>
         <td>{{$user->email}}</td>
         <td>{{$user->phone}}</td>
         <td>{{$user->cnic}}</td>
         <td>
-            <a href="#" class="btn btn-dark btn-sm">Edit</a>
+            <a href="employees/{{$user->id}}/update" class="btn btn-dark btn-sm">Edit</a>
             <form method="POST" action="employees/{{$user->id}}/delete" class="d-inline">
             @csrf
             @method('DELETE')
