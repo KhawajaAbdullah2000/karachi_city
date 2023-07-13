@@ -183,5 +183,11 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('emp_home',['id'=>$user->id]);
      }
+
+     public function branchDetail($id){
+        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+        $count = User::where('branch_id',$user->branch_id)->groupBy('branch_id')->count();
+        return view('emp.branchDetails',['user'=>$user,'EmployeeCount'=>$count]);
+     }
 }
 
