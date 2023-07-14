@@ -43,6 +43,10 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
+    
+    Route::get('/Branches/{id}/edit',[BranchController::class,'edit'])->name('branches.edit');
+    Route::put('/Branches/{id}/update',[BranchController::class,'update'])->name('branches.update');
+    
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');

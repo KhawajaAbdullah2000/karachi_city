@@ -56,6 +56,7 @@
       </tr>
     </thead>
     <tbody>
+      
       @foreach ($branches as $branches)
       
       <tr>
@@ -65,7 +66,7 @@
         <td>{{$branches->manager_id}}</td>
         
         <td>
-            <a href="#" class="btn btn-dark btn-sm">Edit</a> 
+            <a href="/Branches/{{$branches->id}}/edit" class="btn btn-dark btn-sm">Edit</a> 
             <button type="button" class="btn btn-danger btn-sm deleteCategoryBtn" value="{{$branches->id}}">Delete</button>
             
         </td>
