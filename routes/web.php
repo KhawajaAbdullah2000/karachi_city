@@ -3,11 +3,13 @@
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\LeavesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\leaves;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 
@@ -55,6 +57,9 @@ Route::middleware(['auth','isemp'])->group(function(){
     Route::get('/emp_home/{id}/edit',[UserController::class,'editEmp'])->name('emp_edit');
     Route::put('/emp_home/{id}/update',[UserController::class,'updateEmp'])->name('emp_update');
     Route::get('/emp_home/{id}/branchDetails',[UserController::class,'branchDetail'])->name('emp_showBranch');
+    Route::get('/emp_home/{id}/leaves',[LeavesController::class,'myLeaves'])->name('emp_myLeaves');
+    Route::get('/emp_home/{id}/applyLeave',[LeavesController::class,'leaveForm'])->name('emp_applyLeave');
+    Route::post('/emp_home/{id}/store',[LeavesController::class,'leavestore'])->name('emp_storeLeave');
 });
 
 
