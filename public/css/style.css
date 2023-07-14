@@ -244,3 +244,17 @@ a {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.student-nav {
+    background-color: #121F33;
+}
+
+.topnav a:hover {
+    background-color: #6eb5ee;
+    color: #121F33;
+}
+
+.mynavbar .navbar-nav .nav-link {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+}
