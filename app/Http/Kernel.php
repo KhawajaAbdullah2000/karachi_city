@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'isemp'=> \App\Http\Middleware\EmpAuth::class,
         'home'=> \App\Http\Middleware\Homepage::class,
         'isstudent'=> \App\Http\Middleware\StudentMiddleware::class,
+        'logged_in_student'=>\App\Http\Middleware\Student_login::class,
     ];
 }

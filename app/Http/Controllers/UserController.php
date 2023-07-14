@@ -199,5 +199,22 @@ class UserController extends Controller
         $count = User::where('branch_id',$user->branch_id)->groupBy('branch_id')->count();
         return view('emp.branchDetails',['user'=>$user,'EmployeeCount'=>$count]);
      }
+
+         public function registered_students(){
+                $students= Student::where('admission',0)->get();
+                return view('admin.registered_students',['students'=>$students]);
+     }
+
+     public function enrolled_students(){
+        $students= Student::where('admission',1)->get();
+        return view('admin.enrolled_students',['students'=>$students]);
+     }
+
+     public function student_admission_fees_paid($id){
+        $student=Student::find($id);
+        $student->admission=1;
+        $student->save();
+        return redirect()->route('enrolled_students')->with('success','Student Enrolled Successfully');
+     }
 }
 

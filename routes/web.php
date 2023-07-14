@@ -30,8 +30,6 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/admin_home',function(){
         return view('admin.admin_home');
     })->name('admin_home');
-
-    #Employee Routes admin can access
     Route::get('/employees',[UserController::class,'showEmployees'])->name('showEmployees');
     Route::delete('/employees/{id}/delete', [UserController::class,'destroy'])->name('Employees.delete');
     Route::get('/employees/create',[UserController::class,'addEmployee'])->name('Employees.add');
@@ -44,6 +42,11 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
+
+    Route::get('registered_students',[UserController::class,'registered_students'])->name('registered_students');
+    Route::get('enrolled_students',[UserController::class,'enrolled_students'])->name('enrolled_students');
+
+    Route::get('/student_admission_fees_paid/{id}',[UserController::class,'student_admission_fees_paid']);
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -72,14 +75,14 @@ Route::get('/login_form',function(){
 Route::middleware(['auth:student','isstudent'])->group(function(){
 Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
 Route::get('/student_logout',[StudentController::class,'logout'])->name('student_logout');
+Route::get('student_edit_form/{id}',[StudentController::class,'student_edit_form'])->name('student_edit_form');
+Route::put('/student_update/{id}',[StudentController::class,'student_update']);
 
 });
 
-
-
-Route::get('/student/login',function(){
+Route::get('/student-login',function(){
     return view('student.loginform');
-})->name('student_login');
+})->middleware(['logged_in_student','guest'])->name('student_login');
 
 Route::post('/student/login',[StudentController::class,'login'])->name('student_login_logic');
 
@@ -151,6 +154,6 @@ Route::get('student/forgot-password', function () {
     return view('student.forget-password');
 })->middleware('guest')->name('student.password.request');
 
-Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email');
-Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form');
-Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass');
+Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email')->middleware('guest');
+Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form')->middleware('guest');
+Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass')->middleware('guest');

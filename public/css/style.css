@@ -170,15 +170,16 @@ a[data-toggle="collapse"] {
     height: 100vh;
     background-image: url('../home-cover.jpg');
     background-size: cover;
-    /* background-position: center; */
+    background-position: center;
     background-repeat: no-repeat;
 }
 
 .homepage-content {
     text-align: center;
     font-size: 3rem;
-    color: blue;
+    font-weight: bold;
     font-family: 'Roboto Slab';
+    color: black;
 }
 
 .center {
@@ -255,6 +256,19 @@ a {
 }
 
 .mynavbar .navbar-nav .nav-link {
-    padding-right: 1.2rem;
-    padding-left: 1.2rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.stud-card {
+    background-color: #2C394D;
+    opacity: 0.9;
+}
+
+.paginate_button {
+    background-color: rgb(113, 220, 255) !important;
+}
+
+.paging_simple_numbers {
+    color: white !important;
 }
