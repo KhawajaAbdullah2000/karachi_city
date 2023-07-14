@@ -26,7 +26,7 @@
               @endif
 
               @if($leave->status==1)
-              <p class="card-text text-success">Approved</p>
+              <p class="card-text text-warning">Approved</p>
               @endif
 
             </div>

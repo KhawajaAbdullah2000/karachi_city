@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('to_date');
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->foreign('emp_id')->references('id')->on('users')->onUpdate('SET NULL')
+            ->onDelete('SET NULL');
         });
     }
 

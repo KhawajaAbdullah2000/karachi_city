@@ -29,6 +29,17 @@ class LeavesController extends Controller
         $leave->to_date = $request->to_date;
         $leave->save();
         return redirect()->route('emp_myLeaves',['id'=>$id]);
+    }
 
+    public function showLeaves($id){
+        $leaves = leaves::where('emp_id',$id)->get();
+        return view('admin.showLeaves',['leaves'=>$leaves]);
+
+    }
+    public function approveLeave($l_id){
+        $leave = leaves::where('id',$l_id)->first();
+        $leave->status = 1;
+        $leave->save();
+        return redirect()->route('showEmployees');
     }
 }

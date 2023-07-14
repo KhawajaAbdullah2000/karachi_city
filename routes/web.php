@@ -46,6 +46,9 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
+
+    Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
+    Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');

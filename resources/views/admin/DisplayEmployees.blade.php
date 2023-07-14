@@ -34,6 +34,7 @@
         <td>{{$user->phone}}</td>
         <td>{{$user->cnic}}</td>
         <td>
+            <a href="employees/{{$user->id}}/leaves" class="btn btn-primary btn-sm">Leaves</a>
             <a href="employees/{{$user->id}}/update" class="btn btn-dark btn-sm">Edit</a>
             <form method="POST" action="employees/{{$user->id}}/delete" class="d-inline">
             @csrf
