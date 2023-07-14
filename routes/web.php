@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 
@@ -143,3 +144,13 @@ Route::post('/reset-password', function (Request $request) {
                 ? redirect()->route('home')->with('status', __($status))
                 : back()->withErrors(['status' => [__($status)]]);
 })->middleware('guest')->name('password.update');
+
+
+//for atudents
+Route::get('student/forgot-password', function () {
+    return view('student.forget-password');
+})->middleware('guest')->name('student.password.request');
+
+Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email');
+Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form');
+Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass');

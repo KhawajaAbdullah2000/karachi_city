@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Branches;
 use App\Models\Student;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -93,6 +95,9 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
+            'number' => 'required|numeric|digits:11|unique:users,phone',
+            'password' => 'required',
+            'cnic' => 'required|numeric|digits:13|unique:users,cnic',
             'number' => 'min:11|max:11|required|unique:users,phone',
             'password' => 'required',
             'cnic' => 'max:13|min:13|required|unique:users,cnic',
@@ -102,16 +107,6 @@ class UserController extends Controller
             'branch_id' => 'required'
         ]);
         $user = new User;
-        if(isset($request->front)){
-            $cnicFront = time().'.'.$request->front->extension();
-            $request->front->move(public_path('cnic'),$cnicFront);
-            $user->cnicFront=$cnicFront;
-        }
-        if(isset($request->back)){
-            $cnicBack = time().'.'.$request->back->extension();
-            $request->back->move(public_path('cnic'),$cnicBack);
-            $user->cnicBack=$cnicBack;
-        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->number;
@@ -130,8 +125,23 @@ class UserController extends Controller
              $request->back->move(public_path('cnic'),$cnicBack);
            }
         $user->branch_id=$request->branch_id;
+
         $user->salary=$request->salary;
+
         $user->save();
+
+        try{
+            $data=['name'=>$user->name];
+        Mail::send('emp.newemployee',$data,function($messages) use ($user){
+           $messages->to($user->email);
+           $messages->subject('Welcome our new Employee');
+        });
+
+        }catch(Exception $e){
+
+            return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully but email not sent');
+        }
+
 
         return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully');
     }

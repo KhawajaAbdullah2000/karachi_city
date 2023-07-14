@@ -1,3 +1,7 @@
+body {
+    font-family: 'Poppins';
+}
+
 .wrapper {
     width: 100%;
 }
@@ -148,8 +152,6 @@ a[data-toggle="collapse"] {
 }
 
 .kclogo {
-    /* width: 155px;
-    height: 182px; */
     display: block;
     max-height: 100px;
     margin-right: 10px;
@@ -174,14 +176,14 @@ a[data-toggle="collapse"] {
 
 .homepage-content {
     text-align: center;
-    color: black;
-    /* Set the color of the text */
+    font-size: 3rem;
+    color: blue;
+    font-family: 'Roboto Slab';
 }
 
 .center {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     height: 100vh;
     /* background-color: red; */
 }
@@ -193,4 +195,66 @@ a[data-toggle="collapse"] {
 a {
     color: inherit;
     text-decoration: none;
+}
+
+.cont {
+    overflow-y: hidden;
+}
+
+.invoice-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.invoice-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.invoice-details {
+    margin-bottom: 40px;
+}
+
+.invoice-details table {
+    width: 100%;
+}
+
+.invoice-details th,
+.invoice-details td {
+    padding: 10px;
+    text-align: left;
+}
+
+.invoice-total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.forgot-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.student-nav {
+    background-color: #121F33;
+}
+
+.topnav a:hover {
+    background-color: #6eb5ee;
+    color: #121F33;
+}
+
+.mynavbar .navbar-nav .nav-link {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
 }
