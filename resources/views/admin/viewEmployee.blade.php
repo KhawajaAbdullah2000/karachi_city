@@ -36,7 +36,11 @@
                   <h5>{{$user->cnic}}</h5>
                   <hr>
                   <p>Branch Name</p>
-                  <h5>{{$user->branch_name}},{{$user->address}}</h5>
+                  @if(isset($user->branch_name))
+                   <h5>{{$user->branch_name}},{{$user->address}}</h5>
+                  @else
+                    <h5>Branch Not Assigned</h5>    
+                  @endif
                   <hr>
                   <p>Salary</p>
                   <h5>{{$user->salary}} Rs.</h5>

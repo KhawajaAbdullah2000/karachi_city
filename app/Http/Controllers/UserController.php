@@ -146,7 +146,7 @@ class UserController extends Controller
         return redirect()->route('admin_home')->withSuccess('New Employee Added Successfully');
     }
     public function viewEmployee($id){
-        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+        $user = User::leftjoin('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
         return view('admin.viewEmployee',['user'=>$user]);
     }
 
@@ -159,7 +159,7 @@ class UserController extends Controller
          dd('done');
      }
      public function displayEmployee($id){
-        $user = User::join('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
+        $user = User::leftjoin('branches','branches.id','=','users.branch_id')->where('users.id',$id)->first();
         return view('emp.emp_home',['user'=>$user]);
      }
 
