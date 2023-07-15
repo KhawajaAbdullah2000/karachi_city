@@ -46,7 +46,7 @@
                     <select name="manager_id" id="manager_id" class="boxstyling bg-primary rounded">
                         @foreach($user as $u)
                             @if($u->role === 0)
-                                <option value="{{$u->id}}">{{$u->name}}</option>
+                                <option value="{{$u->id}}">{{$u->name}}</option>    
                             @endif
                         @endforeach
                     </select> 

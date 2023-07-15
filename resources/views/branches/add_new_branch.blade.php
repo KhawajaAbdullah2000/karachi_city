@@ -19,7 +19,7 @@
     @endif    
     <div class="row justify-content-center">
         <div class="col-sm-8">
-           <div class="card mt-3 p-3">
+           <div class="card mt-3 p-3 bg-primary text-white">
                <form method="POST" action="/Branches/store" >
                    @csrf
                    @method('POST')
@@ -40,15 +40,6 @@
                     @endif
                 </div>
 
-                <div class="form-group mt-3 mb-3">
-                    <select name="manager_id" id="manager_id" class="boxstyling bg-primary rounded">
-                        @foreach($user as $u)
-                            @if($u->role === 0)
-                                <option value="{{$u->id}}">{{$u->name}}</option>
-                            @endif
-                        @endforeach
-                    </select> 
-                </div>
                 <button type="submit" class="btn btn-dark mt-3">Submit</button>
                </form>
                

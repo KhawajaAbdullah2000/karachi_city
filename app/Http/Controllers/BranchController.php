@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Branches;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 use Spatie\Permission\Models\Role;
@@ -33,35 +33,42 @@ class BranchController extends Controller
       }
       $request->validate([
            'name' => 'required',
-           'address' => 'required',
+           'address' => 'required|unique:branches,address',
           
        ]);
-       $branch = new Branches;
-       $branch->branch_name= $request->name;
+      $branch = new Branches;
+      $branch->branch_name= $request->name;
       $branch->address = $request->address;
-       $branch->manager_id=$request->manager_id;
-      $user = User::where('id',$request->manager_id)->first();
-       $user->assignRole($role);
       $branch->save();
 
       return redirect()->route('branches.create')->with('status','New Branch added successfully!');
   }
-    public function edit($id){
+    
+  public function edit($id){
       $branches=Branches::where('id',$id)->first();
-      $user=User::all();
+      $user=User::where('branch_id',$branches->id)->get();
       return view('branches.edit_branch',[ 'branches' => $branches,'user' => $user]);
 
     }
 
+    
     public function update(Request $request,$id){
       $request->validate([
-        'name' => 'required',
-        'address' => 'required',
+        'name' => ['required'],
+        'address' => ['required',Rule::unique('branches')->ignore($id,'id')],
     ]);
     $branch= Branches::where('id',$id)->first();
     $branch->branch_name= $request->name;
     $branch->address = $request->address;
     $branch->manager_id=$request->manager_id;
+    $manager = User::where('id',$branch->manager_id)->first();
+    if(isset($manager)){
+      $user = User::role('manager')->where('branch_id',$branch->id)->first();
+      if(isset($user)){
+       $user->removeRole('manager');
+      }
+      $manager->assignRole('manager');
+    }
     $branch->save();
     return back()->with('status','Branch updated successfully!');
   }
