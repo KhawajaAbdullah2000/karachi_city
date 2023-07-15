@@ -24,17 +24,13 @@
     <a href="/Branches">Branches</a>
 </li>
   <li>
-  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Students</a>
   <ul class="collapse list-unstyled" id="pageSubmenu">
     <li>
-        <a href="#">Page 1</a>
+        <a href="{{route('registered_students')}}">Registered Students</a>
     </li>
     <li>
-        <a href="#">Page 2</a>
-    </li>
-    <li>
-
-        <a href="#">Page 3</a>
+        <a href="{{route('enrolled_students')}}">Enrolled Students</a>
     </li>
   </ul>
   </li>

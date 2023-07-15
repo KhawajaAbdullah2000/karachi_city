@@ -21,10 +21,7 @@ class Homepage
        {
         return redirect()->route('student_home');
        }
-       else{
-        return $next($request);
-       }
-
+       
         if(Auth::check())
         {
 

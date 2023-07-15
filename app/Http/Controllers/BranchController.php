@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Branches;
+
 use Illuminate\Support\Facades\DB;
 
+use Spatie\Permission\Models\Role;
 
 class BranchController extends Controller
 {
@@ -23,17 +25,25 @@ class BranchController extends Controller
         $user=User::all();
       return view('branches.add_new_branch',['user' => $user]);
     }
+
     public function store(Request $request){
+      $role = Role::first();
+      if(is_null($role)){
+        $role = Role::create(['name'=>'manager']);
+      }
       $request->validate([
-          'name' => 'required',
-          'address' => 'required',
+           'name' => 'required',
+           'address' => 'required',
           
-      ]);
-      $branch = new Branches;
-      $branch->branch_name= $request->name;
+       ]);
+       $branch = new Branches;
+       $branch->branch_name= $request->name;
       $branch->address = $request->address;
-      $branch->manager_id=$request->manager_id;
+       $branch->manager_id=$request->manager_id;
+      $user = User::where('id',$request->manager_id)->first();
+       $user->assignRole($role);
       $branch->save();
+
       return redirect()->route('branches.create')->with('status','New Branch added successfully!');
   }
     public function edit($id){
@@ -57,7 +67,5 @@ class BranchController extends Controller
   }
 
 
-    
-   
-
+ 
 }
