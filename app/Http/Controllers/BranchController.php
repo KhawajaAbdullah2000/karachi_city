@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Branches;
+
+use Illuminate\Support\Facades\DB;
+
 use Spatie\Permission\Models\Role;
 
 class BranchController extends Controller
 {
     public function showbranches(){
-      $branch= Branches::all();
+      $branch=Branches::all();
       return view('branches.displaybranches',['branches' => $branch]);
 
     }
@@ -40,6 +43,29 @@ class BranchController extends Controller
       $user = User::where('id',$request->manager_id)->first();
        $user->assignRole($role);
       $branch->save();
-       return redirect()->route('branches.create')->with('status','New Branch added successfully!');
-   }
+
+      return redirect()->route('branches.create')->with('status','New Branch added successfully!');
+  }
+    public function edit($id){
+      $branches=Branches::where('id',$id)->first();
+      $user=User::all();
+      return view('branches.edit_branch',[ 'branches' => $branches,'user' => $user]);
+
+    }
+
+    public function update(Request $request,$id){
+      $request->validate([
+        'name' => 'required',
+        'address' => 'required',
+    ]);
+    $branch= Branches::where('id',$id)->first();
+    $branch->branch_name= $request->name;
+    $branch->address = $request->address;
+    $branch->manager_id=$request->manager_id;
+    $branch->save();
+    return back()->with('status','Branch updated successfully!');
+  }
+
+
+ 
 }
