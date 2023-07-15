@@ -2,7 +2,10 @@
 
 @section('content')
 
+@include('home-nav')
+
 <div class="container">
+
 
 
 
