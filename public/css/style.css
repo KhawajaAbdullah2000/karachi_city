@@ -272,3 +272,12 @@ a {
 .paging_simple_numbers {
     color: white !important;
 }
+
+@media only screen and (max-width: 925px) {
+    .homepage-content {
+        font-size: 1.8rem;
+        font-weight: bold;
+        font-family: 'Roboto Slab';
+        color: black;
+    }
+}
