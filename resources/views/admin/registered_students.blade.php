@@ -2,15 +2,10 @@
 
 @section('content')
 
-<div class="wrapper d-flex align-items-stretch">
     
-@include('admin_nav')
+@include('emp-nav')
 
 
-<!-- Page Content  -->
-<div id="content" class="p-4 p-md-5">
-    {{-- always include this nav2 first in div with id=content for admin pages --}}
-    @include('admin_nav2')
 
     <div class="container">
         <h1 class='text-center mb-3'>Registered Students</h1>
@@ -33,7 +28,7 @@
                 <td>{{$stud->email}}</td>
                 <td>{{$stud->phone}}</td>
                 <td>
-                    <a href="/student_admission_fees_paid/{{$stud->id}}" class="btn btn-warning btn-sm">Admission Fees paid</a>
+                    <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Admission Fees paid</a>
                 </td>
               </tr>
 
@@ -48,12 +43,6 @@
 
 
 
-
-
-
-</div> 
-
-</div> 
 
 @section('scripts')
 

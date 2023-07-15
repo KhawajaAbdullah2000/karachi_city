@@ -48,18 +48,13 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/Branches/{id}/edit',[BranchController::class,'edit'])->name('branches.edit');
     Route::put('/Branches/{id}/update',[BranchController::class,'update'])->name('branches.update');
     
-
-    Route::get('registered_students',[UserController::class,'registered_students'])->name('registered_students');
-    Route::get('enrolled_students',[UserController::class,'enrolled_students'])->name('enrolled_students');
-
-    Route::get('/student_admission_fees_paid/{id}',[UserController::class,'student_admission_fees_paid']);
-
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
 
 
 //employees and not admin can access
@@ -73,6 +68,14 @@ Route::middleware(['auth','isemp'])->group(function(){
     Route::post('/emp_home/{id}/store',[LeavesController::class,'leavestore'])->name('emp_storeLeave');
 });
 
+//For managers
+Route::middleware(['auth','isemp','role:manager'])->group(function(){
+    Route::get('registered_students/{branch_id}',[UserController::class,'registered_students'])->name('registered_students');
+    Route::get('enrolled_students/{branch_id}',[UserController::class,'enrolled_students'])->name('enrolled_students');
+    Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
+
+
+});
 
 
 Route::get('/', function () {

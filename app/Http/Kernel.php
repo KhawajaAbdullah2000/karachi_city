@@ -69,5 +69,8 @@ class Kernel extends HttpKernel
         'home'=> \App\Http\Middleware\Homepage::class,
         'isstudent'=> \App\Http\Middleware\StudentMiddleware::class,
         'logged_in_student'=>\App\Http\Middleware\Student_login::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }
