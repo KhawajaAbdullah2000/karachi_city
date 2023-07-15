@@ -17,7 +17,7 @@
   <div class="homepage">
 
     <div class="homepage-content">
-    <h1 classs="home-heading">KARACHI CITY</h1>
+    <p classs="home-heading">KARACHI CITY</p>
     <p>We have amazing things in store for you.</p>
     <a href="{{route('register')}}" class="btn btn-warning btn-lg">Register Yourself</a>
     </div>

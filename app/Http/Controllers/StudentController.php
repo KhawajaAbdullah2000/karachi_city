@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -137,6 +138,47 @@ class StudentController extends Controller
 
     
     }
+
+    public function student_edit_form($id){
+        $student=Student::find($id);
+        return view('student.edit_form',['student'=>$student]);
+    }
+
+    public function student_update(Request $req, $id){
+        $req->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'DOB'=>'required',
+            'phone'=>['required',Rule::unique('students')->ignore($id,'id')],
+            'gender'=>'required',
+            'school'=>'required',
+            'medical'=>'required|max:50',
+            'parent_email'=>'required|max:40',
+            'parent_phone'=>'required|max:11',
+            'emergency_name'=>'required',
+            'emergency_contact'=>'required|numeric|digits:11'
+        ]);
+
+    
+        $student=Student::find($id);
+        $student->first_name=$req->first_name;
+        $student->last_name=$req->last_name;
+        $student->DOB=$req->DOB;
+        $student->phone=$req->phone;
+        $student->gender=$req->gender;
+        $student->school=$req->school;
+        $student->medical=$req->medical;
+        $student->parent_email=$req->parent_email;
+        $student->parent_phone=$req->parent_phone;
+        $student->emergency_name=$req->emergency_name;
+        $student->emergency_contact=$req->emergency_contact;
+        $student->save();
+        return redirect()->route('student_home')->with('updated','Your details are updated!');
+
+
+
+    }
+
 
 
 }

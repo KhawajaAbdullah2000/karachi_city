@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse d-md-inline-flex" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto topnav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{route('student_home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Shop Pre-Owned</a>
@@ -23,7 +23,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="#">Edit details</a>
+                        <a href='{{route('student_edit_form',['id'=>auth('student')->user()->id])}}' class="dropdown-item">Edit Profile</a>
+
                        
                     </div>
                 </li>
