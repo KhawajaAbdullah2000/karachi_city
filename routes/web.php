@@ -3,11 +3,13 @@
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\LeavesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\leaves;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,10 +45,15 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
 
+
     Route::get('registered_students',[UserController::class,'registered_students'])->name('registered_students');
     Route::get('enrolled_students',[UserController::class,'enrolled_students'])->name('enrolled_students');
 
     Route::get('/student_admission_fees_paid/{id}',[UserController::class,'student_admission_fees_paid']);
+
+    Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
+    Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -58,6 +65,9 @@ Route::middleware(['auth','isemp'])->group(function(){
     Route::get('/emp_home/{id}/edit',[UserController::class,'editEmp'])->name('emp_edit');
     Route::put('/emp_home/{id}/update',[UserController::class,'updateEmp'])->name('emp_update');
     Route::get('/emp_home/{id}/branchDetails',[UserController::class,'branchDetail'])->name('emp_showBranch');
+    Route::get('/emp_home/{id}/leaves',[LeavesController::class,'myLeaves'])->name('emp_myLeaves');
+    Route::get('/emp_home/{id}/applyLeave',[LeavesController::class,'leaveForm'])->name('emp_applyLeave');
+    Route::post('/emp_home/{id}/store',[LeavesController::class,'leavestore'])->name('emp_storeLeave');
 });
 
 

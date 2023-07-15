@@ -8,6 +8,10 @@
         <li class="nav-item">
             <a href="/emp_home/{{auth()->user()->id}}" class="nav-link">Home</a>
         </li>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+              <a href="/emp_home/{{auth()->user()->id}}/leaves" class="nav-link">Leaves</a>
+          </li>
         @role('manager')
         <li class="nav-item">
             <a href="/emp_home/{{auth()->user()->id}}/branchDetails" class="nav-link">Branch Details</a>
