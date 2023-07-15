@@ -200,21 +200,21 @@ class UserController extends Controller
         return view('emp.branchDetails',['user'=>$user,'EmployeeCount'=>$count]);
      }
 
-         public function registered_students(){
-                $students= Student::where('admission',0)->get();
+         public function registered_students($branch_id){
+                $students= Student::where('admission',0)->where('branch_id',$branch_id)->get();
                 return view('admin.registered_students',['students'=>$students]);
      }
 
-     public function enrolled_students(){
-        $students= Student::where('admission',1)->get();
+     public function enrolled_students($branch_id){
+        $students= Student::where('admission',1)->where('branch_id',$branch_id)->get();
         return view('admin.enrolled_students',['students'=>$students]);
      }
 
-     public function student_admission_fees_paid($id){
+     public function student_admission_fees_paid($id,$branch_id){
         $student=Student::find($id);
         $student->admission=1;
         $student->save();
-        return redirect()->route('enrolled_students')->with('success','Student Enrolled Successfully');
+        return redirect()->route('enrolled_students',['branch_id'=>$branch_id])->with('success','Student Enrolled Successfully');
      }
 }
 
