@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
-            $table->integer('emp_id');
+            $table->unsignedBigInteger('emp_id')->nullable();
             $table->string('reason');
             $table->string('details');
             $table->date('from_date');
