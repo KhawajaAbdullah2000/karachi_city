@@ -51,6 +51,13 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
+    Route::get('make_announcement',[UserController::class,'make_announcement'])->name('make_announcement');
+    Route::post('make_announcement',[UserController::class,'create_announcement'])->name('create_announcement');
+    Route::get('announcements',[UserController::class,'announcements'])->name('announcements');
+    Route::get('edit_announcement/{id}',[UserController::class,'edit_announcement']);
+    Route::post('edit_announcement/{id}',[UserController::class,'submit_edit_announcement']);
+    Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');

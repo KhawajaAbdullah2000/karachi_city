@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Branches;
 use App\Models\Student;
+use App\Models\Announcement;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -215,6 +216,49 @@ class UserController extends Controller
         $student->admission=1;
         $student->save();
         return redirect()->route('enrolled_students',['branch_id'=>$branch_id])->with('success','Student Enrolled Successfully');
+     }
+
+     public function make_announcement(){
+        return view('admin.make_announcement');
+     }
+
+     public function create_announcement(Request $req){
+        $req->validate([
+            'title'=>'required|max:30',
+            'description'=>'required|max:70'
+        ]);
+        $ann=new Announcement();
+        $ann->title=$req->title;
+        $ann->description=$req->description;
+        $ann->save();
+        return redirect()->route('announcements')->with('success','Announcement created');
+
+     }
+
+     public function announcements(){
+        $announcements=Announcement::orderby('created_at','desc')->get();
+        return view('admin.announcements',['announcements'=>$announcements]);
+     }
+     public function edit_announcement($id){
+        $ann=Announcement::find($id);
+        return view('admin.edit_announcement',['announcement'=>$ann]);
+     }
+     public function submit_edit_announcement(Request $req,$id){
+        $req->validate([
+            'title'=>'required|max:30',
+            'description'=>'required|max:70'
+        ]);
+        $ann=Announcement::find($id);
+        $ann->title=$req->title;
+        $ann->description=$req->description;
+        $ann->save();
+        return redirect()->route('announcements')->with('success','Edited announcement successfully');
+
+     }
+     public function destroy_announcement($id){
+        $ann=Announcement::where('id',$id)->first();
+        $ann->delete();
+        return back()->withSuccess('Product deleted');
      }
 }
 
