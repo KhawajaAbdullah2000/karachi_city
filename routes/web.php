@@ -94,13 +94,14 @@ Route::get('/login_form',function(){
 })->middleware('guest')->name('login_form');
 
 
-//student login
+//student
 Route::middleware(['auth:student','isstudent'])->group(function(){
 Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
 Route::get('/student_logout',[StudentController::class,'logout'])->name('student_logout');
 Route::get('student_edit_form/{id}',[StudentController::class,'student_edit_form'])->name('student_edit_form');
 Route::put('/student_update/{id}',[StudentController::class,'student_update']);
-
+Route::get('read_notification/{id}',[StudentController::class,'read_notification'])->name('read_notification');
+Route::get('student_show_announcements',[StudentController::class,'student_show_announcements'])->name('student_show_announcements');
 });
 
 Route::get('/student-login',function(){

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\AnnouncementNotification;
 
 class UserController extends Controller
 {
@@ -231,12 +232,18 @@ class UserController extends Controller
         $ann->title=$req->title;
         $ann->description=$req->description;
         $ann->save();
+        $students=Student::where('admission',1)->get();
+        foreach($students as $stud){
+            $stud->notify(new AnnouncementNotification($ann));
+        }
+
+        
         return redirect()->route('announcements')->with('success','Announcement created');
 
      }
 
      public function announcements(){
-        $announcements=Announcement::orderby('created_at','desc')->get();
+        $announcements=Announcement::orderby('created_at','desc')->paginate(5);
         return view('admin.announcements',['announcements'=>$announcements]);
      }
      public function edit_announcement($id){
@@ -260,5 +267,7 @@ class UserController extends Controller
         $ann->delete();
         return back()->withSuccess('Product deleted');
      }
+
+    
 }
 

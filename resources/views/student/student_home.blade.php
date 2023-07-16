@@ -5,23 +5,26 @@
 @include('student.student_nav')
 
 <div class="container">
-
+    @if(auth('student')->user()->unreadnotifications)
+    @foreach (auth('student')->user()->unreadnotifications as $notifications)
+    <div class="notify p-3 text-center rounded">
+        <b> {{$notifications->data['title']}}</b>
+            <a href="{{route('read_notification',$notifications->id)}}" class="btn btn-sm btn-success">Mark as read</a>
+        @endforeach
+        
+        </div>
+        @endif
+        
 
     <div class="row justify-content-center">
         <div class="col-sm-8">
-            {{-- @if($message=Session::get('success'))
-        <div class="alert alert-success alert-block">
-            <strong>{{$message}}</strong>
-        </div>
-        @endif --}}
+
             <h2 class="text-center">Welcome {{auth('student')->user()->first_name}}</h2>
            <div class="card mt-3 p-3 stud-card text-white text-bold">
             <div class="row">
                 <div class="col">
                   <p>Name</p>
                   <h5>{{auth('student')->user()->first_name}} {{auth('student')->user()->last_name}}</h5>
-
-
                   <p>Email</p>
                   <h5>{{auth('student')->user()->email}}</h5>
                   <hr>
