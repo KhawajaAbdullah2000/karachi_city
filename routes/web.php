@@ -116,7 +116,7 @@ Route::post('login',[UserController::class,'login']);
 
 
 
-//Route::get('changepass',[UserController::class,'changepass']);
+Route::get('changepass',[UserController::class,'changepass']);
 
 Route::get('/register',[StudentController::class,'register'])->name('register');
 Route::Post('/student_register',[StudentController::class,'student_register'])->name('student_register');

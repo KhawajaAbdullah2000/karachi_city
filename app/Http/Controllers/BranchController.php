@@ -12,7 +12,8 @@ use Spatie\Permission\Models\Role;
 class BranchController extends Controller
 {
     public function showbranches(){
-      $branch=Branches::all();
+      $branch= Branches::leftjoin('users','users.id','branches.manager_id')->select('branches.id','branches.branch_name','branches.address','users.name')->get();
+    
       return view('branches.displaybranches',['branches' => $branch]);
 
     }

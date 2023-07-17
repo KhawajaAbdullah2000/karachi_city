@@ -51,7 +51,7 @@
         <th>ID</th>
         <th>BRANCH NAME</th>
         <th>ADDRESS</th>
-        <th>Manager-ID</th>
+        <th>Name</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -63,7 +63,7 @@
         <td>{{$branches->id}}</td>
         <td>{{$branches->branch_name}}</td>
         <td>{{$branches->address}}</td>
-        <td>{{$branches->manager_id}}</td>
+        <td>{{$branches->name}}</td>
         
         <td>
             <a href="/Branches/{{$branches->id}}/edit" class="btn btn-dark btn-sm">Edit/Add manager</a> 
