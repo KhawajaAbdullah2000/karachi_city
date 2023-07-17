@@ -23,18 +23,15 @@
   <li>
     <a href="/Branches">Branches</a>
 </li>
-  <li>
-  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-  <ul class="collapse list-unstyled" id="pageSubmenu">
-    <li>
-        <a href="#">Page 1</a>
-    </li>
-    <li>
-        <a href="#">Page 2</a>
-    </li>
-    <li>
 
-        <a href="#">Page 3</a>
+<li class="nav-item">
+  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Announcements</a>
+  <ul class="collapse navbar-nav list-unstyled" id="pageSubmenu">
+    <li class="nav-item">
+        <a href="{{route('make_announcement')}}">Make Announcement</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('announcements')}}">Announcements</a>
     </li>
   </ul>
   </li>

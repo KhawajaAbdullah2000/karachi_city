@@ -27,7 +27,7 @@ class AdminAuth
 
               }   
               else{
-                return redirect()->route('emp_home')->with('error','Access Denied');
+                return redirect()->route('emp_home',['id'=>Auth::user()->id])->with('error','Access Denied');
 
               }
 

@@ -36,7 +36,11 @@
                   <h5>{{$user->cnic}}</h5>
                   <hr>
                   <p>Branch Name</p>
-                  <h5>{{$user->branch_name}},{{$user->address}}</h5>
+                  @if(isset($user->branch_name))
+                   <h5>{{$user->branch_name}},{{$user->address}}</h5>
+                  @else
+                    <h5>Branch Not Assigned</h5>    
+                  @endif
                   <hr>
                   <p>Salary</p>
                   <h5>{{$user->salary}} Rs.</h5>
@@ -44,13 +48,13 @@
                 </div>
                 <div class="col">
                     <h5>CNIC front</h5>
-                    <img src="/cnic/{{$user->cnicFront}}" class="rounded" width="100%"/>
+                    <img src="/cnic/{{$user->cnicFront}}" alt="CNIC front image not uploaded" class="rounded" width="100%"/>
                     <br>
                     <br>
                     <hr>
                     <br>
                     <h5>CNIC back</h5>
-                    <img src="/cnic/{{$user->cnicBack}}" class="rounded" width="100%"/>
+                    <img src="/cnic/{{$user->cnicBack}}" alt="CNIC back image not uploaded" class="rounded" width="100%"/>
                 </div>
               </div>
            </div>
