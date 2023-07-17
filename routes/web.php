@@ -4,6 +4,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\BorrowController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -80,8 +82,11 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('registered_students/{branch_id}',[UserController::class,'registered_students'])->name('registered_students');
     Route::get('enrolled_students/{branch_id}',[UserController::class,'enrolled_students'])->name('enrolled_students');
     Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
-
-
+    Route::get('/emp_items/{id}',[ItemController::class,'emp_items'])->name('emp_items');
+    Route::get('/emp_items/{id}/add',[ItemController::class,'items_add'])->name('items_add');
+    Route::post('/emp_items/{id}/store',[ItemController::class,'items_store'])->name('items_store');
+    Route::get('/emp_items/{id}/update',[ItemController::class,'items_edit'])->name('items_edit');
+    Route::put('/emp_id/{id}/edit',[ItemController::class,'items_update'])->name('items_update');
 });
 
 
@@ -116,7 +121,7 @@ Route::post('login',[UserController::class,'login']);
 
 
 
-//Route::get('changepass',[UserController::class,'changepass']);
+Route::get('changepass',[UserController::class,'changepass']);
 
 Route::get('/register',[StudentController::class,'register'])->name('register');
 Route::Post('/student_register',[StudentController::class,'student_register'])->name('student_register');

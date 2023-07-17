@@ -32,7 +32,7 @@ class Homepage
 
               }   
               else{
-                return redirect()->route('emp_home');
+                return redirect()->route('emp_home',['id'=>Auth::user()->id]);
 
               }
 
