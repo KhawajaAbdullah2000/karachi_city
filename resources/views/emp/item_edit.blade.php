@@ -15,6 +15,13 @@
                    <span class="text-danger">{{$errors->first('name')}}</span>
                 @endif
             </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="text" name="quantity" class="form-control" value="{{old('quantity',$item->quantity)}}" />
+                @if($errors->has('quantity'))
+                   <span class="text-danger">{{$errors->first('quantity')}}</span>
+                @endif
+               </div>
             <button type="submit" class="btn btn-dark mt-3">Submit</button>
            </form>
            

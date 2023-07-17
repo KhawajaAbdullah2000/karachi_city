@@ -9,18 +9,22 @@ class ItemController extends Controller
 {
     public function emp_items($id){
         $items=Item::where('branch_id',$id)->get();
-        return view('emp.emp_items',['items'=>$items]);
+        //Implement Count Logic
+        $count=Item::where('branch_id',$id)->count();
+        return view('emp.emp_items',['items'=>$items,'count'=>$count]);
     }
     public function items_add($id){
         return view('emp.item_add');
     }
     public function items_store(Request $request,$id){
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'quantity' => 'required'
         ]);
         try{
             $item = new Item;
             $item->item_name=$request->name;
+            $item->quantity=$request->quantity;
             $item->branch_id=$id;
             $item->save();
             return redirect()->route('emp_items',['id'=>$id]);
@@ -38,10 +42,12 @@ class ItemController extends Controller
     }
     public function items_update(Request $request,$id){
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'quantity' => 'required'
         ]);
         $item = Item::where('id',$id)->first();
         $item->item_name = $request->name;
+        $item->quantity = $request->quantity;
          $item->save();
          return redirect()->route('emp_items',['id'=>$item->branch_id]);
     }

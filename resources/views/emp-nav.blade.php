@@ -22,7 +22,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/emp_items/{{auth()->user()->branch_id}}">Items</a>
-            <a class="dropdown-item" href="">Borrow </a>
+            <a class="dropdown-item" href="/emp_borrow/{{auth()->user()->branch_id}}">Borrow </a>
           </div>
         </li>
         <li class="nav-item dropdown">

@@ -60,6 +60,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::post('edit_announcement/{id}',[UserController::class,'submit_edit_announcement']);
     Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
 
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -87,6 +88,11 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::post('/emp_items/{id}/store',[ItemController::class,'items_store'])->name('items_store');
     Route::get('/emp_items/{id}/update',[ItemController::class,'items_edit'])->name('items_edit');
     Route::put('/emp_id/{id}/edit',[ItemController::class,'items_update'])->name('items_update');
+
+    Route::get('/emp_borrow/{id}',[BorrowController::class,'borrowed'])->name('borrowed_items');
+    Route::get('/emp_items/{id}/borrow',[BorrowController::class,'borrow_item'])->name('borrow_item');
+    Route::post('/emp_items/{id}/addborrow',[BorrowController::class,'add_borrow'])->name('borrow_add');
+    Route::delete('/emp_borrow/{id}/delete',[BorrowController::class,'destroy'])->name('borrow_delete');
 });
 
 
