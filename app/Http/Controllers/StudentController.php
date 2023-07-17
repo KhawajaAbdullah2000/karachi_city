@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branches;
 use App\Models\Student;
+use App\Models\Announcement;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -175,8 +176,20 @@ class StudentController extends Controller
         $student->save();
         return redirect()->route('student_home')->with('updated','Your details are updated!');
 
+    }
 
+    public function read_notification($id){
+        if($id){
+            auth('student')->user()->notifications->where('id',$id)->markAsRead();
+        }
+        return back();
 
+    }
+
+    public function student_show_announcements(){
+          $announcements=Announcement::orderby('created_at','desc')->get();
+          ($announcements);
+          return view('student.announcements',['announcements'=>$announcements]);
     }
 
 

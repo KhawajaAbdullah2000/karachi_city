@@ -23,18 +23,18 @@
   <li>
     <a href="/Branches">Branches</a>
 </li>
-{{-- 
+
 <li class="nav-item">
-  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Students</a>
+  <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Announcements</a>
   <ul class="collapse navbar-nav list-unstyled" id="pageSubmenu">
     <li class="nav-item">
-        <a href="{{route('registered_students')}}">Registered Students</a>
+        <a href="{{route('make_announcement')}}">Make Announcement</a>
     </li>
     <li class="nav-item">
-        <a href="{{route('enrolled_students')}}">Enrolled Students</a>
+        <a href="{{route('announcements')}}">Announcements</a>
     </li>
   </ul>
-  </li> --}}
+  </li>
 
 </ul>
 

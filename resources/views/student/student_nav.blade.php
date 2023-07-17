@@ -11,7 +11,7 @@
                     <a class="nav-link" href="{{route('student_home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Shop Pre-Owned</a>
+                    <a class="nav-link" href="{{route('student_show_announcements')}}">Announcements</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Shop New Cars</a>

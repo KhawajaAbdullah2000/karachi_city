@@ -51,6 +51,13 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
+    Route::get('make_announcement',[UserController::class,'make_announcement'])->name('make_announcement');
+    Route::post('make_announcement',[UserController::class,'create_announcement'])->name('create_announcement');
+    Route::get('announcements',[UserController::class,'announcements'])->name('announcements');
+    Route::get('edit_announcement/{id}',[UserController::class,'edit_announcement']);
+    Route::post('edit_announcement/{id}',[UserController::class,'submit_edit_announcement']);
+    Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -87,13 +94,14 @@ Route::get('/login_form',function(){
 })->middleware('guest')->name('login_form');
 
 
-//student login
+//student
 Route::middleware(['auth:student','isstudent'])->group(function(){
 Route::get('/student_home',[StudentController::class,'student_home'])->name('student_home');
 Route::get('/student_logout',[StudentController::class,'logout'])->name('student_logout');
 Route::get('student_edit_form/{id}',[StudentController::class,'student_edit_form'])->name('student_edit_form');
 Route::put('/student_update/{id}',[StudentController::class,'student_update']);
-
+Route::get('read_notification/{id}',[StudentController::class,'read_notification'])->name('read_notification');
+Route::get('student_show_announcements',[StudentController::class,'student_show_announcements'])->name('student_show_announcements');
 });
 
 Route::get('/student-login',function(){
