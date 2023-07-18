@@ -17,6 +17,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone No.</th>
+                <th>Admission fees paid receipt</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -27,6 +28,7 @@
                 <td>{{$stud->first_name}} {{$stud->last_name}}</td>
                 <td>{{$stud->email}}</td>
                 <td>{{$stud->phone}}</td>
+                <td><img src="/admission_fees/{{$stud->admission_fees_ss}}" alt="admission fees" width="50" height="50"></td>
                 <td>
                     <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Admission Fees paid</a>
                 </td>

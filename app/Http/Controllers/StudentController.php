@@ -192,6 +192,45 @@ class StudentController extends Controller
           return view('student.announcements',['announcements'=>$announcements]);
     }
 
+    public function upload_admission_fees_receipt($id){
+        $student=Student::find($id);
+        return view('student.upload_admission_fees',['student'=>$student]);
+    }
+
+    public function submit_admission_fees_ss(Request $req,$id){
+        $req->validate([
+            'admission_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $student=Student::find($id);
+
+        $imagename=time().'.'.$req->admission_fees_ss->extension();
+        $req->admission_fees_ss->move(public_path('admission_fees'),$imagename);
+
+        $student->admission_fees_ss=$imagename;
+        $student->save();
+      return redirect()->route('student_home')->with('updated','Admission fees receipt uploaded');
+       
+    }
+    public function edit_admission_fees_ss(Request $req,$id){
+        $req->validate([
+            'admission_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $student=Student::find($id);
+        //deleting previous image from public folder
+        unlink(public_path('/admission_fees'.'/'.$student->admission_fees_ss) );
+//adding the new image
+        $imagename=time().'.'.$req->admission_fees_ss->extension();
+        $req->admission_fees_ss->move(public_path('admission_fees'),$imagename);
+
+        $student->admission_fees_ss=$imagename;
+        $student->save();
+
+        return redirect()->route('upload_admission_fees_receipt',['id'=>$student->id])->with('updated','new Image uploaded successfully');
+
+        
+
+    }
+
 
 
 }

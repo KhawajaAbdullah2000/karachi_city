@@ -113,6 +113,9 @@ Route::get('student_edit_form/{id}',[StudentController::class,'student_edit_form
 Route::put('/student_update/{id}',[StudentController::class,'student_update']);
 Route::get('read_notification/{id}',[StudentController::class,'read_notification'])->name('read_notification');
 Route::get('student_show_announcements',[StudentController::class,'student_show_announcements'])->name('student_show_announcements');
+Route::get('upload_admission_fees_receipt/{id}',[StudentController::class,'upload_admission_fees_receipt'])->name('upload_admission_fees_receipt');
+Route::post('submit_admission_fees_ss/{id}',[StudentController::class,'submit_admission_fees_ss'])->name('submit_admission_fees_ss');
+Route::put('edit_admission_fees_ss/{id}',[StudentController::class,'edit_admission_fees_ss'])->name('edit_admission_fees_ss');
 });
 
 Route::get('/student-login',function(){
