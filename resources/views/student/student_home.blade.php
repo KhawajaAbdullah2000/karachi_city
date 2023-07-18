@@ -10,6 +10,9 @@
     <div class="notify p-3 text-center rounded">
         <b> {{$notifications->data['title']}}</b>
             <a href="{{route('read_notification',$notifications->id)}}" class="btn btn-sm btn-success">Mark as read</a>
+            <div>
+                <a href="{{route('student_show_announcements')}}" class='ann_link'>For more details, visit here</a>
+            </div>
         @endforeach
         
         </div>
