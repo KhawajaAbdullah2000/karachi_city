@@ -25,6 +25,17 @@
             <a class="dropdown-item" href="/emp_borrow/{{auth()->user()->branch_id}}">Borrow </a>
           </div>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Finance
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/expenses_home/{{auth()->user()->branch_id}}">Expenses</a>
+            <a class="dropdown-item" href="">Revenue</a>
+          </div>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Students

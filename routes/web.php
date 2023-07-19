@@ -4,6 +4,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BorrowController;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,10 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/emp_items/{id}/borrow',[BorrowController::class,'borrow_item'])->name('borrow_item');
     Route::post('/emp_items/{id}/addborrow',[BorrowController::class,'add_borrow'])->name('borrow_add');
     Route::delete('/emp_borrow/{id}/delete',[BorrowController::class,'destroy'])->name('borrow_delete');
+
+    Route::get('/expenses_home/{id}',[ExpenseController::class,'Show'])->name('expenses_display');
+    Route::get('/expenses_home/{id}/add',[ExpenseController::class,'expenseAdd'])->name('expenses_add');
+    Route::post('/expenses_home/{id}/store',[ExpenseController::class,'store'])->name('expense_store');
 });
 
 
