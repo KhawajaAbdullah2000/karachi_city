@@ -297,3 +297,7 @@ a {
     text-decoration: underline;
     color: red;
 }
+
+.table-align {
+    vertical-align: middle;
+}

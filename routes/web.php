@@ -119,6 +119,7 @@ Route::put('edit_admission_fees_ss/{id}',[StudentController::class,'edit_admissi
 Route::get('upload_monthly_fees/{id}',[StudentController::class,'upload_monthly_fees'])->name('upload_monthly_fees');
 Route::post('submit_monthly_fees_ss/{id}',[StudentController::class,'submit_monthly_fees_ss'])->name('submit_monthly_fees_ss');
 Route::Put('edit_monthly_fees/{id}',[StudentController::class,'edit_monthly_fees'])->name('edit_monthly_fees');
+Route::get('student_fees_status/{id}',[StudentController::class,'student_fees_status'])->name('student_fees_status');
 });
 
 Route::get('/student-login',function(){

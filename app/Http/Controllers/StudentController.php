@@ -307,6 +307,11 @@ class StudentController extends Controller
     }
     }
 
+    public function student_fees_status($student_id){
+     $fees=MonthlyFee::where('student_id',$student_id)->orderby('updated_at','desc')->paginate(10);
+     return view('student.monthly_fees',['fees'=>$fees]);
+    }
+
 
 
 

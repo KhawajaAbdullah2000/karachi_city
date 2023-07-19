@@ -24,6 +24,8 @@
                         @endif
                         @if(auth('student')->user()->admission==1)
                         <a href="{{route('upload_monthly_fees',['id'=>auth('student')->user()->id])}}" class="dropdown-item">Monthly fees</a>
+                        <a href="{{route('student_fees_status',['id'=>auth('student')->user()->id])}}" class="dropdown-item">Fees Status</a>
+
                         @endif
 
                        
