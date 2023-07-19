@@ -116,6 +116,9 @@ Route::get('student_show_announcements',[StudentController::class,'student_show_
 Route::get('upload_admission_fees_receipt/{id}',[StudentController::class,'upload_admission_fees_receipt'])->name('upload_admission_fees_receipt');
 Route::post('submit_admission_fees_ss/{id}',[StudentController::class,'submit_admission_fees_ss'])->name('submit_admission_fees_ss');
 Route::put('edit_admission_fees_ss/{id}',[StudentController::class,'edit_admission_fees_ss'])->name('edit_admission_fees_ss');
+Route::get('upload_monthly_fees/{id}',[StudentController::class,'upload_monthly_fees'])->name('upload_monthly_fees');
+Route::post('submit_monthly_fees_ss/{id}',[StudentController::class,'submit_monthly_fees_ss'])->name('submit_monthly_fees_ss');
+Route::Put('edit_monthly_fees/{id}',[StudentController::class,'edit_monthly_fees'])->name('edit_monthly_fees');
 });
 
 Route::get('/student-login',function(){
@@ -195,3 +198,7 @@ Route::get('student/forgot-password', function () {
 Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email')->middleware('guest');
 Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form')->middleware('guest');
 Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass')->middleware('guest');
+
+
+
+//Route::get('relation',[StudentController::class,'relation']);

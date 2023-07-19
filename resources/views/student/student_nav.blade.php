@@ -23,7 +23,7 @@
                         <a class="dropdown-item" href="{{route('upload_admission_fees_receipt',['id'=>auth('student')->user()->id])}}">Admission fees</a>
                         @endif
                         @if(auth('student')->user()->admission==1)
-                        <a href='' class="dropdown-item">Monthly fees</a>
+                        <a href="{{route('upload_monthly_fees',['id'=>auth('student')->user()->id])}}" class="dropdown-item">Monthly fees</a>
                         @endif
 
                        
