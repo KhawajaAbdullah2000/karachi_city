@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use DateTime;
+use Exception;
 
 class StudentController extends Controller
 {
@@ -77,10 +78,15 @@ class StudentController extends Controller
         $user=Student::create(array_merge($req->all(), ['password' => bcrypt($req->password)])); //user created
 
         $data=['f_name'=>$user->first_name,'l_name'=>$user->last_name];
-        Mail::send('student.admission_invoice',$data,function($messages) use ($user){
-           $messages->to($user->email);
-           $messages->subject('Welcome to Karachi City');
-        });
+        try{
+            Mail::send('student.admission_invoice',$data,function($messages) use ($user){
+                $messages->to($user->email);
+                $messages->subject('Welcome to Karachi City');
+             });
+        }catch(Exception $e){
+            return redirect()->route('home')->with('registered','COuldnt sent email but registered');
+        }
+        
 
         return redirect()->route('home')->with('registered','Please check your email inbox');
     

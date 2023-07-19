@@ -39,7 +39,7 @@
 
 @endif
 
-@else
+@else 
 
 
     <h2 class="text-center">Upload paid fee receipt for the month {{$month}} {{$year}}</h2>
