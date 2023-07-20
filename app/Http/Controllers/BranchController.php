@@ -19,6 +19,8 @@ class BranchController extends Controller
     }
     public function destroy(request $request){
         $branch_del = Branches::where('id',$request->category_delete_id)->first();
+        $user = User::where('id',$branch_del->manager_id)->first();
+        $user->removeRole('manager');
         $branch_del->delete();
         return back();
     }

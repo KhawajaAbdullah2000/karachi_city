@@ -51,4 +51,10 @@ class ItemController extends Controller
          $item->save();
          return redirect()->route('emp_items',['id'=>$item->branch_id]);
     }
+    public function items_destroy($id){
+        $item =Item::where('id',$id)->first();
+        $item->delete();
+
+        return back();
+    }
 }

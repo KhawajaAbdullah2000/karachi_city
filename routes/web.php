@@ -88,6 +88,7 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::post('/emp_items/{id}/store',[ItemController::class,'items_store'])->name('items_store');
     Route::get('/emp_items/{id}/update',[ItemController::class,'items_edit'])->name('items_edit');
     Route::put('/emp_id/{id}/edit',[ItemController::class,'items_update'])->name('items_update');
+    Route::delete('/emp_items/{id}/delete',[ItemController::class,'items_destroy'])->name('items_delete');
 
     Route::get('/emp_borrow/{id}',[BorrowController::class,'borrowed'])->name('borrowed_items');
     Route::get('/emp_items/{id}/borrow',[BorrowController::class,'borrow_item'])->name('borrow_item');

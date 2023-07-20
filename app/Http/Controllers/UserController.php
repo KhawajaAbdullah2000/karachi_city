@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\AnnouncementNotification;
+
 use Illuminate\Support\Carbon;
+
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -70,7 +74,8 @@ class UserController extends Controller
             'email' => ['required',Rule::unique('users')->ignore($id,'id')],
             'cnic' => ['min:13','max:13','required',Rule::unique('users')->ignore($id,'id')],
             'number' => ['min:11','max:11','required',Rule::unique('users','phone')->ignore($id,'id')],
-            'salary' => ['required']
+            'salary' => ['required'],
+            'branch_id' => ['required']
                ]);
         $user = User::where('id',$id)->first();
         if(isset($request->front)){
@@ -82,6 +87,12 @@ class UserController extends Controller
             $cnicBack = time().'.'.$request->back->extension();
             $request->back->move(public_path('cnic'),$cnicBack);
             $user->cnicBack=$cnicBack;
+        }
+        if($user->branch_id!=$request->branch_id && $user->hasRole('manager')){
+            $user->removeRole('manager');
+            $branch = Branches::where('id',$user->branch_id)->first();
+            $branch->manager_id= null;
+            $branch->save();
         }
         $user->name = $request->name;
         $user->email = $request->email;
