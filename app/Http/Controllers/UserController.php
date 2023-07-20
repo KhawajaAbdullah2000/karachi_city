@@ -7,12 +7,14 @@ use App\Models\User;
 use App\Models\Branches;
 use App\Models\Student;
 use App\Models\Announcement;
+use App\Models\MonthlyFee;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\AnnouncementNotification;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -268,6 +270,44 @@ class UserController extends Controller
         return back()->withSuccess('Product deleted');
      }
 
+     public function check_monthly_fees_current($branch_id){
+        $current=Carbon::now();
+        $month=$current->format('F');
+        $year=$current->format('Y');
+        $students=Student::select('students.id','students.first_name','students.last_name',
+        'students.branch_id','monthly_fees.month','monthly_fees.year',
+        'monthly_fees.monthly_fees_ss','monthly_fees.paid')
+        ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
+        ->where('students.branch_id',$branch_id)->orderby('monthly_fees.updated_at','desc')->get();
+        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year]);
+     }
+
     
+
+     public function paid_monthly_fees($id,$branch_id)
+     {
+        $current=Carbon::now();
+        $month=$current->format('F');
+        $year=$current->format('Y');
+        $stu=MonthlyFee::where('student_id',$id)->where('month',$month)->where('year',$year)
+        ->where('paid',0)->first();
+        if($stu){
+            $stu->paid=1;
+            $stu->save();
+            return redirect()->route('check_monthly_fees_current',['branch_id'=>$branch_id])->with('success','Record updated');
+
+
+        }else{
+            $new=new MonthlyFee();
+            $new->student_id=$id;
+            $new->fees_for=Carbon::now()->format('Y-m-d');
+            $new->paid=1;
+            $new->month=$month;
+            $new->year=$year;
+            $new->save();
+            return redirect()->route('check_monthly_fees_current',['branch_id'=>$branch_id])->with('success','Record updated');
+            
+        }
+     }
 }
 

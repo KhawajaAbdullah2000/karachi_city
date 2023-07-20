@@ -6,12 +6,17 @@
 
 <div class="container">
 
+  @if(isset($fee_details) and $fee_details->paid==1)
+  <h2>Paid for this month</h2>
+  @endif
+
 @if(isset($fee_details))
 
 <div class="text-center">
 
-
+  @if(isset($fee_details->monthly_fees_ss))
 <h2>Already uploaded for this month</h2>
+
 <img src="/monthly_fees/{{$fee_details->monthly_fees_ss}}" alt="" width="300px" height="300px">
 @if($fee_details->paid==0)
 <p>Edit image</p>
@@ -35,7 +40,7 @@
     <button type="submit" class="btn btn-lg btn-primary mt-3 text-center">Edit image</button>
   </div>
 </form>
-
+@endif
 
 @endif
 

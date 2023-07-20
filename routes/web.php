@@ -93,6 +93,9 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/emp_items/{id}/borrow',[BorrowController::class,'borrow_item'])->name('borrow_item');
     Route::post('/emp_items/{id}/addborrow',[BorrowController::class,'add_borrow'])->name('borrow_add');
     Route::delete('/emp_borrow/{id}/delete',[BorrowController::class,'destroy'])->name('borrow_delete');
+    Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
+   Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
+
 });
 
 
