@@ -301,3 +301,9 @@ a {
 .table-align {
     vertical-align: middle;
 }
+
+.dataTables_wrapper .dataTables_filter input {
+    background-color: #439de7 !important;
+    color: black;
+    font-weight: bold !important;
+}

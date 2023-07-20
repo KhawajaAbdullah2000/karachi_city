@@ -277,9 +277,14 @@ class UserController extends Controller
         $students=Student::select('students.id','students.first_name','students.last_name',
         'students.branch_id','monthly_fees.month','monthly_fees.year',
         'monthly_fees.monthly_fees_ss','monthly_fees.paid')
-        ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
+        ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')->where('students.admission',1)
         ->where('students.branch_id',$branch_id)->orderby('monthly_fees.updated_at','desc')->get();
-        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year]);
+ 
+        $notpaid=Student::leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
+        ->where('students.branch_id',$branch_id)->where('monthly_fees.paid',0)->get();
+
+
+        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year,'notpaid'=>$notpaid->count()]);
      }
 
     
@@ -308,6 +313,47 @@ class UserController extends Controller
             return redirect()->route('check_monthly_fees_current',['branch_id'=>$branch_id])->with('success','Record updated');
             
         }
+     }
+
+
+     public function monthly_fees_record($branch_id,Request $req){
+        $current=Carbon::now();
+        $year=$current->format('Y');
+       $students=Student::query();
+       $students->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
+       ->where('students.branch_id',$branch_id);
+
+       if($req->has('month') && $req->has('month') && !empty($req->input('month')) && !empty($req->input('year'))){
+        $students->where('monthly_fees.month','like','%'.$req->input('month').'%')
+        ->where('monthly_fees.year',$req->input('year'));
+        ;
+       }
+       
+       return view('emp.monthly_fees_record',['students'=>$students->orderby('monthly_fees.updated_at','desc')->paginate(4)->withQueryString(),'cur_year'=>$year]);
+      
+
+     }
+
+
+     public function pay_previous_fees($student_id,$month,$year){
+        $stu=MonthlyFee::where('student_id',$student_id)->where('month',$month)->where('year',$year)->where('paid',0)->first();
+        if($stu){
+            $stu->paid=1;
+            $stu->save();
+            return redirect()->route('monthly_fees_record',['id'=>auth()->user()->branch_id]);
+        }
+        else{
+            //if paid by cash now for some previous month
+            $new=new MonthlyFee();
+            $new->student_id=$student_id;
+            $new->fees_for=Carbon::now()->formay('Y-m-d');
+            $new->paid=1;
+            $new->month=$month;
+            $new->year=$year;
+            $new->save();
+            return redirect()->route('monthly_fees_record',['id'=>auth()->user()->branch_id]);
+        }
+
      }
 }
 

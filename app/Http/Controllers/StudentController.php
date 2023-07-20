@@ -315,7 +315,6 @@ class StudentController extends Controller
 
 
 
-
     // public function relation(){
     //   //  $student=MonthlyFee::where('student_id',3)->first();
     //   $fees = MonthlyFee::with('student')

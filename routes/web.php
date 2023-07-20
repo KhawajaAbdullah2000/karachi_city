@@ -95,7 +95,8 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::delete('/emp_borrow/{id}/delete',[BorrowController::class,'destroy'])->name('borrow_delete');
     Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
-
+Route::get('monthly_fees_record/{id}',[UserController::class,'monthly_fees_record'])->name('monthly_fees_record');
+Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_previous_fees'])->name('pay_previous_fees');
 });
 
 

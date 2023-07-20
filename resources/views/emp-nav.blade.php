@@ -22,7 +22,7 @@
            Monthly Fees</a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{route('check_monthly_fees_current',['branch_id'=>auth()->user()->branch_id])}}">Current Month</a>
-            <a class="dropdown-item" href="">Previous record</a>
+            <a class="dropdown-item" href="/monthly_fees_record/{{auth()->user()->branch_id}}">All records</a>
           </div>
         </li>
 
