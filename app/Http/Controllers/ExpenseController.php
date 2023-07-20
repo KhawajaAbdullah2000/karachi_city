@@ -7,17 +7,19 @@ use App\Models\expense;
 use App\Models\Branches;
 use App\Models\User;
 
+
 class ExpenseController extends Controller
 {
     public function Show($id){
-       $expenses= expense::where('branch_id',$id)->get();
+       $expenses= expense::where('branch_id',$id)->paginate(5);
        $count= expense::where('branch_id',$id)->count();
-       $salary = User::where('branch_id',$id)->sum('salary');
-       return view('expenses.expenses_home',['expenses'=>$expenses,'count'=>$count,'salary'=> $salary]);
+       
+       return view('expenses.expenses_home',['expenses'=>$expenses,'count'=>$count]);
 
     }
 
     public function expenseAdd($id){
+        $expenseData=expense::all();
         return view('expenses.expenses_add');
     }
 
@@ -35,13 +37,14 @@ class ExpenseController extends Controller
 
     // If a duplicate record is found
     if ($duplicateExpense) {
-        return response()->json([
-            'duplicate' => true,
-            'message' => 'This expense already exists. Are you sure you want to add it again?'
-        ]);
+        $expenses = new expense;
+        $expenses->Category=$request->Category;
+        $expenses->Amount=$request->Amount;
+        $expenses->branch_id=$id;
+        $expenses->save();
+        return redirect()->route('expenses_add',['id'=>$id])->with('status','Duplicate record is added. Please, Reconcile; Delete the record if mistakenly added.');
     }
 
-    // If no duplicate record is found, proceed with saving the expen
 
         $expenses = new expense;
         $expenses->Category=$request->Category;
@@ -51,4 +54,5 @@ class ExpenseController extends Controller
         return redirect()->route('expenses_display',['id'=>$id])->with('status','Expense added successfully!');
 
     }
+    
 }

@@ -2,7 +2,19 @@
 @section('content')
 @include('emp-nav')
 
+@if(session()->has('status'))
 
+     
+      <div class="alert alert-warning">
+         {{session('status')}}
+      
+         <a href="/expenses_home/{{auth()->user()->branch_id}}">
+         <button type="button" class="btn btn-secondary btn-sm">OK</button>
+         </a>
+         </div>
+ 
+
+@endif
 
 
 <div class="row justify-content-center">
@@ -29,10 +41,13 @@
                </div>
                 <button type="submit" class="btn btn-dark mt-3">Submit</button>
            </form>
-           
+            @if(Session::has('error'))
+            <p class="text-danger">{{Session::get('error')}}</p>
+            @endif 
        </div>    
     </div>
 </div>
+
 
 
 

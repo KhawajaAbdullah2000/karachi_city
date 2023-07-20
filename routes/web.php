@@ -99,6 +99,7 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/expenses_home/{id}',[ExpenseController::class,'Show'])->name('expenses_display');
     Route::get('/expenses_home/{id}/add',[ExpenseController::class,'expenseAdd'])->name('expenses_add');
     Route::post('/expenses_home/{id}/store',[ExpenseController::class,'store'])->name('expense_store');
+    Route::post('/expenses_home/{id}/store1',[ExpenseController::class,'store1'])->name('expense_store1');
 });
 
 
