@@ -4,6 +4,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BorrowController;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,20 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/emp_items/{id}/borrow',[BorrowController::class,'borrow_item'])->name('borrow_item');
     Route::post('/emp_items/{id}/addborrow',[BorrowController::class,'add_borrow'])->name('borrow_add');
     Route::delete('/emp_borrow/{id}/delete',[BorrowController::class,'destroy'])->name('borrow_delete');
+
+
+    Route::get('/expenses_home/{id}',[ExpenseController::class,'Show'])->name('expenses_display');
+    Route::get('/expenses_home/{id}/add',[ExpenseController::class,'expenseAdd'])->name('expenses_add');
+    Route::post('/expenses_home/{id}/store',[ExpenseController::class,'store'])->name('expense_store');
+
+    Route::get('/expenses_home/{id}/{branch_id}/edit',[ExpenseController::class,'edit'])->name('expenses_edit');
+    Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
+
+    Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
+   Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
+Route::get('monthly_fees_record/{id}',[UserController::class,'monthly_fees_record'])->name('monthly_fees_record');
+Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_previous_fees'])->name('pay_previous_fees');
+
 });
 
 
@@ -114,6 +129,13 @@ Route::get('student_edit_form/{id}',[StudentController::class,'student_edit_form
 Route::put('/student_update/{id}',[StudentController::class,'student_update']);
 Route::get('read_notification/{id}',[StudentController::class,'read_notification'])->name('read_notification');
 Route::get('student_show_announcements',[StudentController::class,'student_show_announcements'])->name('student_show_announcements');
+Route::get('upload_admission_fees_receipt/{id}',[StudentController::class,'upload_admission_fees_receipt'])->name('upload_admission_fees_receipt');
+Route::post('submit_admission_fees_ss/{id}',[StudentController::class,'submit_admission_fees_ss'])->name('submit_admission_fees_ss');
+Route::put('edit_admission_fees_ss/{id}',[StudentController::class,'edit_admission_fees_ss'])->name('edit_admission_fees_ss');
+Route::get('upload_monthly_fees/{id}',[StudentController::class,'upload_monthly_fees'])->name('upload_monthly_fees');
+Route::post('submit_monthly_fees_ss/{id}',[StudentController::class,'submit_monthly_fees_ss'])->name('submit_monthly_fees_ss');
+Route::Put('edit_monthly_fees/{id}',[StudentController::class,'edit_monthly_fees'])->name('edit_monthly_fees');
+Route::get('student_fees_status/{id}',[StudentController::class,'student_fees_status'])->name('student_fees_status');
 });
 
 Route::get('/student-login',function(){
@@ -193,3 +215,7 @@ Route::get('student/forgot-password', function () {
 Route::post('student/forget-password',[StudentController::class,'forget_password'])->name('student.entered_email')->middleware('guest');
 Route::get('/student_pass_reset/{token}/{email}',[StudentController::class,'showResetForm'])->name('reset.password.form')->middleware('guest');
 Route::post('/student-resetpass',[StudentController::class,'student_resetpass'])->name('student.resetpass')->middleware('guest');
+
+
+
+//Route::get('relation',[StudentController::class,'relation']);
