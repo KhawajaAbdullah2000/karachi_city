@@ -16,6 +16,20 @@
         <li class="nav-item">
             <a href="/emp_home/{{auth()->user()->id}}/branchDetails" class="nav-link">Branch Details</a>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Monthly Fees</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{route('check_monthly_fees_current',['branch_id'=>auth()->user()->branch_id])}}">Current Month</a>
+            <a class="dropdown-item" href="/monthly_fees_record/{{auth()->user()->branch_id}}">All records</a>
+          </div>
+        </li>
+
+
+
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Inventory
