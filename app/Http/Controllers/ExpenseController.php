@@ -19,7 +19,7 @@ class ExpenseController extends Controller
     }
 
     public function expenseAdd($id){
-        $expenseData=expense::all();
+        
         return view('expenses.expenses_add');
     }
 
@@ -55,4 +55,20 @@ class ExpenseController extends Controller
 
     }
     
+    public function edit($id,$branch_id){
+        $expenses=expense::where('id',$id)->first();
+        
+        return view('expenses.expenses_edit',['expenses' => $expenses]);
+
+    }
+
+    public function update(Request $request,$id,$branch_id){
+        $expenses = new expense;
+        $expenses->Category=$request->Category;
+        $expenses->Amount=$request->Amount;
+        $expenses->branch_id = $branch_id;
+        $expenses->save();
+        return redirect()->route('expenses_edit',['id'=>$id,'branch_id' => $branch_id])->with('status','Expense updated successfully!');
+
+    }
 }

@@ -99,7 +99,9 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/expenses_home/{id}',[ExpenseController::class,'Show'])->name('expenses_display');
     Route::get('/expenses_home/{id}/add',[ExpenseController::class,'expenseAdd'])->name('expenses_add');
     Route::post('/expenses_home/{id}/store',[ExpenseController::class,'store'])->name('expense_store');
-    Route::post('/expenses_home/{id}/store1',[ExpenseController::class,'store1'])->name('expense_store1');
+
+    Route::get('/expenses_home/{id}/{branch_id}/edit',[ExpenseController::class,'edit'])->name('expenses_edit');
+    Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
 });
 
 

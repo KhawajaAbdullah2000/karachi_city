@@ -35,7 +35,7 @@
             <td>PKR {{number_format($expenses->Amount, 2)}}</td>
             <td>{{$expenses->created_at}}</td>
             <td>
-                <a href="" class="btn btn-dark btn-sm">Edit</a>
+                <a href="/expenses_home/{{$expenses->id}}/{{$expenses->branch_id}}/edit" class="btn btn-dark btn-sm">Edit</a>
                 <form method="POST" action="" class="d-inline">
                 @csrf
                 @method('DELETE')
