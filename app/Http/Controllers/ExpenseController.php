@@ -71,4 +71,9 @@ class ExpenseController extends Controller
         return redirect()->route('expenses_edit',['id'=>$id,'branch_id' => $branch_id])->with('status','Expense updated successfully!');
 
     }
+    public function destroy(request $request){
+        $expensedel = expense::where('id',$request->category_delete_id)->first();
+        $expensedel->delete();
+        return back();
+    }
 }
