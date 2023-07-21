@@ -13,9 +13,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('student_show_announcements')}}">Announcements</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Shop New Cars</a>
+
+          
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fees
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if(auth('student')->user()->admission==0)
+                        <a class="dropdown-item" href="{{route('upload_admission_fees_receipt',['id'=>auth('student')->user()->id])}}">Admission fees</a>
+                        @endif
+                        @if(auth('student')->user()->admission==1)
+                        <a href="{{route('upload_monthly_fees',['id'=>auth('student')->user()->id])}}" class="dropdown-item">Monthly fees</a>
+                        <a href="{{route('student_fees_status',['id'=>auth('student')->user()->id])}}" class="dropdown-item">Fees Status</a>
+
+                        @endif
+
+                       
+                    </div>
                 </li>
+
+
+    
               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 
@@ -34,5 +35,10 @@ class Student extends Authenticatable
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branches::class);
+    }
+
+    public function monthlyfees(): HasMany
+    {
+        return $this->hasMany(MonthlyFee::class);
     }
 }
