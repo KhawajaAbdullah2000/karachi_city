@@ -29,7 +29,7 @@
         <tbody>
             @foreach($students as $stu)
             <tr class='table-align'>
-                <td>{{$stu->student_id}}</td>
+                <td>{{$stu->id}}</td>
                 <td>{{$stu->first_name}}{{$stu->last_name}}</td>
                 <td>{{$stu->month}}</td>
                 <td>{{$stu->year}}</td>
@@ -39,11 +39,17 @@
                 <td>No image yet</td>
                 @endif
 
+            
+        @if(isset($stu->paid))
                 @if($stu->paid==1)
                 <td ><button class="btn btn-sm btn-warning">Fees paid</button></td>
                 @else
-                <td><button class="btn btn-danger btn-sm"><a href="{{route('pay_previous_fees',['id'=>$stu->student_id,'month'=>$stu->month,'year'=>$stu->year])}}">Paid</a></button></td>
+                <td><button class="btn btn-danger btn-sm">Not Paid</a></button></td>
+
+                {{-- <td><button class="btn btn-danger btn-sm"><a href="{{route('pay_previous_fees',['id'=>$stu->student_id,'month'=>$stu->month,'year'=>$stu->year])}}">Paid</a></button></td> --}}
                 @endif
+                @else
+@endif
             </tr>
 
             @endforeach

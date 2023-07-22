@@ -44,7 +44,7 @@
 
 
 
-<div class="d-flex mt-3">
+{{-- <div class="d-flex mt-3">
     <h3 class="text-bold">Total students: </h3>
     <h3>{{ $students->count()}}</h3>
 
@@ -54,7 +54,7 @@
     <h3 class="text-bold">Fees not paid by: </h3>
     <h3>{{$notpaid}}</h3>
 
-</div>
+</div> --}}
 
 
 </div>

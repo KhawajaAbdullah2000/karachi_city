@@ -287,15 +287,13 @@ class UserController extends Controller
         $year=$current->format('Y');
         $students=Student::select('students.id','students.first_name','students.last_name',
         'students.branch_id','monthly_fees.month','monthly_fees.year',
-        'monthly_fees.monthly_fees_ss','monthly_fees.paid')
-        ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')->where('students.admission',1)
-        ->where('students.branch_id',$branch_id)->orderby('monthly_fees.updated_at','desc')->get();
- 
-        $notpaid=Student::leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
-        ->where('students.branch_id',$branch_id)->where('monthly_fees.paid',0)->get();
+        'monthly_fees.monthly_fees_ss','monthly_fees.paid','students.admission')
+        ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
+        ->where('students.branch_id',$branch_id)->where('students.admission',1)
+        ->orderby('monthly_fees.updated_at','desc')->get();
 
 
-        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year,'notpaid'=>$notpaid->count()]);
+        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year]);
      }
 
     
@@ -331,8 +329,13 @@ class UserController extends Controller
         $current=Carbon::now();
         $year=$current->format('Y');
        $students=Student::query();
-       $students->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
-       ->where('students.branch_id',$branch_id);
+       $students->select('students.id','students.first_name','students.last_name',
+       'students.branch_id','monthly_fees.month','monthly_fees.year',
+       'monthly_fees.monthly_fees_ss','monthly_fees.paid','students.admission')
+       
+       ->join('monthly_fees','monthly_fees.student_id','=','students.id')
+
+       ->where('students.branch_id',$branch_id)->where('students.admission',1);
 
        if($req->has('month') && $req->has('month') && !empty($req->input('month')) && !empty($req->input('year'))){
         $students->where('monthly_fees.month','like','%'.$req->input('month').'%')
