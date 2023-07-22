@@ -66,13 +66,15 @@
 @section('scripts')
 
 <script>
+
     let table = new DataTable('#myTable',
     {
     language: {
-        searchPlaceholder: "student name or id"
-     }
+       searchPlaceholder: "student name or id"
+    },
+
     } 
-);
+     );
 </script>
 
 

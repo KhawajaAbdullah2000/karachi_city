@@ -289,7 +289,8 @@ class UserController extends Controller
         'students.branch_id','monthly_fees.month','monthly_fees.year',
         'monthly_fees.monthly_fees_ss','monthly_fees.paid','students.admission')
         ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
-        ->where('students.branch_id',$branch_id)->where('students.admission',1)
+        ->where('students.branch_id',$branch_id)->where('students.admission',1)->where('month',$month)
+        ->where('year',$year)
         ->orderby('monthly_fees.updated_at','desc')->get();
 
 
@@ -337,7 +338,7 @@ class UserController extends Controller
 
        ->where('students.branch_id',$branch_id)->where('students.admission',1);
 
-       if($req->has('month') && $req->has('month') && !empty($req->input('month')) && !empty($req->input('year'))){
+       if($req->has('month') && $req->has('year') && !empty($req->input('month')) && !empty($req->input('year'))){
         $students->where('monthly_fees.month','like','%'.$req->input('month').'%')
         ->where('monthly_fees.year',$req->input('year'));
         ;
