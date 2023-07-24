@@ -17,13 +17,13 @@ class StudentSeeder extends Seeder
     {
         DB::table('students')->insert(
             [
-                'first_name'=>'Bilal',
+                'first_name'=>'Zayan',
                 'last_name'=>'Ali',
                 'DOB'=>'2011-06-10',
-                'email'=>'bilal@gmail.com',
+                'email'=>'zayan@gmail.com',
                 'Gender'=>'male',
                 'password'=>Hash::make('12345'),
-                'phone'=>'04446312343',
+                'phone'=>'04446312313',
                 'school'=>'Beaconhouse',
                 'medical'=>'NO',
                 'parent_email'=>'k200987@gmail.com',
