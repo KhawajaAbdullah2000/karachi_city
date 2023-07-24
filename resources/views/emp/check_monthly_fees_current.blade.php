@@ -78,6 +78,7 @@
     language: {
        searchPlaceholder: "student name or id"
     },
+    ordering:false
 
     } 
      );
