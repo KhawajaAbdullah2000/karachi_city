@@ -21,7 +21,7 @@
             </thead>
             <tbody>
               @foreach ($students as $stud)
-              <tr>
+              <tr class="table-align">
                 <td>{{$stud->id}}</td>
                 <td>{{$stud->first_name}} {{$stud->last_name}}</td>
                 <td>{{$stud->email}}</td>
@@ -47,7 +47,9 @@
 @section('scripts')
 
 <script>
-    let table = new DataTable('#myTable');
+    let table = new DataTable('#myTable',{
+      ordering:false
+    });
 </script>
 
 @if(Session::has('success'))

@@ -285,13 +285,23 @@ class UserController extends Controller
         $current=Carbon::now();
         $month=$current->format('F');
         $year=$current->format('Y');
-        $students=Student::select('students.id','students.first_name','students.last_name',
+        $students=Student::select('students.id as studentid','students.first_name','students.last_name',
         'students.branch_id','monthly_fees.month','monthly_fees.year',
         'monthly_fees.monthly_fees_ss','monthly_fees.paid','students.admission')
         ->leftjoin('monthly_fees','monthly_fees.student_id','=','students.id')
-        ->where('students.branch_id',$branch_id)->where('students.admission',1)->where('month',$month)
-        ->where('year',$year)
-        ->orderby('monthly_fees.updated_at','desc')->get();
+        ->where('students.branch_id',$branch_id)->where('students.admission',1)
+        ->where(function($query) use ($month,$year){
+            $query->where('month',$month)
+            ->orWhere('month',null);
+        })
+        ->where(function($query)use($year){
+            $query->where('year',$year)
+            ->orWhere('year',null);
+        
+    })
+        ->get();
+       
+  
 
 
         return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year]);
