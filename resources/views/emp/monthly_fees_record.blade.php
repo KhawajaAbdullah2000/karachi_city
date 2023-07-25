@@ -8,7 +8,7 @@
     <form action="/monthly_fees_record/{{auth()->user()->branch_id}}" method="get">
         <div class="md-3">
             <input type="text" name="month" id="" placeholder="enter month" value={{request()->input('month')}}>
-            <input type="text" name="year" id="" value={{request()->input('year')}}>
+            <input type="text" name="year" id="" placeholder="enter year" value={{request()->input('year')}}>
 
             <button type="submit" class="btn btn-sm btn-primary">Search</button>
         </div>

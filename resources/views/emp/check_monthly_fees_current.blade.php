@@ -4,7 +4,9 @@
 
 
 <div class="container">
-
+  
+    <a class="btn btn-success float-end mb-5" href="/add_new_cash_payment/{{auth()->user()->branch_id}}">
+            Add new record for cash</a>
 
 <table class="table table-striped table-responsive" id="myTable">
     <thead >
@@ -30,17 +32,12 @@
                 <td>No image yet</td>
                 @endif
 
-            @if(isset($stu->paid))
                 @if($stu->paid==1)
                 <td ><button class="btn btn-sm btn-warning">Fees paid</button></td>
                 @else
-                <td><button class="btn btn-danger btn-sm"><a href="{{route('paid_monthly_fees',['id'=>$stu->studentid,'branch_id'=>auth()->user()->branch_id])}}">Paid</a></button></td>
+                <td><button class="btn btn-warning btn-sm"><a href="{{route('paid_monthly_fees',['id'=>$stu->studentid,'branch_id'=>auth()->user()->branch_id])}}">Confrim payment</a></button></td>
                 @endif
             
-            @else
-    
-                <td><button class="btn btn-danger btn-sm"><a href="{{route('paid_monthly_fees',['id'=>$stu->studentid,'branch_id'=>auth()->user()->branch_id])}}">Paid</a></button></td>
-                @endif
             </tr>
 
             @endforeach
@@ -90,6 +87,17 @@
     swal({
   title: "{{Session::get('success')}}",
   icon: "success",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
+
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
   closeOnClickOutside: true,
   timer: 4000,
     });
