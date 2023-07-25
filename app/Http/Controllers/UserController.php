@@ -292,8 +292,15 @@ class UserController extends Controller
         ->where('students.branch_id',$branch_id)->where('month',$month)->where('year',$year)
         ->orderby('monthly_fees.updated_at','desc')
         ->get();
+        $totalstudents=Student::where('branch_id',$branch_id)->where('admission',1)->count();
+        $paid=MonthlyFee::join('students','students.id','=','monthly_fees.student_id')
+        ->where('students.branch_id',$branch_id)->where('month',$month)->where('year',$year)
+        ->where('paid',1)->count();
        
-        return view('emp.check_monthly_fees_current',['students'=>$students,'month'=>$month,'year'=>$year]);
+        return view('emp.check_monthly_fees_current',
+        ['students'=>$students,'month'=>$month,'year'=>$year,
+        'totalstudents'=>$totalstudents,'paid'=>$paid]
+    );
      }
 
     
@@ -376,7 +383,7 @@ class UserController extends Controller
         ;
        }
        
-       return view('emp.monthly_fees_record',['students'=>$students->orderby('monthly_fees.updated_at','desc')->paginate(4)->withQueryString(),'cur_year'=>$year]);
+       return view('emp.monthly_fees_record',['students'=>$students->orderby('monthly_fees.updated_at','desc')->paginate(8)->withQueryString(),'cur_year'=>$year]);
       
 
      }
