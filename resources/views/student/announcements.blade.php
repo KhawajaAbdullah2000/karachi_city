@@ -5,10 +5,11 @@
 @include('student.student_nav')
 
 <div class="container">
+  <div class="row">
 
     @foreach ($announcements as $ann)
   
-    <div class="jumbotron">
+     <div class="jumbotron">
         <h1 class="display-6">{{$ann->title}}</h1>
         <hr class="my-2">
         <p class="lead">{{$ann->description}}</p>
@@ -16,10 +17,13 @@
         <p class="">Created at: {{$ann->created_at}}</p>
 
      
-      </div>
-            
-    @endforeach
+      </div> 
+    
+   
+      
 
+    @endforeach
+      
 
 </div> 
 

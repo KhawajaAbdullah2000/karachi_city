@@ -40,7 +40,7 @@
                         {{auth('student')->user()->first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        {{-- <a class="dropdown-item" href="#">My Profile</a> --}}
                         <a href='{{route('student_edit_form',['id'=>auth('student')->user()->id])}}' class="dropdown-item">Edit Profile</a>
 
                        

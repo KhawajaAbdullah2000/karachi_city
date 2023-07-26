@@ -34,7 +34,7 @@
                <td><h5><span class="badge bg-primary rounded-pill ">No image yet</span></h5></td>
                 @endif
                 <td>
-                    <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Admission Fees paid</a>
+                    <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Confirm admission fees payment</a>
                 </td>
               </tr>
 
