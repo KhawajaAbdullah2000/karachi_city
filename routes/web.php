@@ -111,7 +111,8 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
 Route::get('monthly_fees_record/{id}',[UserController::class,'monthly_fees_record'])->name('monthly_fees_record');
 Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_previous_fees'])->name('pay_previous_fees');
-
+Route::get('add_new_cash_payment/{branch_id}',[UserController::class,'add_new_cash_payment']);
+Route::post('add_cash_record_monthly',[UserController::class,'add_cash_record_monthly']);
 });
 
 
