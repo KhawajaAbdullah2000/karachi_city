@@ -1,10 +1,8 @@
-@extends('master')
 
-@section('content')
 
 <div class="invoice-container">
     <div class="invoice-header">
-        <h2 class="invoice-title" style="background-color: blue">Welcome {{$f_name}} {{$l_name}} To karachi city</h2>
+        <h2 class="invoice-title" style="background-color: greenyellow">Welcome {{$f_name}} {{$l_name}} To karachi city</h2>
     </div>
     <h3>You can join us after you pay. Bring the receipt to the branch to complete your registeration</h3>
     <div class="invoice-details">
@@ -24,6 +22,3 @@
         <p>Total: 6000 RS</p>
     </div>
 </div>
-
-
-@endsection
