@@ -230,6 +230,7 @@ class UserController extends Controller
         $student->admission=1;
         $student->save();
 
+
         Db::table('admissionfees_revenues')->insert(
             [
                 'student_id'=>$student->id,
@@ -253,8 +254,22 @@ class UserController extends Controller
                     'amount'=>$advanced_amount
                 ]
                 );
+                $current=Carbon::now();
+                $month=$current->format('F');
+                $year=$current->format('Y');
+        
+                $new=new MonthlyFee();
+                $new->student_id=$student->id;
+                $new->fees_for=Carbon::now()->format('Y-m-d');
+                $new->paid=1;
+                $new->month=$month;
+                $new->year=$year;
+                $new->save();
         return redirect()->route('enrolled_students',['branch_id'=>$branch_id])->with('success','Student Enrolled Successfully');
      }
+
+
+
 
      public function make_announcement(){
         return view('admin.make_announcement');
