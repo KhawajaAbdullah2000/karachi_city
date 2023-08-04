@@ -42,7 +42,7 @@
                 @if($stu->paid==1)
                 <td ><button class="btn btn-sm btn-warning">Fees paid</button></td>
                 @else
-                <td><button class="btn btn-danger btn-sm"><a href="{{route('pay_previous_fees',['id'=>$stu->student_id,'month'=>$stu->month,'year'=>$stu->year])}}">Paid</a></button></td>
+                <td><button class="btn btn-danger btn-sm"><a href="{{route('pay_previous_fees',['id'=>$stu->student_id,'month'=>$onth,'year'=>$stu->year])}}">Paid</a></button></td>
                 @endif
             </tr>
 
