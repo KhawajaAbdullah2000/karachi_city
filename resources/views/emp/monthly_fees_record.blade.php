@@ -50,8 +50,6 @@
                 @endif
                 @else
 @endif
-                <td><button class="btn btn-danger btn-sm"><a href="{{route('pay_previous_fees',['id'=>$stu->student_id,'month'=>$onth,'year'=>$stu->year])}}">Paid</a></button></td>
-                @endif
             </tr>
 
             @endforeach
