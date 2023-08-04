@@ -77,7 +77,7 @@ Route::middleware(['auth','isemp'])->group(function(){
     Route::get('/emp_home/{id}/leaves',[LeavesController::class,'myLeaves'])->name('emp_myLeaves');
     Route::get('/emp_home/{id}/applyLeave',[LeavesController::class,'leaveForm'])->name('emp_applyLeave');
     Route::post('/emp_home/{id}/store',[LeavesController::class,'leavestore'])->name('emp_storeLeave');
-});
+    });
 
 //For managers
 Route::middleware(['auth','isemp','role:manager'])->group(function(){
@@ -104,11 +104,15 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('/expenses_home/{id}/{branch_id}/edit',[ExpenseController::class,'edit'])->name('expenses_edit');
     Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
 
+    Route::delete('/expenses_home/delete', [ExpenseController::class,'destroy'])->name('expenses_delete');
+
+
     Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
 Route::get('monthly_fees_record/{id}',[UserController::class,'monthly_fees_record'])->name('monthly_fees_record');
 Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_previous_fees'])->name('pay_previous_fees');
-
+Route::get('add_new_cash_payment/{branch_id}',[UserController::class,'add_new_cash_payment']);
+Route::post('add_cash_record_monthly',[UserController::class,'add_cash_record_monthly']);
 });
 
 
