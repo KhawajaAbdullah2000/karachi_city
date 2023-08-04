@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\AnnouncementNotification;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Spatie\Permission\Models\Role;
@@ -229,8 +229,47 @@ class UserController extends Controller
         $student=Student::find($id);
         $student->admission=1;
         $student->save();
+
+
+        Db::table('admissionfees_revenues')->insert(
+            [
+                'student_id'=>$student->id,
+                'branch_id'=>$branch_id,
+                'fees_for'=>Carbon::now()->format('Y-m-d'),
+                'amount'=>5000
+            ]
+            );
+            $advanced_amount=7000;
+            $currentDate = Carbon::now();
+            $dayOfMonth = $currentDate->day;
+            if($dayOfMonth>15){
+                $advanced_amount=3500;
+            }
+
+            Db::table('monthlyfees_revenues')->insert(
+                [
+                    'student_id'=>$student->id,
+                    'branch_id'=>$branch_id,
+                    'fees_for'=>Carbon::now()->format('Y-m-d'),
+                    'amount'=>$advanced_amount
+                ]
+                );
+                $current=Carbon::now();
+                $month=$current->format('F');
+                $year=$current->format('Y');
+        
+                $new=new MonthlyFee();
+                $new->student_id=$student->id;
+                $new->fees_for=Carbon::now()->format('Y-m-d');
+                $new->paid=1;
+                $new->month=$month;
+                $new->year=$year;
+                $new->save();
         return redirect()->route('enrolled_students',['branch_id'=>$branch_id])->with('success','Student Enrolled Successfully');
      }
+
+
+
 
      public function make_announcement(){
         return view('admin.make_announcement');
@@ -316,6 +355,15 @@ class UserController extends Controller
         if($stu){
             $stu->paid=1;
             $stu->save();
+            Db::table('monthlyfees_revenues')->insert(
+                [
+                    'student_id'=>$stu->id,
+                    'branch_id'=>$branch_id,
+                    'fees_for'=>Carbon::now()->format('Y-m-d'),
+                    'amount'=>7000
+                ]
+                );
+
             return redirect()->route('check_monthly_fees_current',['branch_id'=>$branch_id])->with('success','Record updated');
         }
        
@@ -352,6 +400,15 @@ class UserController extends Controller
         $new->month=$month;
         $new->year=$year;
         $new->save();
+        Db::table('monthlyfees_revenues')->insert(
+            [
+                'student_id'=>$req->student_id,
+                'branch_id'=>auth()->user()->branch_id,
+                'fees_for'=>Carbon::now()->format('Y-m-d'),
+                'amount'=>7000
+            ]
+            );
+
     }else{
         return redirect()->route('check_monthly_fees_current',['branch_id'=>auth()->user()->branch_id])
         ->with('error','Record already exists.please check again if the student had uploaded screenshot for the current month');
