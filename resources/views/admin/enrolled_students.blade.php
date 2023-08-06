@@ -17,6 +17,7 @@
                 <th>Email</th>
                 <th>Phone No.</th>
                 <th>Emergency contact</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                 <td>{{$stud->phone}}</td>
             
                 <td>{{$stud->emergency_name}} {{$stud->emergency_contact}}</td>
+                <td>  <a href="/delete_student/{{$stud->id}}" class="btn btn-danger btn-sm">Delete</a> </td>
         
               </tr>
 
@@ -57,6 +59,17 @@
     swal({
   title: "{{Session::get('success')}}",
   icon: "success",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
+
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
   closeOnClickOutside: true,
   timer: 4000,
     });

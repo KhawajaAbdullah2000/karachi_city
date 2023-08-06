@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admissionfees_revenues', function (Blueprint $table) {
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('student_id')->nullable();
             $table->date('fees_for'); //month and year
-            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('set null')->onDelete('set null');
             $table->timestamps();
             $table->unique(['student_id','fees_for']);
            
