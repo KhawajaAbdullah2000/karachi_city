@@ -7,6 +7,8 @@ use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BorrowController;
+use App\Http\Controllers\ZktecoController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -61,7 +63,11 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::post('edit_announcement/{id}',[UserController::class,'submit_edit_announcement']);
     Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
 
-
+    Route::get('/zktecoDevices',[ZktecoController::class,'showDevices'])->name('showDevices');
+    Route::get('zktecoDevice/create',[ZktecoController::class,'createDevice'])->name('createDevice');
+    Route::post('/zktecoDevice/store',[ZktecoController::class,'storeDevice'])->name('storeDevice');
+    Route::put('zkTeco/{id}/Connect',[ZktecoController::class,'connect'])->name('connectDevice');
+    Route::get('zkTeco/{id}/test',[ZktecoController::class,'test'])->name('testDevice');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -114,6 +120,8 @@ Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_p
 Route::get('add_new_cash_payment/{branch_id}',[UserController::class,'add_new_cash_payment']);
 Route::post('add_cash_record_monthly',[UserController::class,'add_cash_record_monthly']);
 });
+
+
 
 
 Route::get('/', function () {
