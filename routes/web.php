@@ -8,6 +8,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\ZktecoController;
+use App\Http\Controllers\AttendanceController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -64,10 +65,6 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
 
     Route::get('/zktecoDevices',[ZktecoController::class,'showDevices'])->name('showDevices');
-    Route::get('zktecoDevice/create',[ZktecoController::class,'createDevice'])->name('createDevice');
-    Route::post('/zktecoDevice/store',[ZktecoController::class,'storeDevice'])->name('storeDevice');
-    Route::put('zkTeco/{id}/Connect',[ZktecoController::class,'connect'])->name('connectDevice');
-    Route::get('zkTeco/{id}/test',[ZktecoController::class,'test'])->name('testDevice');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -119,6 +116,16 @@ Route::get('monthly_fees_record/{id}',[UserController::class,'monthly_fees_recor
 Route::get('pay_previous_fees/{id}/{month}/{year}',[UserController::class,'pay_previous_fees'])->name('pay_previous_fees');
 Route::get('add_new_cash_payment/{branch_id}',[UserController::class,'add_new_cash_payment']);
 Route::post('add_cash_record_monthly',[UserController::class,'add_cash_record_monthly']);
+
+Route::get('/emp_home/{id}/device',[ZktecoController::class,'manshowDevice'])->name('emp.showDevices');
+Route::get('/zktecoDevice/create',[ZktecoController::class,'createDevice'])->name('createDevice');
+Route::post('/zktecoDevice/{b_id}/store',[ZktecoController::class,'storeDevice'])->name('storeDevice');
+Route::put('/zkTeco/{id}/Connect',[ZktecoController::class,'connect'])->name('connectDevice');
+Route::get('/zkTeco/{id}/test',[ZktecoController::class,'test'])->name('testDevice');
+Route::get('/zkteco/{id}/addStudents',[ZktecoController::class,'addStudents'])->name('addStudentsToDevice');
+Route::get('/zkteco/{id}/getAttendance',[ZktecoController::class,'addAttendanceLogs'])->name('addAttendance');
+Route::get('/emp_home/{id}/studentAttendance',[AttendanceController::class,'displayAttendance'])->name('showAttendance');
+Route::put('/zkTeco/{id}/Disconnect',[ZktecoController::class,'disconnect'])->name('disconnectDevice');
 });
 
 

@@ -84,7 +84,7 @@ class StudentController extends Controller
                 $messages->subject('Welcome to Karachi City');
              });
         }catch(Exception $e){
-            return redirect()->route('home')->with('registered','COuldnt sent email but registered');
+            return redirect()->route('home')->with('registered','Couldnt sent email but registered');
         }
         
 

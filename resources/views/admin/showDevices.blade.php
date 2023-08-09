@@ -25,8 +25,6 @@
             <th>IP</th>
             <th>Model Name</th>
             <th>Branch</th>
-            <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -36,30 +34,6 @@
             <td>{{$device->ip}}</td>
             <td>{{$device->model_name}}</td>
             <td>{{$device->branch_name}}</td>
-            <td>
-                @if($device->status==0)
-                <form method="POST" action="zkTeco/{{$device->id}}/Connect" class="d-inline">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn btn-success btn-sm">Connect</button>
-                    </form>
-                @else
-                <form method="POST" action="zkTeco/{{$device->id}}/Disconnect" class="d-inline">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn btn-danger btn-sm">Disconnect</button>
-                    </form>
-                <a href="zkTeco/{{$device->id}}/test" class="btn btn-success btn-sm d-inline">Test</a>
-                @endif
-            </td>    
-            <td>    
-                <a href="zkTeco/{{$device->id}}/update" class="btn btn-dark btn-sm">Edit</a>
-                <form method="POST" action="zkTeco/{{$device->id}}/delete" class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
           </tr>
           @endforeach 
         </tbody>
@@ -70,8 +44,6 @@
 
     <br>
     <br>
-    <a href="zktecoDevice/create" class="btn btn-info btn-sm text-white" role="button">Add New Device</a>
-
 
 
 </div> 
