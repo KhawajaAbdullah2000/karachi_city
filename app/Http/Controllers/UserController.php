@@ -445,6 +445,17 @@ class UserController extends Controller
 
      }
 
+     public function delete_student($id){
+        $student=Student::where('id',$id)->first();
+        if($student){
+            $student->delete();
+            return redirect()->back()->with('success','Student deleted');
+        }else{
+            return redirect()->back()->with('error','Student not found');
+
+        }
+     }
+
 
     //  public function pay_previous_fees($student_id,$month,$year){
     //     $stu=MonthlyFee::where('student_id',$student_id)->where('month',$month)->where('year',$year)->where('paid',0)->first();

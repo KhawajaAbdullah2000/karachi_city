@@ -35,7 +35,9 @@
                 @endif
                 <td>
                     <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Confirm admission fees payment</a>
-                </td>
+                    <a href="/delete_student/{{$stud->id}}" class="btn btn-danger btn-sm">Delete</a>
+
+                  </td>
               </tr>
 
               @endforeach 
@@ -57,6 +59,28 @@
       ordering:false
     });
 </script>
+
+@if(Session::has('success'))
+<script>
+    swal({
+  title: "{{Session::get('success')}}",
+  icon: "success",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
+
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
 
 
 @endsection
