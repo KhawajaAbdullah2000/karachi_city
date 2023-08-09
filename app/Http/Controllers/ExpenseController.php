@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\expense;
 use App\Models\Branches;
@@ -11,7 +11,7 @@ use App\Models\User;
 class ExpenseController extends Controller
 {
     public function Show($id){
-       $expenses= expense::where('branch_id',$id)->paginate(5);
+       $expenses= expense::where('branch_id',$id)->orderby('created_at','desc')->paginate(5);
        $count= expense::where('branch_id',$id)->count();
        
        return view('expenses.expenses_home',['expenses'=>$expenses,'count'=>$count]);
@@ -50,6 +50,8 @@ class ExpenseController extends Controller
         $expenses->Category=$request->Category;
         $expenses->Amount=$request->Amount;
         $expenses->branch_id=$id;
+        $expenses->month= Carbon::parse($expenses->created_at)->format('F');
+        $expenses->year= Carbon::parse($expenses->created_at)->format('Y');
         $expenses->save();
         return redirect()->route('expenses_display',['id'=>$id])->with('status','Expense added successfully!');
 
@@ -75,5 +77,9 @@ class ExpenseController extends Controller
         $expensedel = expense::where('id',$request->category_delete_id)->first();
         $expensedel->delete();
         return back();
+    }
+
+    public function MonthlyShow($id){
+
     }
 }

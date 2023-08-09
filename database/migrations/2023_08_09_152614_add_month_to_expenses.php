@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('zkteco_devices', function (Blueprint $table) {
-            //
-            $table->unsignedBigInteger('branch_id');
-            $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->string('month')->nullable();
+            $table->string('year')->nullable();
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('zkteco_devices', function (Blueprint $table) {
+        Schema::table('expenses', function (Blueprint $table) {
             //
         });
     }
