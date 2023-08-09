@@ -16,6 +16,9 @@
         <li class="nav-item">
             <a href="/emp_home/{{auth()->user()->id}}/branchDetails" class="nav-link">Branch Details</a>
         </li>
+        <li class="nav-item">
+          <a href="/emp_home/{{auth()->user()->branch_id}}/device" class="nav-link">Device</a>
+      </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,6 +60,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{route('registered_students',['branch_id'=>auth()->user()->branch_id])}}">Registered Students</a>
             <a class="dropdown-item" href="{{route('enrolled_students',['branch_id'=>auth()->user()->branch_id])}}">Enrolled Students</a>
+            <a class="dropdown-item" href="/emp_home/{{auth()->user()->branch_id}}/studentAttendance">Student Attendance</a>
           </div>
         </li>
 

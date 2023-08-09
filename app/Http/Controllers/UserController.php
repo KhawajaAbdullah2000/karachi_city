@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->branch_id=$request->branch_id;
         $user->salary=$request->salary;
         $user->save();
-        return redirect()->route('admin_home')->withSuccess('Employee Details Updated Scuccessfully');
+        return redirect()->route('admin_home')->withSuccess('Employee Details Updated Successfully');
 
     }
 

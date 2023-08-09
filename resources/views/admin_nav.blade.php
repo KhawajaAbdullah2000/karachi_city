@@ -23,6 +23,9 @@
   <li>
     <a href="/Branches">Branches</a>
 </li>
+<li>
+  <a href="/zktecoDevices">Biometric Devices</a>
+</li>
 
 <li class="nav-item">
   <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Announcements</a>
