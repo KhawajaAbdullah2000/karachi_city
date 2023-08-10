@@ -108,7 +108,9 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
 
     Route::delete('/expenses_home/delete', [ExpenseController::class,'destroy'])->name('expenses_delete');
-
+     
+    //monthly
+    Route::get('/expenses_home_monthly/{id}',[ExpenseController::class,'MonthlyShow'])->name('MonthlyShow');
 
     Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
