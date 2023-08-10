@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\expense;
 use App\Models\Branches;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
@@ -80,6 +80,7 @@ class ExpenseController extends Controller
     }
 
     public function MonthlyShow($id){
-
+     $monthlyTotals = Expense::select(['year', 'month', DB::raw('SUM(Amount) as total_amount')])->where('branch_id', $id)->groupBy('year', 'month')->orderBy('year', 'asc')->orderBy('month', 'asc')->paginate(12);
+     return view('expenses.expenses_home_monthly',['monthlyTotals' => $monthlyTotals]);
     }
 }
