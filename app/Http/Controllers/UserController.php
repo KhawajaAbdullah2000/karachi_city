@@ -373,7 +373,7 @@ class UserController extends Controller
         $current=Carbon::now();
         $month=$current->format('F');
         $year=$current->format('Y');
-        $students=Student::where('branch_id',$branch_id)->get();
+        $students=Student::where('branch_id',$branch_id)->where('admission',1)->get();
         return view('emp.monthly_cash_payment',['students'=>$students,'month'=>$month,'year'=>$year]);
      }
 
