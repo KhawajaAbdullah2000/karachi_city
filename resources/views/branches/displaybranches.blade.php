@@ -68,7 +68,7 @@
         <td>
             <a href="/Branches/{{$branches->id}}/edit" class="btn btn-dark btn-sm">Edit/Add manager</a> 
             <button type="button" class="btn btn-danger btn-sm deleteCategoryBtn" value="{{$branches->id}}">Delete</button>
-            
+            <a href="/Branches/{{$branches->id}}/details" class="btn btn-primary btn-sm">Details</a>
         </td>
       </tr>
       

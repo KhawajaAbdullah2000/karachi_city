@@ -80,7 +80,12 @@ class ExpenseController extends Controller
     }
 
     public function MonthlyShow($id){
+        
      $monthlyTotals = Expense::select(['year', 'month', DB::raw('SUM(Amount) as total_amount')])->where('branch_id', $id)->groupBy('year', 'month')->orderBy('year', 'asc')->orderBy('month', 'asc')->paginate(12);
      return view('expenses.expenses_home_monthly',['monthlyTotals' => $monthlyTotals]);
+    }
+    public function showDetails($id){
+        
+    return view('branches.branch_details',['id'=> $id]);
     }
 }
