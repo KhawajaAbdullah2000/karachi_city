@@ -16,7 +16,7 @@
 @endif
 
 @endsection
-@if($device->count()==0)
+@if(!$device)
     <div class="container">
         <h1>No Devices Connected Yet</h1>
         <br>
