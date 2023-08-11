@@ -93,6 +93,27 @@ class ExpenseController extends Controller
      $monthDetails = Expense::where('branch_id',$branch_id)->where('month',$month)->paginate(10);
      return view('expenses.expenses_home_details',['monthlydetails' => $monthDetails]);
     }
+    public function ShowMonthlyFees($id){
+        $monthlyfees = DB::table(DB::raw('(
+            SELECT 
+                SUM(amount) as total_amount,
+                DATE_FORMAT(fees_for, "%M") as month,
+                DATE_FORMAT(fees_for, "%Y") as year
+            FROM 
+                monthlyfees_revenues
+            WHERE 
+                branch_id = :branchId
+            GROUP BY 
+                DATE_FORMAT(fees_for, "%Y-%m"),
+                DATE_FORMAT(fees_for, "%M"),
+                DATE_FORMAT(fees_for, "%Y")
+        ) as subquery'))
+        ->select('total_amount', 'month', 'year')
+        ->setBindings(['branchId' => $id])
+        ->paginate(10);
+        
+    return view('revenue.monthlyRevenue',['monthlyfees' =>$monthlyfees]);
+   }    
     
     public function showDetails($id){
     return view('branches.branch_details',['id'=> $id]);

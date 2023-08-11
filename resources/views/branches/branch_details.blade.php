@@ -19,7 +19,8 @@
             </a>
             <a href="/expenses_home_monthly/{{$id}}" class="list-group-item list-group-item-action">Monthly Expenditure</a>
             <a href="/expenses_home_yearly/{{$id}}" class="list-group-item list-group-item-action">Yearly Expenditure</a>
-            <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+            <a href="/monthlyRevenue/{{$id}}" class="list-group-item list-group-item-action">Monthly Revenue</a>
+            <a href="#" class="list-group-item list-group-item-action">Yearly Revenue</a>
             
           </div>
         
