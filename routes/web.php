@@ -56,6 +56,8 @@ Route::middleware(['auth','isadmin'])->group(function(){
 
     Route::get('/Branches/{id}/details',[ExpenseController::class,'showDetails'])->name('branches.details');
     Route::get('/expenses_home_monthly/{id}',[ExpenseController::class,'MonthlyShow'])->name('MonthlyShow');
+    Route::get('/expenses_home_yearly/{id}',[ExpenseController::class,'yearlyShow'])->name('yearlyShow');
+    Route::get('/expenses_home_details/{branch_id}/{month}',[ExpenseController::class,'ShowMonthlyDetails'])->name('MonthlyDetails');
 
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');

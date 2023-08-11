@@ -14,32 +14,32 @@
 <div class="wrapper d-flex align-items-stretch">
 
 <div class="container">
-    @if($monthlyTotals->isEmpty())
+    @if($yearlyTotals->isEmpty())
 <h1 class="text-center">No Expenses to show yet</h1>
     @else
     <div class="row">
-    {{$monthlyTotals->links()}}
+    {{$yearlyTotals->links()}}
     </div>
     <table class="table table-hover">
       <thead>
           <tr>
             <th>Sno.</th>
-            <th>Month</th>
+
             <th>Year</th>
             <th>Amount</th>
-            <th>Actions</th>
+            
           </tr>
         </thead>
         <tbody>
           
-          @foreach ($monthlyTotals as $monthlyTotals)
+          @foreach ($yearlyTotals as $yearlyTotals)
           <tr>
             
             <td>{{$loop->index+1}}</td>
-            <td>{{$monthlyTotals->month}}</td>
-            <td>{{$monthlyTotals->year}}</td>
-            <td>PKR {{$monthlyTotals->total_amount}}</td>
-            <td><a href="/expenses_home_details/{{$branch_id}}/{{$monthlyTotals->month}}" class="btn btn-primary btn-sm">Details</a></td>
+            
+            <td>{{$yearlyTotals->year}}</td>
+            <td>PKR {{$yearlyTotals->total_amount}}</td>
+           
           </tr>
          @endforeach
     

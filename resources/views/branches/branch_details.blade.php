@@ -18,7 +18,7 @@
                 <h2 style="color: #33361C;">BRANCH FINANCES AND INVENTORY</h2>
             </a>
             <a href="/expenses_home_monthly/{{$id}}" class="list-group-item list-group-item-action">Monthly Expenditure</a>
-            <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+            <a href="/expenses_home_yearly/{{$id}}" class="list-group-item list-group-item-action">Yearly Expenditure</a>
             <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
             
           </div>

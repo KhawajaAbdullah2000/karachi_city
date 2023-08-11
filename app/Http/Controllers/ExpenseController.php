@@ -12,9 +12,9 @@ class ExpenseController extends Controller
 {
     public function Show($id){
        $expenses= expense::where('branch_id',$id)->orderby('created_at','desc')->paginate(5);
-       $count= expense::where('branch_id',$id)->count();
        
-       return view('expenses.expenses_home',['expenses'=>$expenses,'count'=>$count]);
+       
+       return view('expenses.expenses_home',['expenses'=>$expenses]);
 
     }
 
@@ -80,12 +80,21 @@ class ExpenseController extends Controller
     }
 
     public function MonthlyShow($id){
-        
-     $monthlyTotals = Expense::select(['year', 'month', DB::raw('SUM(Amount) as total_amount')])->where('branch_id', $id)->groupBy('year', 'month')->orderBy('year', 'asc')->orderBy('month', 'asc')->paginate(12);
-     return view('expenses.expenses_home_monthly',['monthlyTotals' => $monthlyTotals]);
+     $monthlyTotals = Expense::select(['year', 'month', DB::raw('SUM(Amount) as total_amount')])->where('branch_id', $id)->groupBy('year', 'month')->orderBy('year', 'desc')->orderBy('month', 'desc')->paginate(12);
+     return view('expenses.expenses_home_monthly',['monthlyTotals' => $monthlyTotals],['branch_id'=> $id]);
     }
+    
+    public function yearlyShow($id){
+     $yearlyTotals = Expense::select(['year',  DB::raw('SUM(Amount) as total_amount')])->where('branch_id', $id)->groupBy('year')->orderBy('year', 'desc')->paginate(12);
+     return view('expenses.expenses_home_yearly',['yearlyTotals' => $yearlyTotals]);
+    }
+    
+    public function ShowMonthlyDetails($branch_id,$month){
+     $monthDetails = Expense::where('branch_id',$branch_id)->where('month',$month)->paginate(10);
+     return view('expenses.expenses_home_details',['monthlydetails' => $monthDetails]);
+    }
+    
     public function showDetails($id){
-        
     return view('branches.branch_details',['id'=> $id]);
     }
 }
