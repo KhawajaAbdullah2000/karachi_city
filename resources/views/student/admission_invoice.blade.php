@@ -1,6 +1,30 @@
 
 
-<div class="invoice-container">
+
+  <div class="container" style="max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;">
+    <img class="logo" src="{{asset('logo.png')}}" alt="Big Logo" style="display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;">
+    <h2 class="text" style="margin-top: 20px;
+    text-align: center;
+    color: #333333;">
+    Welcome {{$f_name}} {{$l_name}} To karachi city
+</h2>
+ <br>
+<p>To complete your registration. You can pay admission fees on branch or online.
+     If you pay online, you can upload the screenshot after logging in to your account.
+     For cash payment, you can visit the branch you registered for.
+    </p>
+  </div>
+
+
+
+
+{{-- <div class="invoice-container">
     <div class="invoice-header">
         <h2 class="invoice-title" style="background-color: greenyellow">Welcome {{$f_name}} {{$l_name}} To karachi city</h2>
     </div>
@@ -21,4 +45,4 @@
     <div class="invoice-total">
         <p>Total: 6000 RS</p>
     </div>
-</div>
+</div> --}}
