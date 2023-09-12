@@ -12,7 +12,7 @@
 
 <div class="wrapper d-flex align-items-stretch">
 <div class="container">
-    @if($count==0)
+  @if($expenses->isEmpty())
 <h1 class="text-center">No Expenses Added Yet</h1>
     @else
     <div class="row">
