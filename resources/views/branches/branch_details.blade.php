@@ -19,8 +19,10 @@
             </a>
             <a href="/expenses_home_monthly/{{$id}}" class="list-group-item list-group-item-action">Monthly Expenditure</a>
             <a href="/expenses_home_yearly/{{$id}}" class="list-group-item list-group-item-action">Yearly Expenditure</a>
-            <a href="/monthlyRevenue/{{$id}}" class="list-group-item list-group-item-action">Monthly Revenue</a>
-            <a href="#" class="list-group-item list-group-item-action">Yearly Revenue</a>
+            <a href="/monthlyRevenue/{{$id}}" class="list-group-item list-group-item-action">Monthly fees Revenue</a>
+            <a href="/yearlyRevenue/{{$id}}" class="list-group-item list-group-item-action">Yearly fees Revenue</a>
+            <a href="/monthlyAdmissionRevenue/{{$id}}" class="list-group-item list-group-item-action">Monthly Admission fees Revenue</a>
+            <a href="/yearlyAdmissionRevenue/{{$id}}" class="list-group-item list-group-item-action">Yearly Admission fees Revenue</a>
             
           </div>
         

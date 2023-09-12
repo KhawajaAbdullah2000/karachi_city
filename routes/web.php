@@ -59,7 +59,14 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/expenses_home_yearly/{id}',[ExpenseController::class,'yearlyShow'])->name('yearlyShow');
     Route::get('/expenses_home_details/{branch_id}/{month}',[ExpenseController::class,'ShowMonthlyDetails'])->name('MonthlyDetails');
     Route::get('/monthlyRevenue/{id}',[ExpenseController::class,'ShowMonthlyFees'])->name('showMonthlyFees');
-    
+    Route::get('/yearlyRevenue/{id}',[ExpenseController::class,'ShowYearlyFees'])->name('showYearlyFees');
+    Route::get('/monthlyAdmissionRevenue/{id}',[ExpenseController::class,'ShowMonthlyAFees'])->name('showMonthlyAFees');
+    Route::get('/yearlyAdmissionRevenue/{id}',[ExpenseController::class,'ShowYearlyAFees'])->name('showYearlyAFees');
+    Route::get('/q1',[ExpenseController::class,'showqauterly'])->name('showquaterly');
+    Route::get('/q2',[ExpenseController::class,'showqauterly1'])->name('showquaterly1');
+    Route::get('/q3',[ExpenseController::class,'showqauterly2'])->name('showquaterly2');
+    Route::get('/Y',[ExpenseController::class,'showTheFinal'])->name('Final');
+        
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
