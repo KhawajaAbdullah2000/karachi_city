@@ -12,12 +12,15 @@ use Spatie\Permission\Models\Role;
 class BranchController extends Controller
 {
     public function showbranches(){
-      $branch=Branches::all();
+      $branch= Branches::leftjoin('users','users.id','branches.manager_id')->select('branches.id','branches.branch_name','branches.address','users.name')->get();
+    
       return view('branches.displaybranches',['branches' => $branch]);
 
     }
     public function destroy(request $request){
         $branch_del = Branches::where('id',$request->category_delete_id)->first();
+        $user = User::where('id',$branch_del->manager_id)->first();
+        $user->removeRole('manager');
         $branch_del->delete();
         return back();
     }

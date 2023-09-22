@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branches;
 use App\Models\Student;
+use App\Models\MonthlyFee;
 use App\Models\Announcement;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -13,6 +14,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
+use DateTime;
+use Exception;
 
 class StudentController extends Controller
 {
@@ -75,10 +78,15 @@ class StudentController extends Controller
         $user=Student::create(array_merge($req->all(), ['password' => bcrypt($req->password)])); //user created
 
         $data=['f_name'=>$user->first_name,'l_name'=>$user->last_name];
-        Mail::send('student.admission_invoice',$data,function($messages) use ($user){
-           $messages->to($user->email);
-           $messages->subject('Welcome to Karachi City');
-        });
+        try{
+            Mail::send('student.admission_invoice',$data,function($messages) use ($user){
+                $messages->to($user->email);
+                $messages->subject('Welcome to Karachi City');
+             });
+        }catch(Exception $e){
+            return redirect()->route('home')->with('registered','Couldnt sent email but registered');
+        }
+        
 
         return redirect()->route('home')->with('registered','Please check your email inbox');
     
@@ -191,6 +199,138 @@ class StudentController extends Controller
           ($announcements);
           return view('student.announcements',['announcements'=>$announcements]);
     }
+
+    public function upload_admission_fees_receipt($id){
+        $student=Student::find($id);
+        return view('student.upload_admission_fees',['student'=>$student]);
+    }
+
+    public function submit_admission_fees_ss(Request $req,$id){
+        $req->validate([
+            'admission_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $student=Student::find($id);
+
+        $imagename=time().'.'.$req->admission_fees_ss->extension();
+        $req->admission_fees_ss->move(public_path('admission_fees'),$imagename);
+
+        $student->admission_fees_ss=$imagename;
+        $student->save();
+      return redirect()->route('student_home')->with('updated','Admission fees receipt uploaded');
+       
+    }
+    public function edit_admission_fees_ss(Request $req,$id){
+        $req->validate([
+            'admission_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $student=Student::find($id);
+        //deleting previous image from public folder
+        unlink(public_path('/admission_fees'.'/'.$student->admission_fees_ss) );
+//adding the new image
+        $imagename=time().'.'.$req->admission_fees_ss->extension();
+        $req->admission_fees_ss->move(public_path('admission_fees'),$imagename);
+
+
+        $student->admission_fees_ss=$imagename;
+        $student->save();
+
+        return redirect()->route('upload_admission_fees_receipt',['id'=>$student->id])->with('updated','new Image uploaded successfully');
+
+        
+
+    }
+
+    public function upload_monthly_fees($student_id){
+        $current=Carbon::now();
+        $month=$current->format('F');
+        $year=$current->format('Y');
+    //    dd($month,$year);
+    $existingfee=MonthlyFee::where('student_id',$student_id)->where('month',$month)->where('year',$year)->first();
+
+    if($existingfee){
+
+        return view('student.upload_monthly_fees',['fee_details'=>$existingfee]);
+
+      //dd('uploaded for this month');
+    }
+    else{
+        return view('student.upload_monthly_fees',['month'=>$month,'year'=>$year]);
+    }
+
+
+    }
+
+    public function submit_monthly_fees_ss(Request $req,$student_id){
+        $req->validate([
+            'monthly_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $current=Carbon::now();
+        $month=$current->format('F');
+        $year=$current->format('Y');
+
+        $fees=new MonthlyFee();
+        //saving image in public folder
+        $imagename=time().'.'.$req->monthly_fees_ss->extension();
+        $req->monthly_fees_ss->move(public_path('monthly_fees'),$imagename);
+
+        $fees->student_id=$student_id;
+        $fees->fees_for=Carbon::now();
+        $fees->monthly_fees_ss=$imagename;
+        $fees->month=$month;
+        $fees->year=$year;
+        $fees->save();
+
+        return redirect()->route('student_home',)->with('updated','Your image was submitted');
+  
+        
+    }
+
+    public function edit_monthly_fees(Request $req,$student_id){
+        $req->validate([
+            'monthly_fees_ss'=>'required|mimes:jpeg,jpg,png|max:20000'
+        ]);
+        $current=Carbon::now();
+        $month=$current->format('F');
+        $year=$current->format('Y');
+    
+        $existingfee=MonthlyFee::where('student_id',$student_id)->where('month',$month)->where('year',$year)->first();
+        if($existingfee){
+
+        unlink(public_path('/monthly_fees'.'/'.$existingfee->monthly_fees_ss) );
+
+        $imagename=time().'.'.$req->monthly_fees_ss->extension();
+        $req->monthly_fees_ss->move(public_path('monthly_fees'),$imagename);
+
+        $existingfee->monthly_fees_ss=$imagename;
+        $existingfee->save();
+        return redirect()->route('upload_monthly_fees',['id'=>$student_id])->with('updated','Image edited');
+    }
+    }
+
+    public function student_fees_status($student_id){
+     $fees=MonthlyFee::where('student_id',$student_id)->orderby('updated_at','desc')->paginate(10);
+     return view('student.monthly_fees',['fees'=>$fees]);
+    }
+
+
+
+
+    // public function relation(){
+    //   //  $student=MonthlyFee::where('student_id',3)->first();
+    //   $fees = MonthlyFee::with('student')
+    //   ->whereHas('student', function ($query) {
+    //       // Add your where condition on the student table here
+    //       $query->where('admission',0);
+    //   })
+    //   ->where('student_id', 3)
+    //   ->first()
+    //   ->student;
+     
+    //   dd($fees);
+    //}
+ 
+      
+      
 
 
 

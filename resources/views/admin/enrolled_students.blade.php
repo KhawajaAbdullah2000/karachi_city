@@ -17,17 +17,19 @@
                 <th>Email</th>
                 <th>Phone No.</th>
                 <th>Emergency contact</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($students as $stud)
-              <tr>
+              <tr class="table-align">
                 <td>{{$stud->id}}</td>
                 <td>{{$stud->first_name}} {{$stud->last_name}}</td>
                 <td>{{$stud->email}}</td>
                 <td>{{$stud->phone}}</td>
             
                 <td>{{$stud->emergency_name}} {{$stud->emergency_contact}}</td>
+                <td>  <a href="/delete_student/{{$stud->id}}" class="btn btn-danger btn-sm">Delete</a> </td>
         
               </tr>
 
@@ -47,7 +49,9 @@
 @section('scripts')
 
 <script>
-    let table = new DataTable('#myTable');
+    let table = new DataTable('#myTable',{
+      ordering:false
+    });
 </script>
 
 @if(Session::has('success'))
@@ -55,6 +59,17 @@
     swal({
   title: "{{Session::get('success')}}",
   icon: "success",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
+
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
   closeOnClickOutside: true,
   timer: 4000,
     });

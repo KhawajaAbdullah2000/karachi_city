@@ -17,19 +17,27 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone No.</th>
+                <th>Admission fees paid receipt</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($students as $stud)
-              <tr>
+              <tr class="table-align ">
                 <td>{{$stud->id}}</td>
                 <td>{{$stud->first_name}} {{$stud->last_name}}</td>
                 <td>{{$stud->email}}</td>
                 <td>{{$stud->phone}}</td>
+                @if(isset($stud->admission_fees_ss))
+                <td><img src="/admission_fees/{{$stud->admission_fees_ss}}" alt="admission fees" width="50" height="50"></td>
+               @else
+               <td><h5><span class="badge bg-primary rounded-pill ">No image yet</span></h5></td>
+                @endif
                 <td>
-                    <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Admission Fees paid</a>
-                </td>
+                    <a href="/student_admission_fees_paid/{{$stud->id}}/{{$stud->branch_id}}" class="btn btn-warning btn-sm">Confirm admission fees payment</a>
+                    <a href="/delete_student/{{$stud->id}}" class="btn btn-danger btn-sm">Delete</a>
+
+                  </td>
               </tr>
 
               @endforeach 
@@ -47,8 +55,32 @@
 @section('scripts')
 
 <script>
-    let table = new DataTable('#myTable');
+    let table = new DataTable('#myTable',{
+      ordering:false
+    });
 </script>
+
+@if(Session::has('success'))
+<script>
+    swal({
+  title: "{{Session::get('success')}}",
+  icon: "success",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
+
+@if(Session::has('error'))
+<script>
+    swal({
+  title: "{{Session::get('error')}}",
+  icon: "error",
+  closeOnClickOutside: true,
+  timer: 4000,
+    });
+</script> 
+@endif
 
 
 @endsection

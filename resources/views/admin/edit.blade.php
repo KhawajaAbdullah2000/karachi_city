@@ -52,7 +52,9 @@
                     <label>Branch</label>
                     <select name="branch_id" id="branch_id" class="form-control boxstyling bg-info rounded">
                         @foreach($branches as $b)
-                        <option value="{{$b->id}}">{{$b->branch_name}}</option>
+         <option value="{{$b->id}}" {{ old('branch_id',$user->branch_id) == $b->id ? 'selected' : '' }}>{{$b->branch_name}}</option>
+
+                        {{-- <option value="{{$b->id}}">{{$b->branch_name}}</option> --}}
                         @endforeach
                       </select> 
                 </div>
