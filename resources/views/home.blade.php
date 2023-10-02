@@ -11,19 +11,20 @@
 
 @include('home-nav')
 
+<div class="text-center">
 
-  
+</div>
+
 
   <div class="homepage">
 
     <div class="homepage-content">
-    <p classs="home-heading">KARACHI CITY</p>
-    <p>We have amazing things in store for you.</p>
-    <a href="{{route('register')}}" class="btn btn-warning btn-lg">Register Yourself</a>
+
+    {{-- <a href="{{route('register')}}" class="btn btn-warning btn-lg">Register Yourself</a> --}}
     </div>
 
   </div>
-  
+
 
   @section('scripts')
 
@@ -35,10 +36,10 @@
                 closeOnClickOutside: true,
                 timer: 4000,
                   });
-              </script> 
+              </script>
       @endif
 
-      
+
       @if(Session::has('success'))
       <script>
           swal({
@@ -47,9 +48,9 @@
         closeOnClickOutside: true,
         timer: 4000,
           });
-      </script> 
+      </script>
 @endif
 
-  @endsection 
+  @endsection
 
 @endsection

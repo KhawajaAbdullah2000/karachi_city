@@ -5,6 +5,14 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
+
+        <li class="nav-item">
+        @if(Request::is('/'))
+        <a href="{{route('register')}}" class="btn btn-warning btn-lg mb-2">Register Yourself</a>
+    @endif
+        </li>
+
+
         <li class="nav-item">
             <a href="{{route('login_form')}}" class="nav-link">Employee Login</a>
         </li>
