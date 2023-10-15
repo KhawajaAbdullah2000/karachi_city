@@ -50,7 +50,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
-    
+
     Route::get('/Branches/{id}/edit',[BranchController::class,'edit'])->name('branches.edit');
     Route::put('/Branches/{id}/update',[BranchController::class,'update'])->name('branches.update');
 
@@ -66,7 +66,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/q2',[ExpenseController::class,'showqauterly1'])->name('showquaterly1');
     Route::get('/q3',[ExpenseController::class,'showqauterly2'])->name('showquaterly2');
     Route::get('/Y',[ExpenseController::class,'showTheFinal'])->name('Final');
-        
+
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
@@ -77,7 +77,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::post('edit_announcement/{id}',[UserController::class,'submit_edit_announcement']);
     Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
 
-    Route::get('/zktecoDevices',[ZktecoController::class,'showDevices'])->name('showDevices');
+    // Route::get('/zktecoDevices',[ZktecoController::class,'showDevices'])->name('showDevices');
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
@@ -121,9 +121,9 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
 
     Route::delete('/expenses_home/delete', [ExpenseController::class,'destroy'])->name('expenses_delete');
-     
+
     //monthly
-    
+
 
     Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
@@ -134,15 +134,15 @@ Route::post('add_cash_record_monthly',[UserController::class,'add_cash_record_mo
 
 Route::get('delete_student/{id}',[UserController::class,'delete_student']);
 
-Route::get('/emp_home/{id}/device',[ZktecoController::class,'manshowDevice'])->name('emp.showDevices');
-Route::get('/zktecoDevice/create',[ZktecoController::class,'createDevice'])->name('createDevice');
-Route::post('/zktecoDevice/{b_id}/store',[ZktecoController::class,'storeDevice'])->name('storeDevice');
-Route::put('/zkTeco/{id}/Connect',[ZktecoController::class,'connect'])->name('connectDevice');
-Route::get('/zkTeco/{id}/test',[ZktecoController::class,'test'])->name('testDevice');
-Route::get('/zkteco/{id}/addStudents',[ZktecoController::class,'addStudents'])->name('addStudentsToDevice');
-Route::get('/zkteco/{id}/getAttendance',[ZktecoController::class,'addAttendanceLogs'])->name('addAttendance');
-Route::get('/emp_home/{id}/studentAttendance',[AttendanceController::class,'displayAttendance'])->name('showAttendance');
-Route::put('/zkTeco/{id}/Disconnect',[ZktecoController::class,'disconnect'])->name('disconnectDevice');
+// Route::get('/emp_home/{id}/device',[ZktecoController::class,'manshowDevice'])->name('emp.showDevices');
+// Route::get('/zktecoDevice/create',[ZktecoController::class,'createDevice'])->name('createDevice');
+// Route::post('/zktecoDevice/{b_id}/store',[ZktecoController::class,'storeDevice'])->name('storeDevice');
+// Route::put('/zkTeco/{id}/Connect',[ZktecoController::class,'connect'])->name('connectDevice');
+// Route::get('/zkTeco/{id}/test',[ZktecoController::class,'test'])->name('testDevice');
+// Route::get('/zkteco/{id}/addStudents',[ZktecoController::class,'addStudents'])->name('addStudentsToDevice');
+// Route::get('/zkteco/{id}/getAttendance',[ZktecoController::class,'addAttendanceLogs'])->name('addAttendance');
+// Route::get('/emp_home/{id}/studentAttendance',[AttendanceController::class,'displayAttendance'])->name('showAttendance');
+// Route::put('/zkTeco/{id}/Disconnect',[ZktecoController::class,'disconnect'])->name('disconnectDevice');
 
 });
 
@@ -203,11 +203,11 @@ Route::get('/forgot-password', function () {
 //employee enters email to send link of password
 Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
- 
+
     $status = Password::sendResetLink(
         $request->only('email')
     );
- 
+
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
@@ -224,20 +224,20 @@ Route::post('/reset-password', function (Request $request) {
         'email' => 'required|email',
         'password' => 'required|min:5|confirmed',
     ]);
- 
+
     $status = Password::reset(
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function (User $user, string $password) {
             $user->forceFill([
                 'password' => Hash::make($password)
             ])->setRememberToken(Str::random(60));
- 
+
             $user->save();
- 
+
             event(new PasswordReset($user));
         }
     );
- 
+
     return $status === Password::PASSWORD_RESET
                 ? redirect()->route('home')->with('status', __($status))
                 : back()->withErrors(['status' => [__($status)]]);
