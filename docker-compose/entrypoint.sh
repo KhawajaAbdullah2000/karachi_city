@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wait for the database to become available
-/wait-for-it.sh db:3306 -t 60
+/wait-for-it.sh db:3306 -t 120
 rm -rf vendor composer.lock
 composer install
 
