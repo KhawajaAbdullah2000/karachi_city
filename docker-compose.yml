@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - 80:8000
+      - 4370:4370
     working_dir: /var/www/
     volumes:
       - ./:/var/www
