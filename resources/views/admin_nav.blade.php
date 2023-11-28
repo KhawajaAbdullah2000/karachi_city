@@ -39,6 +39,19 @@
   </ul>
   </li>
 
+
+  <li class="nav-item">
+    <a href="#students" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Students</a>
+    <ul class="collapse navbar-nav list-unstyled" id="students">
+      <li class="nav-item">
+        <a href="{{route('all_registered_students')}}">Registered Students</a>
+    </li>
+      <li class="nav-item">
+          <a href="">Enrolled Students</a>
+      </li>
+    </ul>
+    </li>
+
 </ul>
 
 </div>

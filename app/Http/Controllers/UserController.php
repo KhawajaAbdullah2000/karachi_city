@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications\AnnouncementNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
-use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Spatie\Permission\Models\Role;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class UserController extends Controller
@@ -34,10 +34,10 @@ class UserController extends Controller
             }else{
                 return redirect()->route('emp_home',['id'=>auth()->user()->id]);
             }
-      
+
         } else {
             return redirect()->route('login_form')->with('error','Invalid credentials');
-        
+
     }
 
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route('home')->with('success','Logged out successfully');
-    
+
     }
     public function showEmployees(){
         $users = User::latest()->paginate(6);
@@ -67,7 +67,7 @@ class UserController extends Controller
         $branches=Branches::all();
         return view('admin.edit',['user'=>$user,'branches'=>$branches]);
     }
-    
+
     public function updateEmployee(Request $request,$id){
         $request->validate([
             'password' => ['required'],
@@ -133,10 +133,10 @@ class UserController extends Controller
          $user->cnicFront=$cnicFront;
          $request->front->move(public_path('cnic'),$cnicFront);
         }
-        
+
         if(isset($request->back)){
             $cnicBack = time().'.'.$request->back->extension();
-            $user->cnicBack=$cnicBack;   
+            $user->cnicBack=$cnicBack;
              $request->back->move(public_path('cnic'),$cnicBack);
            }
         $user->branch_id=$request->branch_id;
@@ -257,7 +257,7 @@ class UserController extends Controller
                 $current=Carbon::now();
                 $month=$current->format('F');
                 $year=$current->format('Y');
-        
+
                 $new=new MonthlyFee();
                 $new->student_id=$student->id;
                 $new->fees_for=Carbon::now()->format('Y-m-d');
@@ -289,7 +289,7 @@ class UserController extends Controller
             $stud->notify(new AnnouncementNotification($ann));
         }
 
-        
+
         return redirect()->route('announcements')->with('success','Announcement created');
 
      }
@@ -335,14 +335,14 @@ class UserController extends Controller
         $paid=MonthlyFee::join('students','students.id','=','monthly_fees.student_id')
         ->where('students.branch_id',$branch_id)->where('month',$month)->where('year',$year)
         ->where('paid',1)->count();
-       
+
         return view('emp.check_monthly_fees_current',
         ['students'=>$students,'month'=>$month,'year'=>$year,
         'totalstudents'=>$totalstudents,'paid'=>$paid]
     );
      }
 
-    
+
 
      public function paid_monthly_fees($id,$branch_id)
      {
@@ -366,7 +366,7 @@ class UserController extends Controller
 
             return redirect()->route('check_monthly_fees_current',['branch_id'=>$branch_id])->with('success','Record updated');
         }
-       
+
      }
 
      public function add_new_cash_payment($branch_id){
@@ -382,13 +382,13 @@ class UserController extends Controller
             'student_id'=>'required'
          ],
          ['student_id.required'=>'please select a student'
-        
+
          ]
         );
         $current=Carbon::now();
         $month=$current->format('F');
         $year=$current->format('Y');
-        
+
     $check=MonthlyFee::where('student_id',$req->student_id)->where('month',$month)->where('year',$year);
 
     if($check->count()==0){
@@ -413,11 +413,11 @@ class UserController extends Controller
         return redirect()->route('check_monthly_fees_current',['branch_id'=>auth()->user()->branch_id])
         ->with('error','Record already exists.please check again if the student had uploaded screenshot for the current month');
     }
-           
-        
+
+
        return redirect()->route('check_monthly_fees_current',['branch_id'=>auth()->user()->branch_id])->with('success','Record added');
 
-    
+
      }
 
 
@@ -429,7 +429,7 @@ class UserController extends Controller
        $students->select('students.id','students.first_name','students.last_name',
        'students.branch_id','monthly_fees.month','monthly_fees.year',
        'monthly_fees.monthly_fees_ss','monthly_fees.paid','students.admission')
-       
+
        ->join('monthly_fees','monthly_fees.student_id','=','students.id')
 
        ->where('students.branch_id',$branch_id)->where('students.admission',1);
@@ -439,9 +439,9 @@ class UserController extends Controller
         ->where('monthly_fees.year',$req->input('year'));
         ;
        }
-       
+
        return view('emp.monthly_fees_record',['students'=>$students->orderby('monthly_fees.updated_at','desc')->paginate(8)->withQueryString(),'cur_year'=>$year]);
-      
+
 
      }
 
@@ -457,25 +457,71 @@ class UserController extends Controller
      }
 
 
-    //  public function pay_previous_fees($student_id,$month,$year){
-    //     $stu=MonthlyFee::where('student_id',$student_id)->where('month',$month)->where('year',$year)->where('paid',0)->first();
-    //     if($stu){
-    //         $stu->paid=1;
-    //         $stu->save();
-    //         return redirect()->route('monthly_fees_record',['id'=>auth()->user()->branch_id]);
-    //     }
-    //     else{
-    //         //if paid by cash now for some previous month
-    //         $new=new MonthlyFee();
-    //         $new->student_id=$student_id;
-    //         $new->fees_for=Carbon::now()->formay('Y-m-d');
-    //         $new->paid=1;
-    //         $new->month=$month;
-    //         $new->year=$year;
-    //         $new->save();
-    //         return redirect()->route('monthly_fees_record',['id'=>auth()->user()->branch_id]);
-    //     }
+    //CHeck allregistered students for Admin
+    public function all_registered_students(){
+        $students= Student::where('admission',0)->get();
+        return view('student.all_registered_students',['students'=>$students]);
+    }
 
-    //  }
+    public function student_admission_invoice($id){
+        $student= Student::join('branches','students.branch_id','branches.id')->
+        where('students.id',$id)->where('admission',0)
+        ->first(['students.first_name','students.last_name','students.id','branches.branch_name']);
+        return view('student.register_invoice_form',['student'=>$student]);
+
+    }
+
+    public function send_registeration_invoice(Request $req,$id){
+
+        $req->validate([
+            'reg_fees'=>'required',
+            'month1'=>'required',
+            'month1_fees'=>'required'
+        ]);
+        $student= Student::join('branches','students.branch_id','branches.id')->
+        where('students.id',$id)->where('admission',0)
+        ->first(['students.first_name','students.last_name','students.id','branches.branch_name','students.email']);
+
+        if($req->month2_fees==null){
+            $total_amount=$req->reg_fees+$req->month1_fees;
+        }else{
+            $total_amount=$req->reg_fees+$req->month1_fees+$req->month2_fees;
+        }
+
+
+        $pdf = PDF::loadView('pdf.registeration_template',
+        [
+        'f_name'=>$student->first_name,
+        'l_name'=>$student->last_name,
+         'branch_name'=>$student->branch_name,
+         'total_amount'=>$total_amount,
+         'reg_fees'=>$req->reg_fees,
+         'month1'=>$req->month1,
+         'month2'=>$req->month2,
+         'month1_fees'=>$req->month1_fees,
+         'month2_fees'=>$req->month2_fees,
+
+        ]);
+
+        $pdfContent = $pdf->output();
+
+        try{
+            $data=['first_name'=>$student->first_name,
+                    'last_name'=>$student->last_name
+
+        ];
+        Mail::send('email.registeration_invoice',$data,function($messages) use ($student,$pdfContent){
+           $messages->to($student->email)
+           ->subject('Karachi City Registeration')
+           ->attachData($pdfContent, 'invoice.pdf', ['mime' => 'application/pdf']);
+
+        });
+
+        }catch(Exception $e){
+
+            return redirect()->route('admin_home')->withError('Couldnt send the email.');
+        }
+
+    }
 }
 

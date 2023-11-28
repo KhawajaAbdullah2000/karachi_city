@@ -16,23 +16,23 @@
           </a>
 
         </div>
-        
+
         <div class="modal-body">
             <input type="hidden" name="category_delete_id" id="category_id"/>
           <h5>Are you sure you want to permenantly delete this branch's data?</h5>
         </div>
         <div class="modal-footer">
-          
+
           <button type="submit" class="btn btn-danger">Yes Delete</button>
         </div>
         </form>
-        
+
       </div>
     </div>
   </div>
 
 <div class="wrapper d-flex align-items-stretch">
-    
+
 @include('admin_nav')
 
 
@@ -40,8 +40,8 @@
 <div id="content" class="p-4 p-md-5">
     {{-- always include this nav2 first in div with id=content for admin pages --}}
     @include('admin_nav2')
-    
-    
+
+
     <h1 style="color: #3c3737;">Branch Page</h1>
 
 
@@ -51,36 +51,36 @@
         <th>ID</th>
         <th>BRANCH NAME</th>
         <th>ADDRESS</th>
-        <th>Name</th>
+        <th>Manager Name</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      
+
       @foreach ($branches as $branches)
-      
+
       <tr>
         <td>{{$branches->id}}</td>
         <td>{{$branches->branch_name}}</td>
         <td>{{$branches->address}}</td>
         <td>{{$branches->name}}</td>
-        
+
         <td>
-            <a href="/Branches/{{$branches->id}}/edit" class="btn btn-dark btn-sm">Edit/Add manager</a> 
+            <a href="/Branches/{{$branches->id}}/edit" class="btn btn-dark btn-sm">Edit/Add manager</a>
             <button type="button" class="btn btn-danger btn-sm deleteCategoryBtn" value="{{$branches->id}}">Delete</button>
             <a href="/Branches/{{$branches->id}}/details" class="btn btn-primary btn-sm">Details</a>
         </td>
       </tr>
-      
-      @endforeach 
+
+      @endforeach
     </tbody>
   </table>
 
 <br>
 
 <a href="/Branches/create" class="btn btn-info btn-sm text-white" role="button">Add New Branch</a>
-</div> 
-</div> 
+</div>
+</div>
 
 
 @endsection
