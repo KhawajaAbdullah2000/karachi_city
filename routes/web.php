@@ -82,13 +82,43 @@ Route::middleware(['auth','isadmin'])->group(function(){
 
     //all registered students
     Route::get('all_registered_students',[UserController::class,'all_registered_students'])->name('all_registered_students');
+
+//send invoice after collecting data from admin
+route::post('send_registeration_invoice/{id}',[UserController::class,'send_registeration_invoice']);
+
     //go to registeraton invoice form
     Route::get('student_admission_invoice/{id}',[UserController::class,'student_admission_invoice']);
+
+    //confirm payment view
+    route::get('student_admission_fees_paid/{id}',[UserController::class,'student_admission_fees_paid']);
+
+
+
+    route::post('add_registeration_fees/{id}',[UserController::class,'add_registeration_fees']);
+
+    //all enrolled students
+    Route::get('all_enrolled_students',[UserController::class,'all_enrolled_students'])->name('all_enrolled_students');
+
+    //monthly fee invoice form view
+    route::get('student_monthly_invoice/{id}',[UserController::class,'student_monthly_invoice']);
+
+    //send invoice after collecting data from admin for monthly
+route::post('send_monthly_invoice/{id}',[UserController::class,'send_monthly_invoice']);
+
+//confirm monthly payment gormview
+route::get('student_monthly_fees_paid/{id}',[UserController::class,'student_monthly_fees_paid']);
+route::post('add_monthly_fees/{id}',[UserController::class,'add_monthly_fees']);
+
+route::get('fees_this_month',[UserController::class,'fees_this_month']);
+
+
+
+
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
-//send invoice after collecting data from admin
-route::post('send_registeration_invoice/{id}',[UserController::class,'send_registeration_invoice']);
+
 
 
 
@@ -107,7 +137,7 @@ Route::middleware(['auth','isemp'])->group(function(){
 Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('registered_students/{branch_id}',[UserController::class,'registered_students'])->name('registered_students');
     Route::get('enrolled_students/{branch_id}',[UserController::class,'enrolled_students'])->name('enrolled_students');
-    Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
+  //  Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
     Route::get('/emp_items/{id}',[ItemController::class,'emp_items'])->name('emp_items');
     Route::get('/emp_items/{id}/add',[ItemController::class,'items_add'])->name('items_add');
     Route::post('/emp_items/{id}/store',[ItemController::class,'items_store'])->name('items_store');

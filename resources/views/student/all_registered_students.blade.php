@@ -13,6 +13,7 @@
 
         <h1 class='text-center mb-3'>Registered Students</h1>
 
+
         <table class="table table-responsive table-borderless table-hover table-sm" id="myTable">
             <thead>
               <tr>
@@ -20,8 +21,9 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone No.</th>
-                <th>Admission fees paid receipt</th>
-                <th>Actions</th>
+                <th>Branch</th>
+                <th >Send Invoice</th>
+                <th>Payment</th>
               </tr>
             </thead>
             <tbody>
@@ -31,16 +33,13 @@
                 <td>{{$stud->first_name}} {{$stud->last_name}}</td>
                 <td>{{$stud->email}}</td>
                 <td>{{$stud->phone}}</td>
-                @if(isset($stud->admission_fees_ss))
-                <td><img src="/admission_fees/{{$stud->admission_fees_ss}}" alt="admission fees" width="50" height="50"></td>
-               @else
-               <td><h5><span class="badge bg-primary rounded-pill ">No image yet</span></h5></td>
-                @endif
+                <td>{{$stud->branch->branch_name}}</td>
+
                 <td>
                     <a href="/student_admission_invoice/{{$stud->id}}" class="btn btn-warning btn-sm">Send Registeration invoice</a>
-
+                </td>
+                <td>
                     <a href="/student_admission_fees_paid/{{$stud->id}}" class="btn btn-success btn-sm">Confirm admission fees payment</a>
-                    <a href="/delete_student/{{$stud->id}}" class="btn btn-danger btn-sm">Delete</a>
 
                   </td>
               </tr>

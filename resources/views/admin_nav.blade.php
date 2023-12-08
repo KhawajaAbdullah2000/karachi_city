@@ -47,9 +47,13 @@
         <a href="{{route('all_registered_students')}}">Registered Students</a>
     </li>
       <li class="nav-item">
-          <a href="">Enrolled Students</a>
+          <a href="{{route('all_enrolled_students')}}">Enrolled Students</a>
       </li>
     </ul>
+    </li>
+
+    <li class="nav-item">
+        <a href="/fees_this_month">Fees(this month)</a>
     </li>
 
 </ul>
