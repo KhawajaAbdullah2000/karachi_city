@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('monthlyfees_revenues', function (Blueprint $table) {
             $table->string('month');
             $table->string('year');
+
         });
     }
 
