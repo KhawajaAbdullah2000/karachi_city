@@ -50,7 +50,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('/Branches/delete', [BranchController::class,'destroy'])->name('branches.delete');
     Route::get('/Branches/create',[BranchController::class,'create'])->name('branches.create');
     Route::post('/Branches/store', [BranchController::class,'store'])->name('branches.store');
-    
+
     Route::get('/Branches/{id}/edit',[BranchController::class,'edit'])->name('branches.edit');
     Route::put('/Branches/{id}/update',[BranchController::class,'update'])->name('branches.update');
 
@@ -66,7 +66,7 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/q2',[ExpenseController::class,'showqauterly1'])->name('showquaterly1');
     Route::get('/q3',[ExpenseController::class,'showqauterly2'])->name('showquaterly2');
     Route::get('/Y',[ExpenseController::class,'showTheFinal'])->name('Final');
-        
+
     Route::get('/employees/{id}/leaves',[LeavesController::class,'showLeaves'])->name('leaves.show');
     Route::put('/employees/{l_id}/approve',[LeavesController::class,'approveLeave'])->name('leaves.approve');
 
@@ -78,9 +78,47 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::delete('delete_announcement/{id}',[UserController::class,'destroy_announcement']);
 
     Route::get('/zktecoDevices',[ZktecoController::class,'showDevices'])->name('showDevices');
+
+
+    //all registered students
+    Route::get('all_registered_students',[UserController::class,'all_registered_students'])->name('all_registered_students');
+
+//send invoice after collecting data from admin
+route::post('send_registeration_invoice/{id}',[UserController::class,'send_registeration_invoice']);
+
+    //go to registeraton invoice form
+    Route::get('student_admission_invoice/{id}',[UserController::class,'student_admission_invoice']);
+
+    //confirm payment view
+    route::get('student_admission_fees_paid/{id}',[UserController::class,'student_admission_fees_paid']);
+
+
+
+    route::post('add_registeration_fees/{id}',[UserController::class,'add_registeration_fees']);
+
+    //all enrolled students
+    Route::get('all_enrolled_students',[UserController::class,'all_enrolled_students'])->name('all_enrolled_students');
+
+    //monthly fee invoice form view
+    route::get('student_monthly_invoice/{id}',[UserController::class,'student_monthly_invoice']);
+
+    //send invoice after collecting data from admin for monthly
+route::post('send_monthly_invoice/{id}',[UserController::class,'send_monthly_invoice']);
+
+//confirm monthly payment gormview
+route::get('student_monthly_fees_paid/{id}',[UserController::class,'student_monthly_fees_paid']);
+route::post('add_monthly_fees/{id}',[UserController::class,'add_monthly_fees']);
+
+route::get('fees_this_month',[UserController::class,'fees_this_month']);
+
+
+
+
+
 });
 //emp logout
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
 
 
 
@@ -99,7 +137,7 @@ Route::middleware(['auth','isemp'])->group(function(){
 Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::get('registered_students/{branch_id}',[UserController::class,'registered_students'])->name('registered_students');
     Route::get('enrolled_students/{branch_id}',[UserController::class,'enrolled_students'])->name('enrolled_students');
-    Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
+  //  Route::get('/student_admission_fees_paid/{id}/{branch_id}',[UserController::class,'student_admission_fees_paid']);
     Route::get('/emp_items/{id}',[ItemController::class,'emp_items'])->name('emp_items');
     Route::get('/emp_items/{id}/add',[ItemController::class,'items_add'])->name('items_add');
     Route::post('/emp_items/{id}/store',[ItemController::class,'items_store'])->name('items_store');
@@ -121,9 +159,9 @@ Route::middleware(['auth','isemp','role:manager'])->group(function(){
     Route::put('/expenses_home/{id}/{branch_id}/update',[ExpenseController::class,'update'])->name('expenses_update');
 
     Route::delete('/expenses_home/delete', [ExpenseController::class,'destroy'])->name('expenses_delete');
-     
+
     //monthly
-    
+
 
     Route::get('check_monthly_fees_current/{branch_id}',[UserController::class,'check_monthly_fees_current'])->name('check_monthly_fees_current');
    Route::get('paid_monthly_fees/{id}/{branch_id}',[UserController::class,'paid_monthly_fees'])->name('paid_monthly_fees');
@@ -203,11 +241,11 @@ Route::get('/forgot-password', function () {
 //employee enters email to send link of password
 Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
- 
+
     $status = Password::sendResetLink(
         $request->only('email')
     );
- 
+
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
@@ -224,20 +262,20 @@ Route::post('/reset-password', function (Request $request) {
         'email' => 'required|email',
         'password' => 'required|min:5|confirmed',
     ]);
- 
+
     $status = Password::reset(
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function (User $user, string $password) {
             $user->forceFill([
                 'password' => Hash::make($password)
             ])->setRememberToken(Str::random(60));
- 
+
             $user->save();
- 
+
             event(new PasswordReset($user));
         }
     );
- 
+
     return $status === Password::PASSWORD_RESET
                 ? redirect()->route('home')->with('status', __($status))
                 : back()->withErrors(['status' => [__($status)]]);

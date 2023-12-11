@@ -15,9 +15,8 @@
     Welcome {{$f_name}} {{$l_name}} To karachi city
 </h2>
  <br>
-<p>To complete your registration. You can pay admission fees on branch or online.
-     If you pay online, you can upload the screenshot after logging in to your account.
-     For cash payment, you can visit the branch you registered for.
+<p>To complete your registration. You will get an invoice shortly to successfully enrol.
+
     </p>
   </div>
 

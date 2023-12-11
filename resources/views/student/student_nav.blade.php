@@ -1,4 +1,4 @@
-	
+
 	@auth('student')
     <nav class="navbar navbar-expand-lg navbar-light mynavbar">
         <a class="navbar-brand" href="#"><img src="{{asset('logo.png')}}" alt="karachi city" class=kclogo></a>
@@ -14,7 +14,7 @@
                     <a class="nav-link" href="{{route('student_show_announcements')}}">Announcements</a>
                 </li>
 
-          
+{{--
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fees
                     </a>
@@ -28,13 +28,13 @@
 
                         @endif
 
-                       
+
                     </div>
-                </li>
+                </li> --}}
 
 
-    
-              
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{auth('student')->user()->first_name}}
@@ -43,7 +43,7 @@
                         {{-- <a class="dropdown-item" href="#">My Profile</a> --}}
                         <a href='{{route('student_edit_form',['id'=>auth('student')->user()->id])}}' class="dropdown-item">Edit Profile</a>
 
-                       
+
                     </div>
                 </li>
                  <li class="nav-item">
@@ -52,18 +52,18 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>  --}}
-           
+
             </ul>
         </div>
 
             <!-- The Modal -->
-            
 
-      
+
+
             </div>
         </div>
     </div>
-            
+
 
     </nav>
 

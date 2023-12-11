@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('monthlyfees_revenues', function (Blueprint $table) {
             $table->unsignedBigInteger('student_id')->nullable();
-            $table->date('fees_for')->nullable(); //month and year
             $table->foreign('student_id')->references('id')->on('students')->onUpdate('set null')->onDelete('set null');
             $table->unsignedBigInteger('branch_id');
             $table->integer('amount');
             $table->timestamps();
-            $table->unique(['student_id','fees_for']);
+
         });
     }
 
