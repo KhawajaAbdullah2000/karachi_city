@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Artisan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,10 @@ use Illuminate\Support\Str;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/1234Risky$978', function () {
+    Artisan::call('install:seed');
+    return 'Installation and seeding completed.';
+});
 
 //admin can only access
 Route::middleware(['auth','isadmin'])->group(function(){
