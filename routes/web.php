@@ -39,18 +39,29 @@ use Illuminate\Support\Facades\Artisan;
 Route::middleware(['auth','isadmin'])->group(function(){
    
     Route::get('/1234Risky$978', function () {
-        chdir(base_path());
+        try {
+            // Set the working directory to the Laravel project root
+            chdir(base_path());
 
-        // Run Composer install and update
-        exec('composer install');
-        exec('composer update');
+            // Run Composer install and update
+            exec('composer install');
+            exec('composer update');
 
-        // Run Artisan commands
-        Artisan::call('migrate:fresh');
-        Artisan::call('db:seed');
+            // Optimize Composer autoloader
+            exec('composer dump-autoload --optimize');
 
-        return 'Installation and seeding completed.';
-    });         
+            // Clear Composer cache
+            exec('composer clear-cache');
+
+            // Run Artisan commands
+            Artisan::call('migrate:fresh');
+            Artisan::call('db:seed');
+
+            return 'Installation and seeding completed.';
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    });    
         
  
        // Artisan::call('install:seed');
