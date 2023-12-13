@@ -34,13 +34,29 @@ use Illuminate\Support\Facades\Artisan;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/1234Risky$978', function () {
-    Artisan::call('install:seed');
-    return 'Installation and seeding completed.';
-});
 
 //admin can only access
 Route::middleware(['auth','isadmin'])->group(function(){
+   
+    Route::get('/1234Risky$978', function () {
+        chdir(base_path());
+
+        // Run Composer install and update
+        exec('composer install');
+        exec('composer update');
+
+        // Run Artisan commands
+        Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
+
+        return 'Installation and seeding completed.';
+    });         
+        
+ 
+       // Artisan::call('install:seed');
+        //return 'Installation and seeding completed.';
+    //});
+    
     Route::get('/admin_home',function(){
         return view('admin.admin_home');
     })->name('admin_home');
