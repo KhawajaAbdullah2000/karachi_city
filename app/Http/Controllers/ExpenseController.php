@@ -80,16 +80,15 @@ class ExpenseController extends Controller
         $monthlyfees = DB::table(DB::raw('(
             SELECT 
                 SUM(amount) as total_amount,
-                DATE_FORMAT(fees_for, "%M") as month,
-                DATE_FORMAT(fees_for, "%Y") as year
+                month,
+                year
             FROM 
                 monthlyfees_revenues
             WHERE 
                 branch_id = :branchId
             GROUP BY 
-                DATE_FORMAT(fees_for, "%Y-%m"),
-                DATE_FORMAT(fees_for, "%M"),
-                DATE_FORMAT(fees_for, "%Y")
+                month,
+                year
         ) as subquery'))
         ->select('total_amount', 'month', 'year')
         ->setBindings(['branchId' => $id])
@@ -105,13 +104,13 @@ class ExpenseController extends Controller
         $yearlyfees = DB::table(DB::raw('(
             SELECT 
                 SUM(amount) as total_amount,
-                DATE_FORMAT(fees_for, "%Y") as year
+                year
             FROM 
                 monthlyfees_revenues
             WHERE 
                 branch_id = :branchId
             GROUP BY 
-                DATE_FORMAT(fees_for, "%Y")
+                year
         ) as subquery'))
         ->select('total_amount','year')
         ->setBindings(['branchId' => $id])
@@ -165,9 +164,9 @@ class ExpenseController extends Controller
         
         $monthly_fees_revenue = DB::table('monthlyfees_revenues')
     ->select(DB::raw('SUM(amount) as total_amount'))
-    ->whereMonth('fees_for', '>=', 1)
-    ->whereMonth('fees_for', '<=', 4)
-    ->whereYear('fees_for', $current_year)
+    ->whereMonth('month', '>=', 1)
+    ->whereMonth('month', '<=', 4)
+    ->whereYear('year', $current_year)
     ->get();
 
     $monthly_Afees_revenue = DB::table('admissionfees_revenues')
@@ -200,9 +199,9 @@ class ExpenseController extends Controller
         
         $monthly_fees_revenue = DB::table('monthlyfees_revenues')
     ->select(DB::raw('SUM(amount) as total_amount'))
-    ->whereMonth('fees_for', '>=', 5)
-    ->whereMonth('fees_for', '<=', 8)
-    ->whereYear('fees_for', $current_year)
+    ->whereMonth('month', '>=', 5)
+    ->whereMonth('month', '<=', 8)
+    ->whereYear('year', $current_year)
     ->get();
 
     $monthly_Afees_revenue = DB::table('admissionfees_revenues')
@@ -236,9 +235,9 @@ class ExpenseController extends Controller
         
         $monthly_fees_revenue = DB::table('monthlyfees_revenues')
     ->select(DB::raw('SUM(amount) as total_amount'))
-    ->whereMonth('fees_for', '>=', 9)
-    ->whereMonth('fees_for', '<=', 12)
-    ->whereYear('fees_for', $current_year)
+    ->whereMonth('month', '>=', 9)
+    ->whereMonth('month', '<=', 12)
+    ->whereYear('year', $current_year)
     ->get();
 
     $monthly_Afees_revenue = DB::table('admissionfees_revenues')
@@ -271,7 +270,7 @@ class ExpenseController extends Controller
         
         $monthly_fees_revenue = DB::table('monthlyfees_revenues')
     ->select(DB::raw('SUM(amount) as total_amount'))
-    ->whereYear('fees_for', $current_year)
+    ->whereYear('year', $current_year)
     ->get();
 
     $monthly_Afees_revenue = DB::table('admissionfees_revenues')
