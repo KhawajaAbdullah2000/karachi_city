@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Revenune Generated from Monthly fees for the first quaterly</td>
+                        <td>Revenune Generated from Monthly fees for 2nd quaterly</td>
                         @if($monthly_fees_revenue[0]->total_amount==0)
                         <td class="text-center">pkr 0.00</td>
                         @else

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="wrapper d-flex align-items-stretch">
-    
+
 @include('admin_nav')
 
 
@@ -18,7 +18,7 @@
     </div>
 
     @endif --}}
-    
+
 
     <div class="invoice-items">
         <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
@@ -31,13 +31,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Revenune Generated from Monthly fees for the first quaterly</td>
+                        <td>Revenune Generated from Monthly fees for the 3rd quaterly</td>
                         @if($monthly_fees_revenue[0]->total_amount==0)
                         <td class="text-center">pkr 0.00</td>
                         @else
                         <td class="text-center">pkr {{ $monthly_fees_revenue[0]->total_amount }}.00</td>
                         @endif
-                        
+
                     </tr>
                     <tr>
                         <td>Revenune Generated from Admission fees for the first quaterly</td>
@@ -46,7 +46,7 @@
                         @else
                         <td class="text-center">pkr {{$monthly_Afees_revenue[0]->total_Amount}}.00</td>
                         @endif
-                        
+
                     </tr>
                     <tr>
                         <td>Expense incurred during these 4-month period</td>
@@ -65,20 +65,20 @@
                         <td class="text-center">pkr {{$salary[0]->total_amount}}</td>
                         @endif
                     </tr>
-                    
+
                     <tr>
                         <td>PROFIT/LOSS</td>
-                        
+
                         <td class="text-center">pkr {{$monthly_fees_revenue[0]->total_amount + $monthly_Afees_revenue[0]->total_Amount - ($expense[0]->total_Amount + $salary[0]->total_amount)}}</td>
                     </tr>
                 </tbody>
-               
+
             </table>
         </div>
     </div>
 
     @section('scripts')
- 
+
 @if(Session::has('success'))
 <script>
     swal({
@@ -87,7 +87,7 @@
   closeOnClickOutside: true,
   timer: 4000,
     });
-</script> 
+</script>
 @endif
 
 @endsection
